@@ -5,7 +5,22 @@ rank-bm25==0.2.2
 chromadb==1.5.9
 transformers==5.20.2
 torch==2.14.1
-accelerate
+accelerate==1.15.0
 pillow
 pandas==3.1.0
 numpy==2.5.4
+
+# Part 2: diffusion fine-tuning & evaluation
+datasets==5.1.0
+diffusers==0.42.0
+peft==0.21.2
+torchmetrics==1.9.0
+torchvision==0.29.1
+open_clip_torch==3.3.0
+lpips==0.1.4
+ImageHash==4.3.2
+ftfy==6.3.1
+tensorboard==2.21.0
+
+# Part 3: agents & demo app
+gradio==6.30.0

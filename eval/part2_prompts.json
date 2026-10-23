@@ -1,0 +1,82 @@
+[
+  {
+    "prompt": "a demon with a gun in his hand",
+    "category": "in_domain"
+  },
+  {
+    "prompt": "a man in a blue shirt and red hat",
+    "category": "in_domain"
+  },
+  {
+    "prompt": "a dog and a man sitting on the ground",
+    "category": "in_domain"
+  },
+  {
+    "prompt": "a man with long black hair and glasses",
+    "category": "in_domain"
+  },
+  {
+    "prompt": "a man with red hair and a white cloak",
+    "category": "in_domain"
+  },
+  {
+    "prompt": "a man in a white hoodie looking at the camera",
+    "category": "in_domain"
+  },
+  {
+    "prompt": "a man in uniform with his hand on his head",
+    "category": "in_domain"
+  },
+  {
+    "prompt": "a man with a beard and a mustache",
+    "category": "in_domain"
+  },
+  {
+    "prompt": "a man with black hair and blue eyes pointing at the camera",
+    "category": "in_domain"
+  },
+  {
+    "prompt": "a man with glasses and a green jacket",
+    "category": "in_domain"
+  },
+  {
+    "prompt": "a photorealistic astronaut on the moon",
+    "category": "out_of_domain"
+  },
+  {
+    "prompt": "a watercolor painting of a quiet mountain lake",
+    "category": "out_of_domain"
+  },
+  {
+    "prompt": "a steampunk city skyline at sunset",
+    "category": "out_of_domain"
+  },
+  {
+    "prompt": "a cute cartoon robot watering plants in a garden",
+    "category": "out_of_domain"
+  },
+  {
+    "prompt": "an oil painting of a horse running through a field",
+    "category": "out_of_domain"
+  },
+  {
+    "prompt": "two characters, one in red and one in blue, standing back to back",
+    "category": "compositional"
+  },
+  {
+    "prompt": "a character jumping over a waterfall while holding a sword",
+    "category": "compositional"
+  },
+  {
+    "prompt": "three characters sitting around a campfire at night",
+    "category": "compositional"
+  },
+  {
+    "prompt": "a character wearing a green headband and a character wearing a black cloak facing each other",
+    "category": "compositional"
+  },
+  {
+    "prompt": "a character running through a forest chased by a shadow figure",
+    "category": "compositional"
+  }
+]
