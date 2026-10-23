@@ -26,8 +26,12 @@ SHARED_ARGS = {
     "lr_warmup_steps": 0,
     "seed": SEED,
     "checkpointing_steps": 600,
-    "mixed_precision": "bf16",
+    "mixed_precision": "fp16",
 }
+
+# store_true flags: pass the flag itself, no value. gradient_checkpointing keeps peak
+# memory under the lab's 16GB Kaggle/Colab T4 budget (plain run peaked at ~19.5GB).
+SHARED_FLAGS = ["gradient_checkpointing"]
 
 
 def sample_gpu_memory(samples, stop_event):
@@ -61,6 +65,8 @@ def run_training(run_name):
     for key, value in SHARED_ARGS.items():
         args.append("--{}".format(key))
         args.append(str(value))
+    for flag in SHARED_FLAGS:
+        args.append("--{}".format(flag))
 
     samples = []
     stop_event = threading.Event()

@@ -11,7 +11,8 @@ def get_model_and_processor():
     global _model, _processor
     if _model is None:
         device = "cuda" if torch.cuda.is_available() else "cpu"
-        dtype = torch.bfloat16 if torch.cuda.is_available() else torch.float32
+        # fp16 (not bf16): Kaggle/Colab T4 GPUs don't have native bf16 tensor cores
+        dtype = torch.float16 if torch.cuda.is_available() else torch.float32
         _model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
             MODEL_NAME, torch_dtype=dtype, device_map=device
         )
