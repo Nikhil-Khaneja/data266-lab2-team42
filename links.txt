@@ -1,4 +1,4 @@
-GitHub repository: TBD
+GitHub repository: https://github.com/Nikhil-Khaneja/data266-lab2-team42
 Tags and commits:
   p1-v1.0: TBD
   p2-v1.0: TBD
