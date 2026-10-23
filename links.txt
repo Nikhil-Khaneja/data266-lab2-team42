@@ -1,0 +1,12 @@
+GitHub repository: TBD
+Tags and commits:
+  p1-v1.0: TBD
+  p2-v1.0: TBD
+  p3-v1.0: TBD
+
+Hugging Face:
+  Part 2 model(s): TBD
+  Part 2 image dataset: TBD
+
+Kaggle:
+  Final notebook: TBD

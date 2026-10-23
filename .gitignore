@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Data and weights (go to Hugging Face / Kaggle, never GitHub)
+data/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+
+# Secrets
+.env
+*.key
+
+# OS
+.DS_Store
+Thumbs.db
