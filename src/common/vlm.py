@@ -1,5 +1,5 @@
 import torch
-from transformers import AutoProcessor, Qwen2VLForConditionalGeneration
+from transformers import AutoProcessor, Qwen2_5_VLForConditionalGeneration
 
 MODEL_NAME = "Qwen/Qwen2.5-VL-3B-Instruct"
 
@@ -12,7 +12,7 @@ def get_model_and_processor():
     if _model is None:
         device = "cuda" if torch.cuda.is_available() else "cpu"
         dtype = torch.bfloat16 if torch.cuda.is_available() else torch.float32
-        _model = Qwen2VLForConditionalGeneration.from_pretrained(
+        _model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
             MODEL_NAME, torch_dtype=dtype, device_map=device
         )
         _processor = AutoProcessor.from_pretrained(MODEL_NAME)
