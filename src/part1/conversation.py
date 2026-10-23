@@ -1,0 +1,37 @@
+class Conversation:
+    def __init__(self, conversation_id):
+        self.conversation_id = conversation_id
+        self.turns = []
+        self.session_values = {}
+
+    def add_turn(self, question, answer_dict):
+        self.turns.append({"question": question, "answer": answer_dict})
+
+    def history_text(self):
+        lines = []
+        for turn in self.turns:
+            lines.append("User: {}".format(turn["question"]))
+            lines.append("Assistant: {}".format(turn["answer"]["answer"]))
+        return "\n".join(lines)
+
+    def set_session_value(self, key, value):
+        self.session_values[key] = value
+
+    def get_session_values_text(self):
+        if not self.session_values:
+            return ""
+        parts = ["{}={}".format(k, v) for k, v in self.session_values.items()]
+        return "Session overrides (this conversation only): " + ", ".join(parts)
+
+
+class ConversationStore:
+    def __init__(self):
+        self.conversations = {}
+
+    def new_conversation(self, conversation_id):
+        conv = Conversation(conversation_id)
+        self.conversations[conversation_id] = conv
+        return conv
+
+    def get(self, conversation_id):
+        return self.conversations.get(conversation_id)
