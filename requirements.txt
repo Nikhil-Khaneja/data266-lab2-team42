@@ -1,0 +1,10 @@
+# Part 1: ingestion & retrieval
+pymupdf==2.0
+sentence-transformers==6.2.0
+rank-bm25==0.2.2
+chromadb==1.5.9
+transformers==5.20.2
+torch==2.14.1
+accelerate
+pandas==3.1.0
+numpy==2.5.4
