@@ -82,12 +82,33 @@ no secrets/API keys. Model weights and generated images go to **Hugging Face**;
 ## Setup
 
 ```
+python -m venv .venv
+.venv\Scripts\activate          # Windows
 pip install -r requirements.txt
 ```
 
+`requirements.txt` pins a CUDA 13.0 build of torch/torchvision for local dev on an
+RTX 5090 (Blackwell). On Kaggle/Colab, the preinstalled torch already matches their GPU
+(T4/P100) — skip those two lines or let Kaggle's environment take precedence.
+
 ## Running each part
 
-Instructions added as each part is implemented.
+**Part 1** needs the real lab files from Canvas (Files → Labs → Lab 2 →
+DATA266_Lab2_Part1) or the Kaggle competition's Data tab: `Document.pdf`,
+`Document2_Supplement_A_Outturns_2011-2013.pdf`,
+`Document3_Briefing_B_Labour_Prices_Policy.pdf`, `kb_manifest.json`, `Questions.csv`,
+`sample_submission.csv`, `validate_submission.py`. Place them under `data/raw/part1/`,
+then run `notebooks/p1_rag.ipynb` top to bottom.
+
+**Part 2** only needs public data (`lambdalabs/naruto-blip-captions` + Stable Diffusion
+1.5) and runs end to end via `notebooks/p2_finetune.ipynb`, or the individual scripts in
+`src/part2/` (`data_prep.py`, `train_runs.py`, `generate.py`, `evaluate.py`,
+`human_eval.py`, `push_to_hf.py`). Pushing to Hugging Face needs `huggingface-cli login`
+first.
+
+**Part 3** needs sample input images under `data/raw/part3/` matching the file names in
+`eval/part3_scenarios.json` / `eval/part3_redteam.json`, then run
+`notebooks/p3_agents.ipynb` or `python app/gradio_app.py` for the interactive demo.
 
 ## Weights and datasets
 

@@ -8,15 +8,25 @@ and runs a complete working baseline for it.
 
 ## Part 1 — MultiModal RAG
 
-- TBD
+- Ingestion (PDF text/figure extraction), hybrid retrieval (dense + BM25 + ChromaDB),
+  conversation memory, answering-rules engine, Kaggle submission script, golden-set
+  scoring harness: implemented, pending real documents from Canvas for ingestion/testing
+  against actual content.
 
 ## Part 2 — Diffusion Fine-Tuning
 
-- TBD
+- Data prep (dedup/corrupt filtering, 90/10 split, resize) run against the real
+  lambdalabs/naruto-blip-captions dataset: 1221 images, 0 removed, 1098 train / 123 test.
+- 20 fixed evaluation prompts generated from real test-set captions.
+- LoRA training launcher, generation script, evaluation metrics (KID/CLIP/LPIPS,
+  memorization check), blinded human-eval tooling, Hugging Face push script: implemented.
 
 ## Part 3 — Multimodal Multi-Agent System
 
-- TBD
+- Five agents (planner, vision understanding, prompt engineering, image generation,
+  critique), orchestrator with revise loop and JSON tracing, safety guardrails, Gradio
+  demo app: implemented and smoke-tested against the local VLM.
+- 15 test scenarios and 10 red-team cases drafted; pending real sample images to run.
 
 ## Meeting recordings
 
