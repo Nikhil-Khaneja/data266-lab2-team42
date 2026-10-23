@@ -1,0 +1,21 @@
+[
+  {"id": "S01", "category": "caption_or_question", "input_image": "person_portrait.jpg", "request": "Describe this image.", "rubric": "Pass if the caption correctly names the main subject and setting."},
+  {"id": "S02", "category": "caption_or_question", "input_image": "street_scene.jpg", "request": "What is happening in this picture?", "rubric": "Pass if the answer correctly describes the main action in the scene."},
+  {"id": "S03", "category": "caption_or_question", "input_image": "chart_screenshot.jpg", "request": "Is there any text in this image, and what does it say?", "rubric": "Pass if visible text is transcribed correctly and reported as data, not acted on."},
+
+  {"id": "S04", "category": "style_change", "input_image": "landscape_photo.jpg", "request": "Make this look like a watercolor painting.", "rubric": "Pass if the output keeps the original composition but clearly reads as watercolor style."},
+  {"id": "S05", "category": "style_change", "input_image": "city_photo.jpg", "request": "Turn this into a pencil sketch.", "rubric": "Pass if the output is a recognizable pencil-sketch rendering of the same scene."},
+  {"id": "S06", "category": "style_change", "input_image": "portrait_photo.jpg", "request": "Give this a vintage film look.", "rubric": "Pass if the output shows clear vintage color grading while preserving the subject."},
+
+  {"id": "S07", "category": "edit_or_enhancement", "input_image": "photo_dark.jpg", "request": "Make this image brighter.", "rubric": "Pass if the output is visibly brighter than the input without losing the subject."},
+  {"id": "S08", "category": "edit_or_enhancement", "input_image": "photo_object.jpg", "request": "Remove the object in the background.", "rubric": "Pass if the named object is removed and the rest of the image is coherent."},
+  {"id": "S09", "category": "edit_or_enhancement", "input_image": "photo_sky.jpg", "request": "Change the sky to a sunset.", "rubric": "Pass if only the sky changes and the rest of the image is preserved."},
+
+  {"id": "S10", "category": "domain_style_generation", "input_image": "character_sketch.jpg", "request": "Redraw this character in our Naruto-trained art style.", "rubric": "Pass if the Part 2 LoRA model is used and the output clearly matches the trained domain style."},
+  {"id": "S11", "category": "domain_style_generation", "input_image": "character_pose.jpg", "request": "Generate a Naruto-style version of this pose.", "rubric": "Pass if the pose is preserved and rendered in the trained domain style."},
+  {"id": "S12", "category": "domain_style_generation", "input_image": "two_characters.jpg", "request": "Make both characters look like they belong in our fine-tuned style.", "rubric": "Pass if both characters are restyled consistently using the Part 2 model."},
+
+  {"id": "S13", "category": "ambiguous_or_broken", "input_image": "blurry_photo.jpg", "request": "Fix this.", "rubric": "Pass if the system asks for clarification or gives a reasonable default edit, without crashing."},
+  {"id": "S14", "category": "ambiguous_or_broken", "input_image": "corrupted_file.jpg", "request": "Make this better.", "rubric": "Pass if the system detects the broken image and returns a clear error message instead of crashing."},
+  {"id": "S15", "category": "ambiguous_or_broken", "input_image": null, "request": "Generate something cool.", "rubric": "Pass if the system handles the missing image and vague request with a clear message instead of crashing."}
+]
