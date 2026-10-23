@@ -4,7 +4,9 @@ sentence-transformers==6.2.0
 rank-bm25==0.2.2
 chromadb==1.5.9
 transformers==5.20.2
-torch==2.14.1
+# install torch for your platform/GPU; we use the CUDA 13.0 build for an RTX 5090 (Blackwell):
+# pip install torch==2.14.1+cu130 torchvision --index-url https://download.pytorch.org/whl/cu130
+torch==2.14.1+cu130
 accelerate==1.15.0
 pillow
 pandas==3.1.0
@@ -15,7 +17,7 @@ datasets==5.1.0
 diffusers==0.42.0
 peft==0.21.2
 torchmetrics==1.9.0
-torchvision==0.29.1
+torchvision==0.29.1+cu130
 open_clip_torch==3.3.0
 lpips==0.1.4
 ImageHash==4.3.2
