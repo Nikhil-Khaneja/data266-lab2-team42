@@ -2,13 +2,16 @@ import re
 
 UNSAFE_PATTERNS = [
     r"\bnude\b", r"\bnaked\b", r"\bnsfw\b", r"\bsex(ual)?\b", r"\bporn", r"\bexplicit\b",
-    r"\bgore\b", r"\bviolent\b", r"\bkill\b", r"\bweapon\b", r"\bself[- ]harm\b",
+    r"\bgore\b", r"\bviolen(t|ce)\b", r"\bgraphic\b.*\b(violen|gore|blood)", r"\bkill\b",
+    r"\bweapon\b", r"\bself[- ]harm\b",
 ]
 UNSAFE_REGEX = re.compile("|".join(UNSAFE_PATTERNS), re.IGNORECASE)
 
 DECEPTIVE_EDIT_PATTERNS = [
-    r"\breal (person|politician|celebrity)\b", r"\bmake (him|her|them) look like\b",
-    r"\bdeepfake\b", r"\bfake (photo|image) of\b",
+    r"\b(real|this) (person|politician|celebrity|public figure)\b",
+    r"\b(politician|celebrity|public figure)\b", r"\bmake (him|her|them) look like\b",
+    r"\bdeepfake\b", r"\bfake (photo|image) of\b", r"\bcompromising\b", r"\bembarrassing\b",
+    r"\bdidn'?t do\b",
 ]
 DECEPTIVE_EDIT_REGEX = re.compile("|".join(DECEPTIVE_EDIT_PATTERNS), re.IGNORECASE)
 

@@ -11,6 +11,23 @@ from src.part3.state import RequestState
 MAX_REVISIONS = 2
 
 
+def summarize_output(state, agent_name):
+    if agent_name == "planner":
+        return {"route": state.route, "refused": state.refused, "refusal_reason": state.refusal_reason}
+    if agent_name == "vision_understanding":
+        return {"caption": state.vision_caption, "objects": state.vision_objects,
+                "text_in_image": state.vision_text_in_image, "qa": state.vision_qa}
+    if agent_name in ("prompt_engineering", "prompt_engineering_revision"):
+        return {"generation_prompt": state.generation_prompt}
+    if agent_name == "image_generation":
+        return {"mode": state.generation_mode, "model": state.generation_model,
+                "seed": state.generation_seed, "steps": state.generation_steps}
+    if agent_name == "critique":
+        return {"score": state.critique_score, "decision": state.critique_decision,
+                "feedback": state.critique_feedback}
+    return "ok"
+
+
 def timed_step(state, agent_name, step_input, func, *args):
     start = time.time()
     try:
@@ -19,7 +36,7 @@ def timed_step(state, agent_name, step_input, func, *args):
     except Exception as exc:
         error = str(exc)
     duration = time.time() - start
-    step_output = error if error else "ok"
+    step_output = {"error": error} if error else summarize_output(state, agent_name)
     state.log_step(agent_name, step_input, step_output, duration)
     return error
 
