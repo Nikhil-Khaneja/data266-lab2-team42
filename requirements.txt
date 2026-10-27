@@ -17,6 +17,7 @@ datasets==5.1.0
 diffusers==0.42.0
 peft==0.21.2
 torchmetrics==1.9.0
+torch-fidelity==0.4.0
 torchvision==0.29.1+cu130
 open_clip_torch==3.3.0
 lpips==0.1.4
