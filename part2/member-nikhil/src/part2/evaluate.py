@@ -10,6 +10,12 @@ from torchvision import transforms
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
+# run2_lora_r16 has much lower (better) KID than run1_lora_r4 with essentially the
+# same CLIP score, so it is the run selected as final for the memorization check,
+# the Hugging Face model card, and the human-eval blind comparison against the base
+# model.
+FINAL_MODEL = "run2_lora_r16"
+
 _clip_model = None
 _clip_preprocess = None
 _clip_tokenizer = None
@@ -155,3 +161,14 @@ if __name__ == "__main__":
     with open("eval/part2_metrics.json", "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2)
     print(json.dumps(results, indent=2))
+
+    final_in_domain_files = [
+        r["file_name"] for r in metadata if r["model"] == FINAL_MODEL and r["category"] == "in_domain"
+    ]
+    memorization_pairs = memorization_check(
+        os.path.join("data/processed/part2/generated", FINAL_MODEL),
+        "data/processed/part2/train", final_in_domain_files,
+    )
+    with open("eval/part2_memorization.json", "w", encoding="utf-8") as f:
+        json.dump({"model": FINAL_MODEL, "closest_pairs": memorization_pairs}, f, indent=2)
+    print(json.dumps(memorization_pairs, indent=2))

@@ -68,10 +68,12 @@ def compute_win_rate(responses_path, answer_key_path, final_model):
 
 
 if __name__ == "__main__":
+    # run2_lora_r16 has much lower (better) KID than run1_lora_r4 with essentially the
+    # same CLIP score, so it is the run selected as final (see evaluate.py).
     build_blind_pairs(
         generated_root="data/processed/part2/generated",
         base_model="base",
-        final_model="run1_lora_r4",
+        final_model="run2_lora_r16",
         metadata_path="data/processed/part2/generated/generation_metadata.json",
         output_dir="eval/part2_human_eval",
     )

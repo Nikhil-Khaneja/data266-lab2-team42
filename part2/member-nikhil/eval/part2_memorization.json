@@ -1,0 +1,20 @@
+{
+  "model": "run2_lora_r16",
+  "closest_pairs": [
+    {
+      "generated": "a_man_with_long_black_hair_and_glasses_seed0.png",
+      "closest_train": "00587.jpg",
+      "similarity": 0.9245924949645996
+    },
+    {
+      "generated": "a_man_with_long_black_hair_and_glasses_seed1.png",
+      "closest_train": "00995.jpg",
+      "similarity": 0.9038133025169373
+    },
+    {
+      "generated": "a_man_with_red_hair_and_a_white_cloak_seed1.png",
+      "closest_train": "00429.jpg",
+      "similarity": 0.900908350944519
+    }
+  ]
+}

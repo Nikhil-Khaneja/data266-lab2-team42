@@ -1,0 +1,177 @@
+[
+  {
+    "pair_id": "pair_00",
+    "prompt": "a man with a beard and a mustache",
+    "left_image": "data/processed/part2/generated\\base\\a_man_with_a_beard_and_a_mustache_seed0.png",
+    "right_image": "data/processed/part2/generated\\run2_lora_r16\\a_man_with_a_beard_and_a_mustache_seed0.png",
+    "preferred": null
+  },
+  {
+    "pair_id": "pair_01",
+    "prompt": "a man with black hair and blue eyes pointing at the camera",
+    "left_image": "data/processed/part2/generated\\base\\a_man_with_black_hair_and_blue_eyes_pointing_at_th_seed1.png",
+    "right_image": "data/processed/part2/generated\\run2_lora_r16\\a_man_with_black_hair_and_blue_eyes_pointing_at_th_seed1.png",
+    "preferred": null
+  },
+  {
+    "pair_id": "pair_02",
+    "prompt": "a man with glasses and a green jacket",
+    "left_image": "data/processed/part2/generated\\run2_lora_r16\\a_man_with_glasses_and_a_green_jacket_seed1.png",
+    "right_image": "data/processed/part2/generated\\base\\a_man_with_glasses_and_a_green_jacket_seed1.png",
+    "preferred": null
+  },
+  {
+    "pair_id": "pair_03",
+    "prompt": "a character jumping over a waterfall while holding a sword",
+    "left_image": "data/processed/part2/generated\\run2_lora_r16\\a_character_jumping_over_a_waterfall_while_holding_seed0.png",
+    "right_image": "data/processed/part2/generated\\base\\a_character_jumping_over_a_waterfall_while_holding_seed0.png",
+    "preferred": null
+  },
+  {
+    "pair_id": "pair_04",
+    "prompt": "a man in uniform with his hand on his head",
+    "left_image": "data/processed/part2/generated\\run2_lora_r16\\a_man_in_uniform_with_his_hand_on_his_head_seed1.png",
+    "right_image": "data/processed/part2/generated\\base\\a_man_in_uniform_with_his_hand_on_his_head_seed1.png",
+    "preferred": null
+  },
+  {
+    "pair_id": "pair_05",
+    "prompt": "a man with long black hair and glasses",
+    "left_image": "data/processed/part2/generated\\run2_lora_r16\\a_man_with_long_black_hair_and_glasses_seed1.png",
+    "right_image": "data/processed/part2/generated\\base\\a_man_with_long_black_hair_and_glasses_seed1.png",
+    "preferred": null
+  },
+  {
+    "pair_id": "pair_06",
+    "prompt": "a character wearing a green headband and a character wearing a black cloak facing each other",
+    "left_image": "data/processed/part2/generated\\base\\a_character_wearing_a_green_headband_and_a_charact_seed0.png",
+    "right_image": "data/processed/part2/generated\\run2_lora_r16\\a_character_wearing_a_green_headband_and_a_charact_seed0.png",
+    "preferred": null
+  },
+  {
+    "pair_id": "pair_07",
+    "prompt": "a man with red hair and a white cloak",
+    "left_image": "data/processed/part2/generated\\run2_lora_r16\\a_man_with_red_hair_and_a_white_cloak_seed1.png",
+    "right_image": "data/processed/part2/generated\\base\\a_man_with_red_hair_and_a_white_cloak_seed1.png",
+    "preferred": null
+  },
+  {
+    "pair_id": "pair_08",
+    "prompt": "three characters sitting around a campfire at night",
+    "left_image": "data/processed/part2/generated\\base\\three_characters_sitting_around_a_campfire_at_nigh_seed1.png",
+    "right_image": "data/processed/part2/generated\\run2_lora_r16\\three_characters_sitting_around_a_campfire_at_nigh_seed1.png",
+    "preferred": null
+  },
+  {
+    "pair_id": "pair_09",
+    "prompt": "a watercolor painting of a quiet mountain lake",
+    "left_image": "data/processed/part2/generated\\run2_lora_r16\\a_watercolor_painting_of_a_quiet_mountain_lake_seed0.png",
+    "right_image": "data/processed/part2/generated\\base\\a_watercolor_painting_of_a_quiet_mountain_lake_seed0.png",
+    "preferred": null
+  },
+  {
+    "pair_id": "pair_10",
+    "prompt": "a man in a white hoodie looking at the camera",
+    "left_image": "data/processed/part2/generated\\run2_lora_r16\\a_man_in_a_white_hoodie_looking_at_the_camera_seed1.png",
+    "right_image": "data/processed/part2/generated\\base\\a_man_in_a_white_hoodie_looking_at_the_camera_seed1.png",
+    "preferred": null
+  },
+  {
+    "pair_id": "pair_11",
+    "prompt": "a photorealistic astronaut on the moon",
+    "left_image": "data/processed/part2/generated\\base\\a_photorealistic_astronaut_on_the_moon_seed1.png",
+    "right_image": "data/processed/part2/generated\\run2_lora_r16\\a_photorealistic_astronaut_on_the_moon_seed1.png",
+    "preferred": null
+  },
+  {
+    "pair_id": "pair_12",
+    "prompt": "a cute cartoon robot watering plants in a garden",
+    "left_image": "data/processed/part2/generated\\run2_lora_r16\\a_cute_cartoon_robot_watering_plants_in_a_garden_seed1.png",
+    "right_image": "data/processed/part2/generated\\base\\a_cute_cartoon_robot_watering_plants_in_a_garden_seed1.png",
+    "preferred": null
+  },
+  {
+    "pair_id": "pair_13",
+    "prompt": "a watercolor painting of a quiet mountain lake",
+    "left_image": "data/processed/part2/generated\\run2_lora_r16\\a_watercolor_painting_of_a_quiet_mountain_lake_seed1.png",
+    "right_image": "data/processed/part2/generated\\base\\a_watercolor_painting_of_a_quiet_mountain_lake_seed1.png",
+    "preferred": null
+  },
+  {
+    "pair_id": "pair_14",
+    "prompt": "a photorealistic astronaut on the moon",
+    "left_image": "data/processed/part2/generated\\run2_lora_r16\\a_photorealistic_astronaut_on_the_moon_seed0.png",
+    "right_image": "data/processed/part2/generated\\base\\a_photorealistic_astronaut_on_the_moon_seed0.png",
+    "preferred": null
+  },
+  {
+    "pair_id": "pair_15",
+    "prompt": "a man with a beard and a mustache",
+    "left_image": "data/processed/part2/generated\\base\\a_man_with_a_beard_and_a_mustache_seed1.png",
+    "right_image": "data/processed/part2/generated\\run2_lora_r16\\a_man_with_a_beard_and_a_mustache_seed1.png",
+    "preferred": null
+  },
+  {
+    "pair_id": "pair_16",
+    "prompt": "a character running through a forest chased by a shadow figure",
+    "left_image": "data/processed/part2/generated\\run2_lora_r16\\a_character_running_through_a_forest_chased_by_a_s_seed0.png",
+    "right_image": "data/processed/part2/generated\\base\\a_character_running_through_a_forest_chased_by_a_s_seed0.png",
+    "preferred": null
+  },
+  {
+    "pair_id": "pair_17",
+    "prompt": "a dog and a man sitting on the ground",
+    "left_image": "data/processed/part2/generated\\base\\a_dog_and_a_man_sitting_on_the_ground_seed1.png",
+    "right_image": "data/processed/part2/generated\\run2_lora_r16\\a_dog_and_a_man_sitting_on_the_ground_seed1.png",
+    "preferred": null
+  },
+  {
+    "pair_id": "pair_18",
+    "prompt": "a man with red hair and a white cloak",
+    "left_image": "data/processed/part2/generated\\run2_lora_r16\\a_man_with_red_hair_and_a_white_cloak_seed0.png",
+    "right_image": "data/processed/part2/generated\\base\\a_man_with_red_hair_and_a_white_cloak_seed0.png",
+    "preferred": null
+  },
+  {
+    "pair_id": "pair_19",
+    "prompt": "a demon with a gun in his hand",
+    "left_image": "data/processed/part2/generated\\run2_lora_r16\\a_demon_with_a_gun_in_his_hand_seed1.png",
+    "right_image": "data/processed/part2/generated\\base\\a_demon_with_a_gun_in_his_hand_seed1.png",
+    "preferred": null
+  },
+  {
+    "pair_id": "pair_20",
+    "prompt": "two characters, one in red and one in blue, standing back to back",
+    "left_image": "data/processed/part2/generated\\base\\two_characters__one_in_red_and_one_in_blue__standi_seed0.png",
+    "right_image": "data/processed/part2/generated\\run2_lora_r16\\two_characters__one_in_red_and_one_in_blue__standi_seed0.png",
+    "preferred": null
+  },
+  {
+    "pair_id": "pair_21",
+    "prompt": "an oil painting of a horse running through a field",
+    "left_image": "data/processed/part2/generated\\base\\an_oil_painting_of_a_horse_running_through_a_field_seed1.png",
+    "right_image": "data/processed/part2/generated\\run2_lora_r16\\an_oil_painting_of_a_horse_running_through_a_field_seed1.png",
+    "preferred": null
+  },
+  {
+    "pair_id": "pair_22",
+    "prompt": "two characters, one in red and one in blue, standing back to back",
+    "left_image": "data/processed/part2/generated\\base\\two_characters__one_in_red_and_one_in_blue__standi_seed1.png",
+    "right_image": "data/processed/part2/generated\\run2_lora_r16\\two_characters__one_in_red_and_one_in_blue__standi_seed1.png",
+    "preferred": null
+  },
+  {
+    "pair_id": "pair_23",
+    "prompt": "a man in a white hoodie looking at the camera",
+    "left_image": "data/processed/part2/generated\\run2_lora_r16\\a_man_in_a_white_hoodie_looking_at_the_camera_seed0.png",
+    "right_image": "data/processed/part2/generated\\base\\a_man_in_a_white_hoodie_looking_at_the_camera_seed0.png",
+    "preferred": null
+  },
+  {
+    "pair_id": "pair_24",
+    "prompt": "a man with glasses and a green jacket",
+    "left_image": "data/processed/part2/generated\\base\\a_man_with_glasses_and_a_green_jacket_seed0.png",
+    "right_image": "data/processed/part2/generated\\run2_lora_r16\\a_man_with_glasses_and_a_green_jacket_seed0.png",
+    "preferred": null
+  }
+]

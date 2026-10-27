@@ -1,0 +1,127 @@
+[
+  {
+    "pair_id": "pair_00",
+    "left_model": "base",
+    "right_model": "run2_lora_r16"
+  },
+  {
+    "pair_id": "pair_01",
+    "left_model": "base",
+    "right_model": "run2_lora_r16"
+  },
+  {
+    "pair_id": "pair_02",
+    "left_model": "run2_lora_r16",
+    "right_model": "base"
+  },
+  {
+    "pair_id": "pair_03",
+    "left_model": "run2_lora_r16",
+    "right_model": "base"
+  },
+  {
+    "pair_id": "pair_04",
+    "left_model": "run2_lora_r16",
+    "right_model": "base"
+  },
+  {
+    "pair_id": "pair_05",
+    "left_model": "run2_lora_r16",
+    "right_model": "base"
+  },
+  {
+    "pair_id": "pair_06",
+    "left_model": "base",
+    "right_model": "run2_lora_r16"
+  },
+  {
+    "pair_id": "pair_07",
+    "left_model": "run2_lora_r16",
+    "right_model": "base"
+  },
+  {
+    "pair_id": "pair_08",
+    "left_model": "base",
+    "right_model": "run2_lora_r16"
+  },
+  {
+    "pair_id": "pair_09",
+    "left_model": "run2_lora_r16",
+    "right_model": "base"
+  },
+  {
+    "pair_id": "pair_10",
+    "left_model": "run2_lora_r16",
+    "right_model": "base"
+  },
+  {
+    "pair_id": "pair_11",
+    "left_model": "base",
+    "right_model": "run2_lora_r16"
+  },
+  {
+    "pair_id": "pair_12",
+    "left_model": "run2_lora_r16",
+    "right_model": "base"
+  },
+  {
+    "pair_id": "pair_13",
+    "left_model": "run2_lora_r16",
+    "right_model": "base"
+  },
+  {
+    "pair_id": "pair_14",
+    "left_model": "run2_lora_r16",
+    "right_model": "base"
+  },
+  {
+    "pair_id": "pair_15",
+    "left_model": "base",
+    "right_model": "run2_lora_r16"
+  },
+  {
+    "pair_id": "pair_16",
+    "left_model": "run2_lora_r16",
+    "right_model": "base"
+  },
+  {
+    "pair_id": "pair_17",
+    "left_model": "base",
+    "right_model": "run2_lora_r16"
+  },
+  {
+    "pair_id": "pair_18",
+    "left_model": "run2_lora_r16",
+    "right_model": "base"
+  },
+  {
+    "pair_id": "pair_19",
+    "left_model": "run2_lora_r16",
+    "right_model": "base"
+  },
+  {
+    "pair_id": "pair_20",
+    "left_model": "base",
+    "right_model": "run2_lora_r16"
+  },
+  {
+    "pair_id": "pair_21",
+    "left_model": "base",
+    "right_model": "run2_lora_r16"
+  },
+  {
+    "pair_id": "pair_22",
+    "left_model": "base",
+    "right_model": "run2_lora_r16"
+  },
+  {
+    "pair_id": "pair_23",
+    "left_model": "run2_lora_r16",
+    "right_model": "base"
+  },
+  {
+    "pair_id": "pair_24",
+    "left_model": "base",
+    "right_model": "run2_lora_r16"
+  }
+]
