@@ -61,4 +61,4 @@ def generate_all(prompts_path, output_root):
 
 
 if __name__ == "__main__":
-    generate_all("eval/part2_prompts.json", "data/processed/part2/generated")
+    generate_all("../eval/part2_prompts.json", "data/processed/part2/generated")

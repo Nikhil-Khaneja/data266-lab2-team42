@@ -6,7 +6,7 @@ import time
 from src.part1.answer_engine import AnswerEngine, detect_figure_mentions, GENERATION_TOP_K
 from src.part1.conversation import ConversationStore
 
-GOLDEN_SET_PATH = "eval/part1_golden_set.json"
+GOLDEN_SET_PATH = "../eval/part1_golden_set.json"  # shared definition, one level up
 NUMBER_PATTERN = re.compile(r"-?\d+\.?\d*")
 # "Figure A-2", "Table 1-2" etc. contain a hyphen+digit that NUMBER_PATTERN misreads as a
 # negative number (e.g. "-2"). Strip these labels before extracting numbers for comparison.

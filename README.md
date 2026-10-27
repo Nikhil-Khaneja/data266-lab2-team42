@@ -13,42 +13,76 @@ None. All language/vision model inference uses local open-source models
 
 ## Repo layout
 
+One repo, three parts. Inside each part, one directory per team member, so both
+partners' work lives side by side without overwriting each other:
+
 ```
 data266-lab2-team42/
 ├── README.md               how to run each part (this file)
-├── requirements.txt        pinned dependency versions
+├── requirements.txt        pinned dependency versions (shared .venv for the whole repo)
 ├── CONTRIBUTIONS.md        who did what, per part + meeting recordings log
 ├── AI_USAGE.md             which AI coding assistants were used, and for what
 ├── links.txt               GitHub tags/commits, Hugging Face links, Kaggle notebook link
 ├── .gitignore              excludes data/, weights, secrets
-├── notebooks/
-│   ├── p1_rag.ipynb
-│   ├── p2_finetune.ipynb
-│   └── p3_agents.ipynb
-├── src/
-│   ├── part1/               ingestion, retrieval, answering engine
-│   ├── part2/                data prep, training, generation, metrics
-│   └── part3/                 agents, orchestration, safety checks
-├── eval/
-│   ├── part1_golden_set.json       25 Q&A pairs (task 1.4)
-│   ├── part2_prompts.json           20 fixed generation prompts (task 2.3)
-│   ├── part3_scenarios.json         15 test scenarios + rubrics (task 3.3)
-│   └── part3_redteam.json           10 red-team cases (task 3.3)
-└── app/
-    └── gradio_app.py        Part 3 demo app
+├── part1/
+│   ├── eval/
+│   │   └── part1_golden_set.json   25 Q&A pairs (task 1.4) — shared, same for both members
+│   ├── member-nikhil/
+│   │   ├── src/
+│   │   │   ├── common/          shared VLM chat helper
+│   │   │   └── part1/           ingestion, retrieval, answering engine
+│   │   └── notebooks/
+│   │       └── p1_rag.ipynb
+│   └── member-anushka/          Anushka's own Part 1 implementation
+├── part2/
+│   ├── eval/
+│   │   └── part2_prompts.json      20 fixed generation prompts (task 2.3) — shared
+│   ├── member-nikhil/
+│   │   ├── src/part2/           data prep, training, generation, metrics
+│   │   └── notebooks/
+│   │       └── p2_finetune.ipynb
+│   └── member-anushka/          Anushka's own Part 2 implementation
+└── part3/
+    ├── eval/
+    │   ├── part3_scenarios.json     15 test scenarios + rubrics (task 3.3) — shared
+    │   └── part3_redteam.json       10 red-team cases (task 3.3) — shared
+    ├── member-nikhil/
+    │   ├── src/
+    │   │   ├── common/          shared VLM chat helper
+    │   │   └── part3/           agents, orchestration, safety checks
+    │   ├── eval/
+    │   │   ├── part3_eval_report.json   this member's own results against the shared tests
+    │   │   └── part3_traces/            per-request JSON traces from this member's eval runs
+    │   ├── notebooks/
+    │   │   └── p3_agents.ipynb
+    │   └── app/
+    │       └── gradio_app.py    Part 3 demo app
+    └── member-anushka/          Anushka's own Part 3 implementation
 ```
 
-- `notebooks/` — the three graded notebooks, imported from `src/`, not holding business
-  logic inline. Submitted **executed, with all outputs visible** (Restart & Run All) —
-  a notebook without outputs earns at most 50% of the marks it supports.
-- `src/part1/`, `src/part2/`, `src/part3/` — shared code imported by the notebooks. Plain
-  functions/classes, no lambdas, no type annotations — keep it simple and readable.
-- `eval/` — golden sets, fixed prompts, and test scenarios. These are written and
-  **committed before** the corresponding tuning/training/running starts, since the lab
-  checks the git timestamp to confirm they weren't adjusted after seeing results.
+- `part{N}/eval/` — the golden set, fixed prompts, test scenarios, and red-team cases:
+  the fixed test definitions, identical for both members, written and **committed
+  before** the corresponding tuning/training/running starts (the lab checks the git
+  timestamp to confirm they weren't adjusted after seeing results). Only one copy per
+  part — never duplicated into a member folder, so it can't drift between members.
+- Each `member-<name>/` folder is otherwise self-contained: its own `src/`, `notebooks/`,
+  and (locally, gitignored) `data/`/`models/`, plus its own `eval/` for that member's
+  *results* (scores, reports, traces) from running their implementation against the
+  shared tests above. Scripts are run with the member folder as the working directory —
+  see "Running each part" below.
+- `member-nikhil/` currently holds the one working implementation built so far for each
+  part. `member-anushka/` is scaffolded with a README stub — add your own implementation
+  there, following the same internal layout.
+- `src/common/` (inside `member-nikhil/` for Part 1 and Part 3) is a small shared VLM
+  chat helper, duplicated rather than centralized, so each member's folder stays
+  self-contained and runnable on its own.
+- `notebooks/` — the graded notebook for each part, imported from that member's `src/`,
+  not holding business logic inline. Submitted **executed, with all outputs visible**
+  (Restart & Run All) — a notebook without outputs earns at most 50% of the marks it
+  supports.
 - `app/` — Gradio demo app for Part 3, used live in the team demo.
-- `requirements.txt` — pinned dependency versions (`package==x.y.z`), updated as
-  dependencies are added.
+- `requirements.txt` — pinned dependency versions (`package==x.y.z`), one shared `.venv`
+  for the whole repo across both members and all three parts.
 
 ## Notebook rules (every notebook)
 
@@ -70,7 +104,9 @@ no secrets/API keys. Model weights and generated images go to **Hugging Face**;
 - Work directly on `main`; always `git pull` before you start and before you push.
 - Commit in small, logical steps — one task/change per commit, not end-of-day dumps.
 - Prefix commit messages with the part, e.g. `[Part1] add hybrid retrieval`,
-  `[Part2] LoRA run 1`, `[Docs] update README`.
+  `[Part2] LoRA run 1`, `[Docs] update README`. Only touch your own
+  `member-<name>/` folder within a part — that's what keeps both partners' work
+  side by side without merge conflicts.
 - No AI-assistant attribution in commit messages or PRs.
 - Tag each part when it's feature-complete and ready for grading:
   `git tag p1-v1.0 && git push origin p1-v1.0` (same for `p2-v1.0`, `p3-v1.0`). Tags
@@ -80,6 +116,8 @@ no secrets/API keys. Model weights and generated images go to **Hugging Face**;
   (read access) once you have them.
 
 ## Setup
+
+One shared virtual environment at the repo root, used by both members for every part:
 
 ```
 python -m venv .venv
@@ -93,22 +131,36 @@ RTX 5090 (Blackwell). On Kaggle/Colab, the preinstalled torch already matches th
 
 ## Running each part
 
+Each part's scripts expect to be run **with that member's folder as the working
+directory** (e.g. `part3/member-nikhil/`), since `src/`, `eval/`, `data/`, and `models/`
+all sit inside it. From the repo root:
+
+```
+cd part1\member-nikhil      # or part2\..., part3\...
+..\..\.venv\Scripts\python.exe -m src.part1.score_golden_set   # example
+```
+
 **Part 1** needs the real lab files from Canvas (Files → Labs → Lab 2 →
 DATA266_Lab2_Part1) or the Kaggle competition's Data tab: `Document.pdf`,
 `Document2_Supplement_A_Outturns_2011-2013.pdf`,
 `Document3_Briefing_B_Labour_Prices_Policy.pdf`, `kb_manifest.json`, `Questions.csv`,
-`sample_submission.csv`, `validate_submission.py`. Place them under `data/raw/part1/`,
-then run `notebooks/p1_rag.ipynb` top to bottom.
+`sample_submission.csv`, `validate_submission.py`. Place them under
+`part1/member-nikhil/data/raw/part1/`, then run
+`part1/member-nikhil/notebooks/p1_rag.ipynb` top to bottom (cwd = that notebook's own
+folder, which is the Jupyter default).
 
 **Part 2** only needs public data (`lambdalabs/naruto-blip-captions` + Stable Diffusion
-1.5) and runs end to end via `notebooks/p2_finetune.ipynb`, or the individual scripts in
-`src/part2/` (`data_prep.py`, `train_runs.py`, `generate.py`, `evaluate.py`,
-`human_eval.py`, `push_to_hf.py`). Pushing to Hugging Face needs `huggingface-cli login`
-first.
+1.5) and runs end to end via `part2/member-nikhil/notebooks/p2_finetune.ipynb`, or the
+individual scripts in `part2/member-nikhil/src/part2/` (`data_prep.py`, `train_runs.py`,
+`generate.py`, `evaluate.py`, `human_eval.py`, `push_to_hf.py`), run with
+`part2/member-nikhil/` as the working directory. Pushing to Hugging Face needs
+`huggingface-cli login` (or the `huggingface_hub` Python login call) first.
 
-**Part 3** needs sample input images under `data/raw/part3/` matching the file names in
-`eval/part3_scenarios.json` / `eval/part3_redteam.json`, then run
-`notebooks/p3_agents.ipynb` or `python app/gradio_app.py` for the interactive demo.
+**Part 3** needs sample input images under `part3/member-nikhil/data/raw/part3/`
+matching the file names in `part3/eval/part3_scenarios.json` /
+`part3/eval/part3_redteam.json` (already generated — see `part3/member-nikhil/src/part3/make_test_images.py`),
+then run `part3/member-nikhil/notebooks/p3_agents.ipynb`, or from
+`part3/member-nikhil/`: `python app/gradio_app.py` for the interactive demo.
 
 ## Weights and datasets
 

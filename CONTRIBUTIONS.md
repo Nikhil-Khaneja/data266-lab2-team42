@@ -6,6 +6,11 @@ Both members contribute to all three parts. Nikhil leads Part 3 (agents); Anushk
 Part 2 (fine-tuning). Part 1 is shared. The partner not leading a part still implements
 and runs a complete working baseline for it.
 
+Each part has one directory per member (`part1/member-nikhil/`, `part1/member-anushka/`,
+and so on) so both implementations live side by side in the same repo. Everything below
+describes the work currently in each `member-nikhil/` folder; the `member-anushka/`
+folders are scaffolded and pending her own implementation.
+
 ## Part 1 — MultiModal RAG
 
 - Ingestion (PDF text/figure extraction), hybrid retrieval (dense + BM25 + ChromaDB),

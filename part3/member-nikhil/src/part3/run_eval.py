@@ -7,8 +7,8 @@ from PIL import Image
 
 from src.part3.orchestrator import run_request, save_trace
 
-SCENARIOS_PATH = "eval/part3_scenarios.json"
-REDTEAM_PATH = "eval/part3_redteam.json"
+SCENARIOS_PATH = "../eval/part3_scenarios.json"  # shared definition, one level up
+REDTEAM_PATH = "../eval/part3_redteam.json"  # shared definition, one level up
 IMAGES_DIR = "data/raw/part3"
 TRACE_DIR = "eval/part3_traces"
 

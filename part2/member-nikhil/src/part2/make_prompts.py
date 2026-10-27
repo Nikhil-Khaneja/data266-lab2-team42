@@ -50,4 +50,4 @@ def build_prompts(test_metadata_path, output_path):
 
 
 if __name__ == "__main__":
-    build_prompts("data/processed/part2/test/metadata.jsonl", "eval/part2_prompts.json")
+    build_prompts("data/processed/part2/test/metadata.jsonl", "../eval/part2_prompts.json")
