@@ -25,7 +25,10 @@ def build_page_trust_lookup(doc_entry):
     return trust_for_page
 
 
-def extract_text_chunks(pdf_path, doc_id, trust_for_page, chunk_chars=800, overlap_chars=150):
+def extract_text_chunks(pdf_path, doc_id, trust_for_page, chunk_chars=3000, overlap_chars=150):
+    # chunk_chars is a safety cap for unusually long pages; a whole page normally
+    # becomes one chunk so a table's rows are never split across chunks (splitting
+    # tables mid-row was causing the model to read numbers from the wrong row/column).
     doc = fitz.open(pdf_path)
     chunks = []
     for page_index in range(len(doc)):
@@ -88,10 +91,34 @@ def extract_figures(pdf_path, doc_id, trust_for_page, output_dir):
         page_number = page_index + 1
         page_text = page.get_text("text")
         image_list = page.get_images(full=True)
-        if not image_list:
-            continue
         trust_level = trust_for_page(page_number)
         captions_on_page = find_caption_labels(page_text)
+
+        if not image_list:
+            # Charts drawn with PDF vector commands (common in this textbook) have no
+            # embedded raster image for get_images() to find. Render the whole page as
+            # a fallback so the chart is still indexed and citable, one entry per
+            # "Figure ..." caption found on the page (captions for "Table ..." are
+            # skipped here since table data is already captured in the text chunks).
+            figure_captions = [c for c in captions_on_page if c.lower().startswith("figure")]
+            if figure_captions:
+                pixmap = page.get_pixmap(dpi=150)
+                for label in figure_captions:
+                    safe_label = re.sub(r"[^A-Za-z0-9]+", "_", label).strip("_")
+                    file_name = "{}_p{}_{}_page.png".format(doc_id, page_number, safe_label)
+                    file_path = os.path.join(output_dir, file_name)
+                    pixmap.save(file_path)
+                    figures.append({
+                        "doc_id": doc_id,
+                        "page": page_number,
+                        "trust_level": trust_level,
+                        "figure_id": label,
+                        "caption": label,
+                        "image_path": file_path,
+                        "kind": "figure",
+                    })
+            continue
+
         for img_index, img in enumerate(image_list):
             xref = img[0]
             base_image = doc.extract_image(xref)

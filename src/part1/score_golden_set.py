@@ -14,20 +14,25 @@ def extract_numbers(text):
     return [float(n) for n in NUMBER_PATTERN.findall(text)]
 
 
+def number_present(expected, actual_numbers, tolerance):
+    for actual in actual_numbers:
+        if expected == 0:
+            if abs(actual) <= tolerance:
+                return True
+        elif abs(actual - expected) / abs(expected) <= tolerance:
+            return True
+    return False
+
+
 def numbers_match(expected_text, actual_text, tolerance=0.01):
+    # Every number the golden answer requires must appear somewhere in the predicted
+    # answer, within tolerance. We don't require the same count/order: a longer,
+    # fully-worded answer that restates the right number is still correct.
     expected_numbers = extract_numbers(expected_text)
     actual_numbers = extract_numbers(actual_text)
     if not expected_numbers:
         return True
-    if len(expected_numbers) != len(actual_numbers):
-        return False
-    for expected, actual in zip(expected_numbers, actual_numbers):
-        if expected == 0:
-            if abs(actual) > tolerance:
-                return False
-        elif abs(actual - expected) / abs(expected) > tolerance:
-            return False
-    return True
+    return all(number_present(expected, actual_numbers, tolerance) for expected in expected_numbers)
 
 
 def citation_is_supported(citation, retrieved_sources):

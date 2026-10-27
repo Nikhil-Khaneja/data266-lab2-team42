@@ -20,8 +20,9 @@ class Conversation:
     def get_session_values_text(self):
         if not self.session_values:
             return ""
-        parts = ["{}={}".format(k, v) for k, v in self.session_values.items()]
-        return "Session overrides (this conversation only): " + ", ".join(parts)
+        parts = list(self.session_values.values())
+        return ("The user has made this assumption for THIS conversation only (never update the "
+                "documents themselves): " + " | ".join(parts))
 
 
 class ConversationStore:
