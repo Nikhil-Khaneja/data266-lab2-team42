@@ -36,6 +36,8 @@ Use an empty list for citations or figure_references when there are none. Every 
 answer must be backed by a citation.
 """
 
+GENERATION_TOP_K = 8
+
 SESSION_OVERRIDE_PATTERN = re.compile(
     r"\b(assume|suppose|let'?s say|for this (chat|conversation)|pretend)\b", re.IGNORECASE
 )
@@ -100,7 +102,7 @@ class AnswerEngine:
 
         # Retrieve more context for generation than the lab's Recall@5 metric measures;
         # a wider net reduces cases where the right table just misses the top 5.
-        text_results = self.index.hybrid_search_text(question, top_k=8)
+        text_results = self.index.hybrid_search_text(question, top_k=GENERATION_TOP_K)
         context_text = build_context_text(text_results, figure_results)
 
         session_text = conversation.get_session_values_text()
