@@ -3,7 +3,7 @@ import re
 import statistics
 import time
 
-from src.part1.answer_engine import AnswerEngine
+from src.part1.answer_engine import AnswerEngine, detect_figure_mentions
 from src.part1.conversation import ConversationStore
 
 GOLDEN_SET_PATH = "eval/part1_golden_set.json"
@@ -61,6 +61,8 @@ def run_golden_set(index, baseline=False):
             retrieved = index.dense_search_text(item["question"], top_k=5)
         else:
             retrieved = index.hybrid_search_text(item["question"], top_k=5)
+        for label in detect_figure_mentions(item["question"]):
+            retrieved.extend(index.find_figure_by_label(label))
         predicted = engine.answer(conv, item["question"])
         durations.append(time.time() - start)
 
