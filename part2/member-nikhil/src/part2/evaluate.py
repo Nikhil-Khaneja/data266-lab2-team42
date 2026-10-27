@@ -41,14 +41,16 @@ def to_uint8_tensor(image, size=299):
     return transform(image)
 
 
-def compute_kid(generated_dir, test_dir, subset_size=50):
-    kid = KernelInceptionDistance(subset_size=subset_size, normalize=False).to(DEVICE)
-
-    gen_files = [f for f in os.listdir(generated_dir) if f.endswith(".png")]
+def compute_kid(generated_dir, in_domain_files, test_dir):
     test_files = [f for f in os.listdir(test_dir) if f.endswith(".jpg")]
 
-    gen_tensors = torch.stack([to_uint8_tensor(load_image(os.path.join(generated_dir, f))) for f in gen_files]).to(DEVICE)
+    gen_tensors = torch.stack([to_uint8_tensor(load_image(os.path.join(generated_dir, f))) for f in in_domain_files]).to(DEVICE)
     test_tensors = torch.stack([to_uint8_tensor(load_image(os.path.join(test_dir, f))) for f in test_files]).to(DEVICE)
+
+    # KID needs subset_size strictly smaller than both sample counts; with only a
+    # handful of in-domain generations, the metric's own default (50) is too large.
+    subset_size = min(len(gen_tensors), len(test_tensors)) - 1
+    kid = KernelInceptionDistance(subset_size=subset_size, normalize=False).to(DEVICE)
 
     kid.update(test_tensors, real=True)
     kid.update(gen_tensors, real=False)
@@ -109,7 +111,8 @@ def evaluate_model(model_name, generated_dir, metadata, test_dir):
         image_b = load_image(os.path.join(generated_dir, records[1]["file_name"]))
         lpips_distances.append(lpips_distance(image_a, image_b))
 
-    kid_mean, kid_std = compute_kid(generated_dir, test_dir)
+    in_domain_files = [r["file_name"] for r in model_records if r["category"] == "in_domain"]
+    kid_mean, kid_std = compute_kid(generated_dir, in_domain_files, test_dir)
 
     return {
         "model": model_name,

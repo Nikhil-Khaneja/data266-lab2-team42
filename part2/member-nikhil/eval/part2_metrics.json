@@ -1,0 +1,23 @@
+[
+  {
+    "model": "base",
+    "kid_mean": 0.11776462197303772,
+    "kid_std": 0.012626200914382935,
+    "clip_score_mean": 0.3116380274295807,
+    "lpips_diversity_mean": 0.6867398858070374
+  },
+  {
+    "model": "run1_lora_r4",
+    "kid_mean": 0.05066291242837906,
+    "kid_std": 0.008521717973053455,
+    "clip_score_mean": 0.3032644562423229,
+    "lpips_diversity_mean": 0.6716904222965241
+  },
+  {
+    "model": "run2_lora_r16",
+    "kid_mean": 0.02326805144548416,
+    "kid_std": 0.005318491719663143,
+    "clip_score_mean": 0.3043290976434946,
+    "lpips_diversity_mean": 0.6598382622003556
+  }
+]
