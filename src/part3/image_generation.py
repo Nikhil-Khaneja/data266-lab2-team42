@@ -3,7 +3,11 @@ from diffusers import StableDiffusionImg2ImgPipeline, StableDiffusionInstructPix
 
 BASE_MODEL = "stable-diffusion-v1-5/stable-diffusion-v1-5"
 EDIT_MODEL = "timbrooks/instruct-pix2pix"
-LORA_REPO = None  # set once the Part 2 LoRA is pushed to Hugging Face, e.g. "team42/sd15-naruto-lora-run1"
+# Local LoRA weights from Part 2 (run1_lora_r4), used until the model is pushed to
+# Hugging Face; LORA_REPO overrides this once a HF repo id is set (e.g. after
+# huggingface-cli login + push_to_hf.py).
+LORA_LOCAL_PATH = "models/part2/run1_lora_r4"
+LORA_REPO = None
 
 _img2img_pipe = None
 _edit_pipe = None
@@ -28,10 +32,14 @@ def get_edit_pipe():
     return _edit_pipe
 
 
+def domain_lora_source():
+    return LORA_REPO or LORA_LOCAL_PATH
+
+
 def load_domain_lora(pipe):
     global _lora_loaded
-    if LORA_REPO and not _lora_loaded:
-        pipe.load_lora_weights(LORA_REPO)
+    if not _lora_loaded:
+        pipe.load_lora_weights(domain_lora_source())
         _lora_loaded = True
 
 
@@ -48,9 +56,12 @@ def generate(state, seed=0, steps=30, strength=0.6):
         pipe = get_img2img_pipe()
         if state.route == "domain_style_generation":
             load_domain_lora(pipe)
-            model_name = LORA_REPO or BASE_MODEL
+            pipe.enable_lora()
+            model_name = domain_lora_source()
             mode = "domain_style_generation"
         else:
+            if _lora_loaded:
+                pipe.disable_lora()
             model_name = BASE_MODEL
             mode = "style_change"
         result = pipe(prompt=state.generation_prompt, image=state.input_image, strength=strength,
