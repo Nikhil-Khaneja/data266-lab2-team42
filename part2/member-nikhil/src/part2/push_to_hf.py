@@ -2,7 +2,7 @@ import sys
 
 from huggingface_hub import HfApi, create_repo
 
-HF_USERNAME = "team42"  # replace with your actual Hugging Face username/org once known
+HF_USERNAME = "nikhilkhaneja"
 
 MODEL_CARD_TEMPLATE = """---
 license: creativeml-openrail-m
