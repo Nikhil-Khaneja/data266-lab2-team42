@@ -12,7 +12,20 @@ def load_manifest(manifest_path):
         return json.load(f)
 
 
-def extract_text_chunks(pdf_path, doc_id, trust_level, chunk_chars=800, overlap_chars=150):
+def build_page_trust_lookup(doc_entry):
+    base_trust = doc_entry["trust_level"]
+    overrides = {}
+    for override in doc_entry.get("section_trust_overrides", []):
+        for page in override["pages"]:
+            overrides[page] = override["trust_level"]
+
+    def trust_for_page(page_number):
+        return overrides.get(page_number, base_trust)
+
+    return trust_for_page
+
+
+def extract_text_chunks(pdf_path, doc_id, trust_for_page, chunk_chars=800, overlap_chars=150):
     doc = fitz.open(pdf_path)
     chunks = []
     for page_index in range(len(doc)):
@@ -22,6 +35,7 @@ def extract_text_chunks(pdf_path, doc_id, trust_level, chunk_chars=800, overlap_
         text = text.strip()
         if not text:
             continue
+        trust_level = trust_for_page(page_number)
         start = 0
         while start < len(text):
             end = min(start + chunk_chars, len(text))
@@ -50,7 +64,22 @@ def find_figure_labels(caption_text):
     return labels
 
 
-def extract_figures(pdf_path, doc_id, trust_level, output_dir):
+def find_caption_labels(page_text):
+    # A real figure/table caption starts its own line, e.g. "Figure A-4 Stock prices...".
+    # A cross-reference like "as in Figure 1-1 of Document 1" appears mid-sentence and
+    # must not be mistaken for a caption, or image-to-label alignment breaks.
+    labels = []
+    for line in page_text.splitlines():
+        match = FIGURE_LABEL_PATTERN.match(line.strip())
+        if match:
+            label = match.group(1).strip()
+            if match.group(2):
+                label = label + " (corrected)"
+            labels.append(label)
+    return labels
+
+
+def extract_figures(pdf_path, doc_id, trust_for_page, output_dir):
     os.makedirs(output_dir, exist_ok=True)
     doc = fitz.open(pdf_path)
     figures = []
@@ -61,7 +90,8 @@ def extract_figures(pdf_path, doc_id, trust_level, output_dir):
         image_list = page.get_images(full=True)
         if not image_list:
             continue
-        captions_on_page = find_figure_labels(page_text)
+        trust_level = trust_for_page(page_number)
+        captions_on_page = find_caption_labels(page_text)
         for img_index, img in enumerate(image_list):
             xref = img[0]
             base_image = doc.extract_image(xref)
@@ -92,9 +122,9 @@ def ingest_documents(manifest_path, pdf_dir, figures_output_dir):
     all_figures = []
     for doc_entry in manifest["documents"]:
         doc_id = doc_entry["doc_id"]
-        file_name = doc_entry["file_name"]
-        trust_level = doc_entry["trust_level"]
+        file_name = doc_entry["file"]
+        trust_for_page = build_page_trust_lookup(doc_entry)
         pdf_path = os.path.join(pdf_dir, file_name)
-        all_text_chunks.extend(extract_text_chunks(pdf_path, doc_id, trust_level))
-        all_figures.extend(extract_figures(pdf_path, doc_id, trust_level, figures_output_dir))
+        all_text_chunks.extend(extract_text_chunks(pdf_path, doc_id, trust_for_page))
+        all_figures.extend(extract_figures(pdf_path, doc_id, trust_for_page, figures_output_dir))
     return all_text_chunks, all_figures
