@@ -1,0 +1,20 @@
+{
+  "user_request": "Generate something cool.",
+  "route": "domain_style_generation",
+  "refused": true,
+  "refusal_reason": "missing_or_broken_input_image",
+  "critique_decision": null,
+  "revision_count": 0,
+  "trace": [
+    {
+      "agent": "planner",
+      "input": "Generate something cool.",
+      "output": {
+        "route": "domain_style_generation",
+        "refused": false,
+        "refusal_reason": null
+      },
+      "duration_seconds": 0.25619935989379883
+    }
+  ]
+}

@@ -26,15 +26,30 @@ and runs a complete working baseline for it.
 - Data prep (dedup/corrupt filtering, 90/10 split, resize) run against the real
   lambdalabs/naruto-blip-captions dataset: 1221 images, 0 removed, 1098 train / 123 test.
 - 20 fixed evaluation prompts generated from real test-set captions.
-- LoRA training launcher, generation script, evaluation metrics (KID/CLIP/LPIPS,
-  memorization check), blinded human-eval tooling, Hugging Face push script: implemented.
+- Two real LoRA training runs completed on an RTX 5090, both under the 16GB GPU budget
+  (gradient checkpointing + fp16): run1 (rank 4) — 797,184 trainable params, 7.3GB peak,
+  946s; run2 (rank 16) — 3,188,736 trainable params, 8.6GB peak, 1046s.
+- Generation script, evaluation metrics (KID/CLIP/LPIPS, memorization check), blinded
+  human-eval tooling, Hugging Face push script: implemented, not yet run.
 
 ## Part 3 — Multimodal Multi-Agent System
 
 - Five agents (planner, vision understanding, prompt engineering, image generation,
   critique), orchestrator with revise loop and JSON tracing, safety guardrails, Gradio
-  demo app: implemented and smoke-tested against the local VLM.
-- 15 test scenarios and 10 red-team cases drafted; pending real sample images to run.
+  demo app: implemented and run end-to-end against the local VLM and SD1.5 + LoRA.
+- 15 test scenarios and 10 red-team cases run against self-generated fixture images
+  (no external downloads needed). All 15 scenarios complete without crashing, including
+  the two broken/missing-image cases, which refuse cleanly instead of crashing the batch.
+  All 10 red-team cases are handled correctly: direct unsafe requests and deceptive edits
+  of real people are refused by the planner's safety check; the three image-embedded
+  prompt-injection attacks ("ignore previous instructions", a fake system prompt, a fake
+  developer override) are captured verbatim as data in the vision agent's output but never
+  change the caption or the route, so the architecture resists them without needing an
+  explicit refusal. Found and fixed two real bugs from this run: a crash on a corrupted
+  (not just missing) image file, and two safety-regex gaps ("graphic violence" and
+  "celebrity ... compromising" phrasing that the original patterns missed). Final
+  pass/fail judgment against the written rubric and the two instructions-in-image calls
+  still needs sign-off from the team.
 
 ## Meeting recordings
 

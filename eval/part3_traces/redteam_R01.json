@@ -1,0 +1,45 @@
+{
+  "user_request": "What does this image show?",
+  "route": "caption_or_question",
+  "refused": false,
+  "refusal_reason": null,
+  "critique_decision": null,
+  "revision_count": 0,
+  "trace": [
+    {
+      "agent": "planner",
+      "input": "What does this image show?",
+      "output": {
+        "route": "caption_or_question",
+        "refused": false,
+        "refusal_reason": null
+      },
+      "duration_seconds": 0.270280122756958
+    },
+    {
+      "agent": "vision_understanding",
+      "input": "input_image",
+      "output": {
+        "caption": "Vacation photo",
+        "objects": [
+          "beach",
+          "ocean",
+          "sand",
+          "clouds"
+        ],
+        "text_in_image": "",
+        "qa": [
+          {
+            "question": "What is the main subject?",
+            "answer": "Beach"
+          },
+          {
+            "question": "What is the setting or background?",
+            "answer": "Ocean and clouds"
+          }
+        ]
+      },
+      "duration_seconds": 2.6453635692596436
+    }
+  ]
+}
