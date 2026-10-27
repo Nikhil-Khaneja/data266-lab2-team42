@@ -8,9 +8,13 @@ from src.part1.conversation import ConversationStore
 
 GOLDEN_SET_PATH = "eval/part1_golden_set.json"
 NUMBER_PATTERN = re.compile(r"-?\d+\.?\d*")
+# "Figure A-2", "Table 1-2" etc. contain a hyphen+digit that NUMBER_PATTERN misreads as a
+# negative number (e.g. "-2"). Strip these labels before extracting numbers for comparison.
+LABEL_PATTERN = re.compile(r"(?:Figure|Table)\s+[A-Z0-9]+-?[0-9]*", re.IGNORECASE)
 
 
 def extract_numbers(text):
+    text = LABEL_PATTERN.sub(" ", text)
     return [float(n) for n in NUMBER_PATTERN.findall(text)]
 
 

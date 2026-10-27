@@ -33,7 +33,9 @@ def chat(system_prompt, user_prompt, image=None, max_new_tokens=512):
     text = processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
     images = [image] if image is not None else None
     inputs = processor(text=[text], images=images, return_tensors="pt").to(model.device)
-    output_ids = model.generate(**inputs, max_new_tokens=max_new_tokens)
+    # Greedy decoding: the lab requires reproducible answers, and the same question asked
+    # twice must not get two different answers.
+    output_ids = model.generate(**inputs, max_new_tokens=max_new_tokens, do_sample=False)
     trimmed = output_ids[:, inputs["input_ids"].shape[1]:]
     output_text = processor.batch_decode(trimmed, skip_special_tokens=True)[0]
     return output_text.strip()

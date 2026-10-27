@@ -98,7 +98,9 @@ class AnswerEngine:
         for label in figure_mentions:
             figure_results.extend(self.index.find_figure_by_label(label))
 
-        text_results = self.index.hybrid_search_text(question, top_k=5)
+        # Retrieve more context for generation than the lab's Recall@5 metric measures;
+        # a wider net reduces cases where the right table just misses the top 5.
+        text_results = self.index.hybrid_search_text(question, top_k=8)
         context_text = build_context_text(text_results, figure_results)
 
         session_text = conversation.get_session_values_text()
