@@ -53,7 +53,7 @@ def build_context_text(text_results, figure_results):
         if r["trust_level"] == "low":
             continue
         lines.append("[{}:p{} trust={} figure={}] {}".format(
-            r["doc_id"], r["page"], r["trust_level"], r["figure_id"], r["caption"]
+            r["doc_id"], r["page"], r["trust_level"], r["figure_id"], r["text"]
         ))
     return "\n".join(lines)
 
