@@ -19,7 +19,13 @@ def load_image_if_available(file_name):
     path = os.path.join(IMAGES_DIR, file_name)
     if not os.path.exists(path):
         return None
-    return Image.open(path).convert("RGB")
+    try:
+        return Image.open(path).convert("RGB")
+    except Exception:
+        # Broken/empty/truncated file: treat like a missing image so the orchestrator's
+        # existing "missing_or_broken_input_image" refusal path handles it, rather than
+        # crashing the whole evaluation batch (this is exactly what these test cases check).
+        return None
 
 
 def run_scenarios():
