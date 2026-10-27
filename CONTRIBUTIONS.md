@@ -10,8 +10,16 @@ and runs a complete working baseline for it.
 
 - Ingestion (PDF text/figure extraction), hybrid retrieval (dense + BM25 + ChromaDB),
   conversation memory, answering-rules engine, Kaggle submission script, golden-set
-  scoring harness: implemented, pending real documents from Canvas for ingestion/testing
-  against actual content.
+  scoring harness: implemented and run against the real documents.
+- 25-question golden set written and verified by hand against the real documents.
+- Current real results (both baseline-dense and final-hybrid): 11/25 correct, 72%
+  Recall@5, 86% citation accuracy, ~1.9s median per question. Baseline and final match
+  on this small a corpus (78 chunks) — hybrid retrieval and dense-only retrieval return
+  the same top-5 results for nearly every golden-set question here.
+- Found and fixed several real bugs during evaluation: 800-char chunking was splitting
+  tables mid-row (caused wrong numbers); DOC1's vector-drawn charts weren't extracted at
+  all (get_images() only finds embedded raster images); generation wasn't deterministic
+  (same question, different answers across runs); several golden-set scoring bugs.
 
 ## Part 2 — Diffusion Fine-Tuning
 
