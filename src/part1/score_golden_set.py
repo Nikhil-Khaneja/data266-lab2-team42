@@ -64,7 +64,7 @@ def run_golden_set(index, baseline=False):
     with open(GOLDEN_SET_PATH, "r", encoding="utf-8") as f:
         golden_set = json.load(f)
 
-    engine = AnswerEngine(index)
+    engine = AnswerEngine(index, retrieval_mode=("dense" if baseline else "hybrid"))
     store = ConversationStore()
 
     correct_count = 0

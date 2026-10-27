@@ -87,8 +87,9 @@ def default_not_found():
 
 
 class AnswerEngine:
-    def __init__(self, index):
+    def __init__(self, index, retrieval_mode="hybrid"):
         self.index = index
+        self.retrieval_mode = retrieval_mode
 
     def answer(self, conversation, question):
         is_new_override = detect_session_override(question)
@@ -102,7 +103,10 @@ class AnswerEngine:
 
         # Retrieve more context for generation than the lab's Recall@5 metric measures;
         # a wider net reduces cases where the right table just misses the top 5.
-        text_results = self.index.hybrid_search_text(question, top_k=GENERATION_TOP_K)
+        if self.retrieval_mode == "dense":
+            text_results = self.index.dense_search_text(question, top_k=GENERATION_TOP_K)
+        else:
+            text_results = self.index.hybrid_search_text(question, top_k=GENERATION_TOP_K)
         context_text = build_context_text(text_results, figure_results)
 
         session_text = conversation.get_session_values_text()
