@@ -18,13 +18,23 @@ folders are scaffolded and pending her own implementation.
   scoring harness: implemented and run against the real documents.
 - 25-question golden set written and verified by hand against the real documents.
 - Current real results (both baseline-dense and final-hybrid): 11/25 correct, 72%
-  Recall@5, 86% citation accuracy, ~1.9s median per question. Baseline and final match
+  Recall@5, 100% citation accuracy, ~2.5s median per question. Baseline and final match
   on this small a corpus (78 chunks) — hybrid retrieval and dense-only retrieval return
   the same top-5 results for nearly every golden-set question here.
 - Found and fixed several real bugs during evaluation: 800-char chunking was splitting
   tables mid-row (caused wrong numbers); DOC1's vector-drawn charts weren't extracted at
   all (get_images() only finds embedded raster images); generation wasn't deterministic
   (same question, different answers across runs); several golden-set scoring bugs.
+- Ran the real Kaggle submission pipeline locally against the 40-question practice set
+  (`Questions.csv`) and the lab's own `validate_submission.py`: found that 18/40 (45%)
+  of citations and 1/40 figure references failed the required strict format, because
+  the model was copying stray text (a " trust=high" annotation, or a citation-style
+  "DOCn:" prefix) out of the retrieved-context labels into its output. Fixed with a
+  tightened prompt plus a regex sanitizer applied to every answer. This also raised
+  golden-set citation accuracy from 86% to 100%, since the same malformed citations
+  were failing the golden-set checker too. `submission.csv` now passes
+  `validate_submission.py` cleanly (40/40 valid rows) — not yet submitted to Kaggle
+  (needs the team's Kaggle signup and a run of the tagged notebook on Kaggle itself).
 
 ## Part 2 — Diffusion Fine-Tuning
 
