@@ -33,7 +33,9 @@ Respond with ONLY a single JSON object, no other text, in exactly this shape:
 {"answer": "<=120 words", "status": "answered|not_found|conflict|false_premise|session_override",
  "citations": ["DOC2:p4", "DOC1:Table 1-2"], "figure_references": ["Figure A-3"]}
 Use an empty list for citations or figure_references when there are none. Every fact in the
-answer must be backed by a citation.
+answer must be backed by a citation. Each citation must be EXACTLY "DOCn:pN" or "DOCn:<label>"
+(e.g. "DOC1:p4", "DOC3:Table 1-2") — copy only the doc id and page/label from the context's
+leading bracket, never the word "trust" or its value, and never any other text from the bracket.
 """
 
 GENERATION_TOP_K = 8
@@ -41,6 +43,35 @@ GENERATION_TOP_K = 8
 SESSION_OVERRIDE_PATTERN = re.compile(
     r"\b(assume|suppose|let'?s say|for this (chat|conversation)|pretend)\b", re.IGNORECASE
 )
+
+# Matches the Kaggle submission format's citation grammar exactly: "DOCn:pN" or
+# "DOCn:Figure/Table <label>". Used to strip stray text the model sometimes copies in
+# from the context's "[DOC1:p4 trust=high]" bracket, such as " trust=high" itself.
+CITATION_PATTERN = re.compile(
+    r"DOC[1-3]:(p\d+|(?:Figure|Table) (?:[12]|[A-C])-\d+(?: \(corrected\))?)"
+)
+
+# Bare label only, no "DOCn:" prefix -- the model occasionally copies the citation
+# format onto a figure reference by mistake (e.g. "DOC2:Figure A-3").
+FIGURE_REF_PATTERN = re.compile(r"(Figure|Table) ([12]|[A-C])-\d+( \(corrected\))?")
+
+
+def sanitize_citations(citations):
+    cleaned = []
+    for citation in citations:
+        match = CITATION_PATTERN.match(citation.strip())
+        if match:
+            cleaned.append(match.group(0))
+    return cleaned
+
+
+def sanitize_figure_references(figure_references):
+    cleaned = []
+    for ref in figure_references:
+        match = FIGURE_REF_PATTERN.search(ref.strip())
+        if match:
+            cleaned.append(match.group(0))
+    return cleaned
 
 
 def detect_figure_mentions(question):
@@ -78,6 +109,8 @@ def parse_answer_json(raw_text):
     data.setdefault("status", "not_found")
     data.setdefault("citations", [])
     data.setdefault("figure_references", [])
+    data["citations"] = sanitize_citations(data["citations"])
+    data["figure_references"] = sanitize_figure_references(data["figure_references"])
     return data
 
 
