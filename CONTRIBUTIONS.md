@@ -34,8 +34,23 @@ folders are scaffolded and pending her own implementation.
 - Two real LoRA training runs completed on an RTX 5090, both under the 16GB GPU budget
   (gradient checkpointing + fp16): run1 (rank 4) — 797,184 trainable params, 7.3GB peak,
   946s; run2 (rank 16) — 3,188,736 trainable params, 8.6GB peak, 1046s.
-- Generation script, evaluation metrics (KID/CLIP/LPIPS, memorization check), blinded
-  human-eval tooling, Hugging Face push script: implemented, not yet run.
+- Generated all 120 images (base + both runs x 20 fixed prompts x 2 seeds) and ran the
+  real evaluation: KID (in-domain generations vs. real test images) drops from 0.119
+  (base) to 0.050 (run1) to 0.024 (run2); CLIP score holds steady around 0.30-0.31 for
+  all three; LPIPS seed diversity dips slightly for the fine-tuned models versus base.
+  **run2 (rank 16) selected as the final run** — far better domain fidelity (KID) at
+  essentially the same CLIP score as run1.
+- Memorization check (10 in-domain generations from the final run vs. the training set
+  by CLIP similarity): closest pairs are 0.90-0.92 similarity — notably similar but
+  short of near-exact duplication.
+- Both LoRA models pushed to Hugging Face with model cards (the final run's card
+  includes the real comparison table); all 120 generated images pushed as a Hugging
+  Face dataset with prompt/seed/model/category metadata.
+- Blinded human-eval pairs (25, base vs. final run, left/right randomized) generated;
+  actual rating by both members plus one outside rater is still pending.
+- Found and fixed a real bug during evaluation: KID was being computed over all 40
+  generated images per model (including out-of-domain and compositional prompts)
+  against the test set, instead of just the 10 in-domain ones the lab spec asks for.
 
 ## Part 3 — Multimodal Multi-Agent System
 
