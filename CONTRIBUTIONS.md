@@ -32,9 +32,10 @@ folders are scaffolded and pending her own implementation.
   "DOCn:" prefix) out of the retrieved-context labels into its output. Fixed with a
   tightened prompt plus a regex sanitizer applied to every answer. This also raised
   golden-set citation accuracy from 86% to 100%, since the same malformed citations
-  were failing the golden-set checker too. `submission.csv` now passes
-  `validate_submission.py` cleanly (40/40 valid rows) — not yet submitted to Kaggle
-  (needs the team's Kaggle signup and a run of the tagged notebook on Kaggle itself).
+  were failing the golden-set checker too. `submission.csv` passed
+  `validate_submission.py` cleanly (40/40 valid rows) and was submitted to the real
+  competition (`data-266-fall-2026-lab-2-part-1-multimodal-rag`): **public leaderboard
+  score 0.571** (submission ref 57729902, 2026-10-28).
 
 ## Part 2 — Diffusion Fine-Tuning
 
