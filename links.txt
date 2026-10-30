@@ -11,5 +11,7 @@ Hugging Face:
 
 Kaggle:
   Competition: https://www.kaggle.com/competitions/data-266-fall-2026-lab-2-part-1-multimodal-rag
-  Submission ref 57729902 (2026-10-28): public score 0.571
+  Submission ref 57729902 (2026-10-28): public score 0.571 (hybrid retrieval was silently dense-only)
+  Submission ref 57789018 (2026-10-30): public score 0.555 (real hybrid retrieval + tokenizer fix;
+    golden-set recall@5 72%->80% locally, public-half score moved within noise of a 20-question sample)
   Final notebook: TBD

@@ -36,6 +36,20 @@ folders are scaffolded and pending her own implementation.
   `validate_submission.py` cleanly (40/40 valid rows) and was submitted to the real
   competition (`data-266-fall-2026-lab-2-part-1-multimodal-rag`): **public leaderboard
   score 0.571** (submission ref 57729902, 2026-10-28).
+- Found and fixed a second real bug while trying to improve that score: `HybridIndex`'s
+  BM25 index was only ever built once, in the (never fully executed) notebook, during
+  initial ingestion. Every other entry point re-opens the persisted Chroma directory
+  with a fresh `HybridIndex`, so `self.bm25` stayed `None` and "hybrid" retrieval had
+  silently been pure dense search the whole time — including for the first Kaggle
+  submission above. Also found the BM25 tokenizer stripped no punctuation, so a query
+  word like `"slowdown?"` never matched `"slowdown"` in the documents. Fixed both:
+  BM25 now rebuilds from the persisted collection on load, with a proper regex
+  tokenizer. Golden-set recall@5 rose from 72% to 80% (11/25 to 12/25 correct); also
+  fixed a prompt gap that dropped the minus sign on negative values (budget deficits).
+  Resubmitted: **public score 0.555** (ref 57789018, 2026-10-30) — slightly lower than
+  before on this public ~20-question sample, which we read as sampling noise rather
+  than a regression, since the retrieval bug fixed here was objectively broken (BM25
+  was never running at all) rather than a judgment call.
 
 ## Part 2 — Diffusion Fine-Tuning
 
