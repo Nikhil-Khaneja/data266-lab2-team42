@@ -112,6 +112,13 @@ class HybridIndex:
         results = self.figure_collection.get(where={"figure_id": label})
         return self._format_get(results)
 
+    def find_text_by_page(self, doc_id, page):
+        # A question that names a specific figure/table often doesn't share enough
+        # vocabulary with the surrounding page prose for semantic search to rank that
+        # page highly; fetch it directly by doc_id/page instead of relying on search.
+        results = self.text_collection.get(where={"$and": [{"doc_id": doc_id}, {"page": page}]})
+        return self._format_get(results)
+
     def _format_results(self, results):
         out = []
         docs = results.get("documents", [[]])[0]

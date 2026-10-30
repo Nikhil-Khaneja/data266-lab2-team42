@@ -9,8 +9,10 @@ from src.part1.conversation import ConversationStore
 GOLDEN_SET_PATH = "../eval/part1_golden_set.json"  # shared definition, one level up
 NUMBER_PATTERN = re.compile(r"-?\d+\.?\d*")
 # "Figure A-2", "Table 1-2" etc. contain a hyphen+digit that NUMBER_PATTERN misreads as a
-# negative number (e.g. "-2"). Strip these labels before extracting numbers for comparison.
-LABEL_PATTERN = re.compile(r"(?:Figure|Table)\s+[A-Z0-9]+-?[0-9]*", re.IGNORECASE)
+# negative number (e.g. "-2"). "Document 1"/"Document 2" are source attributions, not
+# required facts, but their trailing digit is still a bare number NUMBER_PATTERN would
+# pick up. Strip all three label kinds before extracting numbers for comparison.
+LABEL_PATTERN = re.compile(r"(?:Figure|Table|Document)\s+[A-Z0-9]+-?[0-9]*", re.IGNORECASE)
 
 
 def extract_numbers(text):

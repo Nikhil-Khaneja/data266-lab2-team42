@@ -17,6 +17,9 @@ class Conversation:
     def set_session_value(self, key, value):
         self.session_values[key] = value
 
+    def has_active_override(self):
+        return bool(self.session_values)
+
     def get_session_values_text(self):
         if not self.session_values:
             return ""
@@ -30,9 +33,13 @@ class ConversationStore:
         self.conversations = {}
 
     def new_conversation(self, conversation_id):
-        conv = Conversation(conversation_id)
-        self.conversations[conversation_id] = conv
-        return conv
+        # Callers invoke this once per golden-set/submission item, passing the item's
+        # conversation_id. Several items can share one conversation_id (a multi-turn
+        # exchange), so this must return the existing Conversation for that id rather
+        # than overwrite it, or every multi-turn follow-up loses all prior context.
+        if conversation_id not in self.conversations:
+            self.conversations[conversation_id] = Conversation(conversation_id)
+        return self.conversations[conversation_id]
 
     def get(self, conversation_id):
         return self.conversations.get(conversation_id)

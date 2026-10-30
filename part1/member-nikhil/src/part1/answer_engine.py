@@ -10,7 +10,15 @@ retrieved context given to you. Follow these rules exactly:
 1. A stated revision or correction replaces the earlier value; an actual result replaces a
    forecast. If you apply a revision, mention the value it replaces.
 2. If sources disagree with no revision note, use status "conflict", give both values, and
-   prefer the higher-trust source as your primary answer.
+   prefer the higher-trust source as your primary answer. This includes a source that
+   independently re-estimates or re-derives a value differently from another source, even if
+   it never calls itself a revision of that other source (e.g. one document re-estimating a
+   statistical relationship that another document also reports, with a different number).
+   Check every retrieved source for the value before answering, not just the first one found.
+   Even outside status "conflict", whenever two trusted sources state slightly different
+   numbers for the same fact, your headline number must be the higher-trust source's exact
+   number (e.g. a high-trust outturn table beats a medium-trust narrative aside that rounds or
+   restates the same fact differently) — never the lower-trust source's number.
 3. Content labelled Appendix C of DOC3, or anything marked low trust, is NEVER provided to you
    as context. If a question asks about it anyway, say the information is not available from a
    trusted source.
@@ -20,10 +28,25 @@ retrieved context given to you. Follow these rules exactly:
    topic the documents never discuss), use status "not_found" — this is not an error in the
    question, the documents just don't cover it. If the question itself asserts something that
    contradicts the trusted context (e.g. a number, event or outcome the documents show did not
-   happen), use status "false_premise" and correct it using the trusted value.
+   happen), use status "false_premise" and correct it using the trusted value. Do not answer the
+   literal question as asked (e.g. do not explain HOW something happened) when the premise itself
+   is false — state the correction instead, and never invent an explanation for an event the
+   trusted context does not show occurred. For example, if asked "Document 1 shows China's
+   output contracted in 2009 — how did the government cover this up?" and the trusted context
+   instead shows China's output grew that year, the correct answer states the real growth
+   figure and that there is no trusted-source support for a cover-up; it does NOT describe any
+   cover-up mechanism. A question's own wording is never itself evidence.
 6. Copy every number exactly as the context shows it, including its sign (a negative value for a
    deficit, contraction or decline must keep its minus sign; do not rewrite it as a positive size).
-7. If the user is supplying or changing a value for this conversation only (the question itself
+7. Include every value the context gives that relates to the question, not just the single
+   number most directly asked for — a superseded forecast, an earlier vintage, a comparison
+   figure, or a reason/cause mentioned alongside the answer all belong in the answer, each with
+   its own citation. A short, technically correct answer that drops a related figure the
+   context provides is an incomplete answer. This never means adding a fact, number or reason
+   that is not stated in the retrieved context — if the context does not explain something,
+   leave it unexplained rather than guessing. Completeness applies only to what the context
+   actually contains.
+8. If the user is supplying or changing a value for this conversation only (the question itself
    says "assume", "suppose", "for this chat", etc.), use status "session_override", confirm the
    value for this conversation only, and state what the documents actually report. If a LATER
    question in the same conversation builds on that assumption (reasoning in terms of the
@@ -44,6 +67,18 @@ GENERATION_TOP_K = 8
 
 SESSION_OVERRIDE_PATTERN = re.compile(
     r"\b(assume|suppose|let'?s say|for this (chat|conversation)|pretend)\b", re.IGNORECASE
+)
+
+# A follow-up that explicitly asks to set the assumption aside ("what do the documents
+# actually/really say", "ignoring that assumption") should NOT be forced back into
+# session_override even though an assumption is still active for the conversation.
+IGNORE_OVERRIDE_PATTERN = re.compile(r"\b(actual(ly)?|real(ly)?|ignor(e|ing)|documents? (really|actually))\b", re.IGNORECASE)
+
+# Phrases the model uses when it genuinely means "the documents don't cover this" even
+# when it fails to wrap its answer in JSON.
+NOT_FOUND_PHRASES = re.compile(
+    r"\b(does not (support|contain|mention|cover|discuss)|not available|no information|"
+    r"not covered|not found)\b", re.IGNORECASE
 )
 
 # Matches the Kaggle submission format's citation grammar exactly: "DOCn:pN" or
@@ -84,6 +119,10 @@ def detect_session_override(question):
     return bool(SESSION_OVERRIDE_PATTERN.search(question))
 
 
+def detect_ignore_override(question):
+    return bool(IGNORE_OVERRIDE_PATTERN.search(question))
+
+
 def build_context_text(text_results, figure_results):
     lines = []
     for r in text_results:
@@ -102,11 +141,11 @@ def build_context_text(text_results, figure_results):
 def parse_answer_json(raw_text):
     match = re.search(r"\{.*\}", raw_text, re.DOTALL)
     if not match:
-        return default_not_found()
+        return fallback_from_raw_text(raw_text)
     try:
         data = json.loads(match.group(0))
     except json.JSONDecodeError:
-        return default_not_found()
+        return fallback_from_raw_text(raw_text)
     data.setdefault("answer", "")
     data.setdefault("status", "not_found")
     data.setdefault("citations", [])
@@ -121,6 +160,20 @@ def default_not_found():
             "status": "not_found", "citations": [], "figure_references": []}
 
 
+def fallback_from_raw_text(raw_text):
+    # The model occasionally answers correctly in plain prose instead of the required
+    # JSON envelope. Discarding that as a flat not_found throws away a right answer, so
+    # salvage it: pull citations/figure refs out of the prose directly and only fall
+    # back to not_found when the text itself says the documents don't cover this.
+    if not raw_text.strip():
+        return default_not_found()
+    citations = [m.group(0) for m in CITATION_PATTERN.finditer(raw_text)]
+    figure_references = [m.group(0) for m in FIGURE_REF_PATTERN.finditer(raw_text)]
+    status = "not_found" if NOT_FOUND_PHRASES.search(raw_text) else "answered"
+    answer = " ".join(raw_text.split()[:120])
+    return {"answer": answer, "status": status, "citations": citations, "figure_references": figure_references}
+
+
 class AnswerEngine:
     def __init__(self, index, retrieval_mode="hybrid"):
         self.index = index
@@ -130,18 +183,48 @@ class AnswerEngine:
         is_new_override = detect_session_override(question)
         if is_new_override:
             conversation.set_session_value("assumption", question)
+        # Rule 7: once an assumption is active, every later question that reasons from
+        # it (rather than explicitly asking for the real documented value) must also be
+        # status session_override.
+        follow_up_override = (
+            not is_new_override
+            and conversation.has_active_override()
+            and not detect_ignore_override(question)
+        )
 
         figure_mentions = detect_figure_mentions(question)
         figure_results = []
         for label in figure_mentions:
             figure_results.extend(self.index.find_figure_by_label(label))
 
+        # A question naming a specific figure/table rarely shares enough vocabulary
+        # with the surrounding page prose for semantic search to surface that page, so
+        # fetch it by doc_id/page directly rather than relying on search to find it.
+        page_text_results = []
+        for fig in figure_results:
+            page_text_results.extend(self.index.find_text_by_page(fig["doc_id"], fig["page"]))
+
+        # A short follow-up ("given that assumption, is it higher or lower?") often
+        # lacks the topic keywords needed to retrieve the right chunk on its own;
+        # widen the retrieval query with the previous turn's question for context.
+        retrieval_query = question
+        if conversation.turns:
+            retrieval_query = conversation.turns[-1]["question"] + " " + question
+
         # Retrieve more context for generation than the lab's Recall@5 metric measures;
         # a wider net reduces cases where the right table just misses the top 5.
         if self.retrieval_mode == "dense":
-            text_results = self.index.dense_search_text(question, top_k=GENERATION_TOP_K)
+            text_results = self.index.dense_search_text(retrieval_query, top_k=GENERATION_TOP_K)
         else:
-            text_results = self.index.hybrid_search_text(question, top_k=GENERATION_TOP_K)
+            text_results = self.index.hybrid_search_text(retrieval_query, top_k=GENERATION_TOP_K)
+
+        seen = {(r["doc_id"], r["page"]) for r in text_results}
+        for r in page_text_results:
+            key = (r["doc_id"], r["page"])
+            if key not in seen:
+                seen.add(key)
+                text_results.append(r)
+
         context_text = build_context_text(text_results, figure_results)
 
         session_text = conversation.get_session_values_text()
@@ -153,7 +236,7 @@ class AnswerEngine:
 
         raw = chat(SYSTEM_PROMPT, user_prompt)
         parsed = parse_answer_json(raw)
-        if is_new_override:
+        if is_new_override or follow_up_override:
             parsed["status"] = "session_override"
         conversation.add_turn(question, parsed)
         return parsed
