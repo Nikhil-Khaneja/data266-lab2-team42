@@ -21,7 +21,9 @@ retrieved context given to you. Follow these rules exactly:
    question, the documents just don't cover it. If the question itself asserts something that
    contradicts the trusted context (e.g. a number, event or outcome the documents show did not
    happen), use status "false_premise" and correct it using the trusted value.
-6. If the user is supplying or changing a value for this conversation only (the question itself
+6. Copy every number exactly as the context shows it, including its sign (a negative value for a
+   deficit, contraction or decline must keep its minus sign; do not rewrite it as a positive size).
+7. If the user is supplying or changing a value for this conversation only (the question itself
    says "assume", "suppose", "for this chat", etc.), use status "session_override", confirm the
    value for this conversation only, and state what the documents actually report. If a LATER
    question in the same conversation builds on that assumption (reasoning in terms of the

@@ -1,10 +1,17 @@
+import re
+
 import chromadb
 from rank_bm25 import BM25Okapi
 from sentence_transformers import SentenceTransformer
 
+# Keeps letters, digits and apostrophes (so "China's" stays one token) and drops
+# everything else, so trailing punctuation ("slowdown?", "outturn,") doesn't stop a
+# query token from matching the same word in document text.
+TOKEN_PATTERN = re.compile(r"[a-z0-9']+")
+
 
 def simple_tokenize(text):
-    return text.lower().split()
+    return TOKEN_PATTERN.findall(text.lower())
 
 
 class HybridIndex:
@@ -16,6 +23,21 @@ class HybridIndex:
         self.image_embedder = SentenceTransformer(image_model_name)
         self.bm25 = None
         self.bm25_chunks = []
+        # BM25 only lives in process memory (build_text_index is called once, during
+        # ingestion); a freshly reopened persisted index otherwise has no BM25 at all,
+        # so hybrid_search_text silently degrades to dense-only. Rebuild it here from
+        # whatever text chunks are already in the persisted Chroma collection.
+        if self.text_collection.count() > 0:
+            self._load_bm25_from_collection()
+
+    def _load_bm25_from_collection(self):
+        stored = self.text_collection.get(include=["documents", "metadatas"])
+        chunks = [
+            {"text": text, "doc_id": meta["doc_id"], "page": meta["page"], "trust_level": meta["trust_level"]}
+            for text, meta in zip(stored["documents"], stored["metadatas"])
+        ]
+        self.bm25_chunks = chunks
+        self.bm25 = BM25Okapi([simple_tokenize(c["text"]) for c in chunks])
 
     def build_text_index(self, chunks):
         self.bm25_chunks = chunks
