@@ -4,7 +4,7 @@ import re
 from src.common.vlm import chat
 from src.part1.ingest import FIGURE_LABEL_PATTERN
 
-SYSTEM_PROMPT = """You answer questions about a read-only economics knowledge base using ONLY the
+SYSTEM_PROMPT_HEAD = """You answer questions about a read-only economics knowledge base using ONLY the
 retrieved context given to you. Follow these rules exactly:
 
 1. A stated revision or correction replaces the earlier value; an actual result replaces a
@@ -38,22 +38,32 @@ retrieved context given to you. Follow these rules exactly:
    cover-up mechanism. A question's own wording is never itself evidence.
 6. Copy every number exactly as the context shows it, including its sign (a negative value for a
    deficit, contraction or decline must keep its minus sign; do not rewrite it as a positive size).
-7. Include every value the context gives that relates to the question, not just the single
+7. If the user is supplying or changing a value for this conversation only (the question itself
+   says "assume", "suppose", "for this chat", etc.), use status "session_override", confirm the
+   value for this conversation only, and state what the documents actually report. If a LATER
+   question in the same conversation builds on that assumption (reasoning in terms of the
+   assumed value), also use status "session_override". If a later question instead asks what the
+   documents actually/really say, ignoring the assumption, answer normally with status
+   "answered" using the real documented value. Never change the documents permanently."""
+
+# Applying "include every related value" to every question (not just ones that actually ask
+# for more than one fact) was the leading suspect for the real Kaggle score falling (0.571 ->
+# 0.531) even as it raised local golden-set correctness, since it pushes every answer, including
+# simple single-fact lookups, toward longer, more fact-dense responses -- each extra asserted
+# fact/citation is one more chance to be wrong on questions outside our own golden set. Scoping
+# it to questions that actually show multi-part phrasing keeps the benefit where it was designed
+# for while not touching the (likely larger) share of simple lookup questions.
+COMPLETENESS_RULE = """
+8. Include every value the context gives that relates to the question, not just the single
    number most directly asked for — a superseded forecast, an earlier vintage, a comparison
    figure, or a reason/cause mentioned alongside the answer all belong in the answer, each with
    its own citation. A short, technically correct answer that drops a related figure the
    context provides is an incomplete answer. This never means adding a fact, number or reason
    that is not stated in the retrieved context — if the context does not explain something,
    leave it unexplained rather than guessing. Completeness applies only to what the context
-   actually contains.
-8. If the user is supplying or changing a value for this conversation only (the question itself
-   says "assume", "suppose", "for this chat", etc.), use status "session_override", confirm the
-   value for this conversation only, and state what the documents actually report. If a LATER
-   question in the same conversation builds on that assumption (reasoning in terms of the
-   assumed value), also use status "session_override". If a later question instead asks what the
-   documents actually/really say, ignoring the assumption, answer normally with status
-   "answered" using the real documented value. Never change the documents permanently.
+   actually contains."""
 
+JSON_ENVELOPE_INSTRUCTIONS = """
 Respond with ONLY a single JSON object, no other text, in exactly this shape:
 {"answer": "<=120 words", "status": "answered|not_found|conflict|false_premise|session_override",
  "citations": ["DOC2:p4", "DOC1:Table 1-2"], "figure_references": ["Figure A-3"]}
@@ -62,6 +72,15 @@ answer must be backed by a citation. Each citation must be EXACTLY "DOCn:pN" or 
 (e.g. "DOC1:p4", "DOC3:Table 1-2") — copy only the doc id and page/label from the context's
 leading bracket, never the word "trust" or its value, and never any other text from the bracket.
 """
+
+# A question that only asks for one fact ("What was X in year Y?") doesn't need the
+# completeness rule and is where that rule's extra length/fabrication risk is least
+# justified. Only widen the prompt for questions that show real multi-part shape.
+MULTI_PART_PATTERN = re.compile(
+    r"\b(and (how|why|what|does|do|did)|how does|why (did|does|is|was)|what (does|do|did) .* (say|show|explain)|"
+    r"compare|differ|caused?|explain|distinguishes?)\b",
+    re.IGNORECASE,
+)
 
 GENERATION_TOP_K = 8
 
@@ -121,6 +140,18 @@ def detect_session_override(question):
 
 def detect_ignore_override(question):
     return bool(IGNORE_OVERRIDE_PATTERN.search(question))
+
+
+def detect_multi_part(question):
+    return bool(MULTI_PART_PATTERN.search(question)) or question.count("?") > 1
+
+
+def build_system_prompt(question):
+    parts = [SYSTEM_PROMPT_HEAD]
+    if detect_multi_part(question):
+        parts.append(COMPLETENESS_RULE)
+    parts.append(JSON_ENVELOPE_INSTRUCTIONS)
+    return "\n".join(parts)
 
 
 def build_context_text(text_results, figure_results):
@@ -234,7 +265,7 @@ class AnswerEngine:
             history_text or "(none)", session_text, context_text or "(no relevant context found)", question
         )
 
-        raw = chat(SYSTEM_PROMPT, user_prompt)
+        raw = chat(build_system_prompt(question), user_prompt)
         parsed = parse_answer_json(raw)
         if is_new_override or follow_up_override:
             parsed["status"] = "session_override"
