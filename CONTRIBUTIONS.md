@@ -50,6 +50,31 @@ folders are scaffolded and pending her own implementation.
   before on this public ~20-question sample, which we read as sampling noise rather
   than a regression, since the retrieval bug fixed here was objectively broken (BM25
   was never running at all) rather than a judgment call.
+- Pushed further for a better score and found a real scoring-harness bug: `ConversationStore`
+  overwrote its stored `Conversation` every time it was called with the same
+  `conversation_id`, so our own per-item golden-set/diagnostic loop silently lost all
+  session-override state and turn history on every multi-turn item (the real
+  `kaggle_submit.py` path groups by conversation first and was not affected). Also added:
+  a fallback that salvages citations/figure-refs/answer text from the model's raw output
+  when it skips the required JSON envelope instead of discarding a correct answer as
+  `not_found`; a direct doc_id/page lookup for figure-naming questions, since they often
+  don't share enough vocabulary with the surrounding page prose for semantic search to
+  rank it highly; retrieval-query widening for short follow-ups; and several prompt
+  strengthenings (trust-precedence between sources, a concrete false-premise example,
+  and a rule to include every context-given value related to the question, not just the
+  one asked for). Golden-set correct count rose from 11/25 to 15/25 and recall@5 from 72%
+  to 80%. Resubmitted: **public score 0.531** (ref 57811667, 2026-10-30) — lower than
+  both prior submissions, despite every one of these changes improving our own 25-question
+  golden set. This is the first result in the series that looks like a real regression
+  rather than sampling noise: three submissions in a row moved the same direction (down)
+  while our local proxy moved the opposite direction each time, which is the signature of
+  overfitting to our own golden set rather than the actual held-out question distribution
+  (most likely culprit: the "include every related value" completeness rule, which makes
+  answers longer and asserts more facts/citations, each one a new chance to be wrong on
+  questions our golden set doesn't cover). The team's best submission remains **0.571**
+  (ref 57729902). We stopped spending the daily submission quota on further unvalidated
+  prompt changes pending a clearer hypothesis, rather than keep guessing against a
+  3-submission/day budget.
 
 ## Part 2 — Diffusion Fine-Tuning
 

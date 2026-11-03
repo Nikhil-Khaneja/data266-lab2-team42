@@ -14,4 +14,11 @@ Kaggle:
   Submission ref 57729902 (2026-10-28): public score 0.571 (hybrid retrieval was silently dense-only)
   Submission ref 57789018 (2026-10-30): public score 0.555 (real hybrid retrieval + tokenizer fix;
     golden-set recall@5 72%->80% locally, public-half score moved within noise of a 20-question sample)
+  Submission ref 57811667 (2026-10-30): public score 0.531. Conversation-state fix in the scoring
+    harness, JSON-fallback answer salvage, direct figure-page lookup, and trust-precedence/
+    false-premise/completeness prompt rules all raised the local golden-set correct count
+    11/25->15/25 and recall@5 72%->80%, but the real score fell further despite that -- see
+    CONTRIBUTIONS.md for the overfitting-to-our-own-golden-set concern this raised. Best score
+    remains 0.571 (ref 57729902). Paused further Kaggle submissions pending a clearer hypothesis
+    before spending more of the daily submission quota.
   Final notebook: TBD
