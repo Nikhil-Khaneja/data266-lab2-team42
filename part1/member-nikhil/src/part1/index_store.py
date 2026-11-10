@@ -1,13 +1,19 @@
 import re
 
 import chromadb
+import numpy as np
+import torch
 from rank_bm25 import BM25Okapi
-from sentence_transformers import SentenceTransformer
+from sentence_transformers import CrossEncoder, SentenceTransformer
 
-# Keeps letters, digits and apostrophes (so "China's" stays one token) and drops
-# everything else, so trailing punctuation ("slowdown?", "outturn,") doesn't stop a
-# query token from matching the same word in document text.
-TOKEN_PATTERN = re.compile(r"[a-z0-9']+")
+from src.part1 import facts as facts_module
+
+# Keeps letters, digits, apostrophes and hyphens inside numbers/labels, so "A-6", "China's"
+# and "2011-2013" stay searchable, and trailing punctuation never blocks a match.
+TOKEN_PATTERN = re.compile(r"[a-z0-9']+(?:-[a-z0-9]+)*")
+# BGE models are trained with this instruction on the query side only.
+BGE_QUERY_PREFIX = "Represent this sentence for searching relevant passages: "
+META_KEYS = ("doc_id", "page", "trust_level", "figure_id", "kind", "image_path")
 
 
 def simple_tokenize(text):
@@ -15,134 +21,158 @@ def simple_tokenize(text):
 
 
 class HybridIndex:
-    def __init__(self, persist_dir, text_model_name="BAAI/bge-small-en-v1.5", image_model_name="clip-ViT-B-32"):
+    """Dense (ChromaDB) + BM25, fused with RRF, optionally reranked by a cross-encoder.
+
+    Text passages, table chunks and figure descriptions live in one collection, so a value
+    that only exists inside a chart can be found by an ordinary question.
+    """
+
+    def __init__(self, persist_dir, text_model_name="BAAI/bge-small-en-v1.5", reranker_name=None):
         self.client = chromadb.PersistentClient(path=persist_dir)
-        self.text_collection = self.client.get_or_create_collection("text_chunks")
-        self.figure_collection = self.client.get_or_create_collection("figures")
+        self.collection = self.client.get_or_create_collection("kb_chunks", metadata={"hnsw:space": "cosine"})
         self.text_embedder = SentenceTransformer(text_model_name)
-        self.image_embedder = SentenceTransformer(image_model_name)
+        self.reranker = None
+        if reranker_name:
+            half = {"dtype": torch.float16} if torch.cuda.is_available() else {}
+            self.reranker = CrossEncoder(reranker_name, model_kwargs=half)
+        self.chunks = []
         self.bm25 = None
-        self.bm25_chunks = []
-        # BM25 only lives in process memory (build_text_index is called once, during
-        # ingestion); a freshly reopened persisted index otherwise has no BM25 at all,
-        # so hybrid_search_text silently degrades to dense-only. Rebuild it here from
-        # whatever text chunks are already in the persisted Chroma collection.
-        if self.text_collection.count() > 0:
-            self._load_bm25_from_collection()
+        if self.collection.count() > 0:
+            self._load_from_collection()
 
-    def _load_bm25_from_collection(self):
-        stored = self.text_collection.get(include=["documents", "metadatas"])
-        chunks = [
-            {"text": text, "doc_id": meta["doc_id"], "page": meta["page"], "trust_level": meta["trust_level"]}
-            for text, meta in zip(stored["documents"], stored["metadatas"])
-        ]
-        self.bm25_chunks = chunks
-        self.bm25 = BM25Okapi([simple_tokenize(c["text"]) for c in chunks])
+    def _load_from_collection(self):
+        stored = self.collection.get(include=["documents", "metadatas"])
+        self.chunks = [dict(meta, text=text) for text, meta in zip(stored["documents"], stored["metadatas"])]
+        self.bm25 = BM25Okapi([simple_tokenize(c["text"]) for c in self.chunks])
+        self._build_facts()
 
-    def build_text_index(self, chunks):
-        self.bm25_chunks = chunks
-        tokenized = [simple_tokenize(c["text"]) for c in chunks]
-        self.bm25 = BM25Okapi(tokenized)
+    def _build_facts(self):
+        self.tables_by_label = {(c["doc_id"], c["figure_id"]): c for c in self.all_tables()}
+        self.facts = [f for t in self.all_tables() for f in facts_module.keyed_table_facts(t)]
+        self.prose_facts = [f for c in self.chunks if c.get("kind") == "text" for f in facts_module.prose_facts(c)]
+        self.fact_embeddings = self.text_embedder.encode(
+            [f["context"] for f in self.facts], show_progress_bar=False, normalize_embeddings=True)
 
-        texts = [c["text"] for c in chunks]
-        embeddings = self.text_embedder.encode(texts, show_progress_bar=False).tolist()
-        ids = ["text_{}".format(i) for i in range(len(chunks))]
-        metadatas = [
-            {"doc_id": c["doc_id"], "page": c["page"], "trust_level": c["trust_level"], "figure_id": ""}
-            for c in chunks
-        ]
-        self.text_collection.add(ids=ids, embeddings=embeddings, documents=texts, metadatas=metadatas)
+    def search_facts(self, query, years, top_k=10):
+        """Table cells most similar to the query. When the question names a year, only cells
+        for that year qualify, so a value from a neighbouring column cannot be picked up. With
+        no year (years=None), every cell competes, including the period averages."""
+        if not self.facts:
+            return []
+        embedding = self.text_embedder.encode(
+            [BGE_QUERY_PREFIX + query], show_progress_bar=False, normalize_embeddings=True)[0]
+        scores = np.dot(self.fact_embeddings, embedding)
+        eligible = [i for i, f in enumerate(self.facts) if not years or facts_module.fact_matches_years(f, years)]
+        if self.reranker is not None and eligible:
+            ce = self.reranker.predict([(query, self.facts[i]["context"]) for i in eligible],
+                                       batch_size=16, show_progress_bar=False)
+            scores = dict(zip(eligible, ce))
+        ranked = sorted(eligible, key=lambda i: float(scores[i]), reverse=True)[:top_k]
+        return [self.facts[i] for i in ranked]
 
-    def build_figure_index(self, figures):
-        from PIL import Image
+    def lookup(self, key):
+        return facts_module.resolve_lookup(key, self.facts + self.prose_facts)
 
-        if not figures:
+    def chunk_for_fact(self, fact):
+        """The chunk a fact came from, for citation."""
+        if fact.get("figure_id"):
+            return self.tables_by_label[(fact["doc_id"], fact["figure_id"])]
+        for c in self.chunks:
+            if c.get("kind") == "text" and c["doc_id"] == fact["doc_id"] and c["page"] == fact["page"]:
+                if fact["text"][:40] in c["text"].replace("\n", " ").replace("U.S.", "US"):
+                    return c
+        return None
+
+    def facts_as_sources(self, facts):
+        return facts_module.group_facts(facts, self.tables_by_label)
+
+    def build(self, chunks):
+        if not chunks:
             return
-        images = [Image.open(f["image_path"]) for f in figures]
-        embeddings = self.image_embedder.encode(images, show_progress_bar=False).tolist()
-        ids = ["figure_{}".format(i) for i in range(len(figures))]
-        documents = [f["caption"] for f in figures]
-        metadatas = [
-            {"doc_id": f["doc_id"], "page": f["page"], "trust_level": f["trust_level"], "figure_id": f["figure_id"]}
-            for f in figures
-        ]
-        self.figure_collection.add(ids=ids, embeddings=embeddings, documents=documents, metadatas=metadatas)
+        texts = [c["text"] for c in chunks]
+        embeddings = self.text_embedder.encode(texts, show_progress_bar=False, normalize_embeddings=True).tolist()
+        metadatas = [{k: c.get(k, "") for k in META_KEYS} for c in chunks]
+        ids = ["chunk_{}".format(i) for i in range(len(chunks))]
+        self.collection.add(ids=ids, embeddings=embeddings, documents=texts, metadatas=metadatas)
+        self._load_from_collection()
 
-    def dense_search_text(self, query, top_k=5):
-        query_embedding = self.text_embedder.encode([query], show_progress_bar=False).tolist()
-        results = self.text_collection.query(query_embeddings=query_embedding, n_results=top_k)
-        return self._format_results(results)
+    def dense_search_text(self, query, top_k=5, exclude_low_trust=True):
+        n = self.collection.count()
+        if n == 0:
+            return []
+        embedding = self.text_embedder.encode(
+            [BGE_QUERY_PREFIX + query], show_progress_bar=False, normalize_embeddings=True).tolist()
+        kwargs = {"query_embeddings": embedding, "n_results": min(top_k, n)}
+        if exclude_low_trust:
+            # Filter BEFORE ranking: low-trust content is never evidence, so it must not
+            # occupy a slot (it is also written to look relevant to what it tries to subvert).
+            kwargs["where"] = {"trust_level": {"$ne": "low"}}
+        results = self.collection.query(**kwargs)
+        return [dict(meta, text=text) for text, meta in zip(results["documents"][0], results["metadatas"][0])]
 
-    def bm25_search_text(self, query, top_k=5):
+    def bm25_search_text(self, query, top_k=5, exclude_low_trust=True):
         if self.bm25 is None:
             return []
         scores = self.bm25.get_scores(simple_tokenize(query))
-        ranked = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)[:top_k]
+        ranked = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)
         results = []
         for i in ranked:
-            c = self.bm25_chunks[i]
-            results.append({
-                "text": c["text"],
-                "doc_id": c["doc_id"],
-                "page": c["page"],
-                "trust_level": c["trust_level"],
-                "figure_id": "",
-                "score": float(scores[i]),
-            })
+            if exclude_low_trust and self.chunks[i]["trust_level"] == "low":
+                continue
+            results.append(self.chunks[i])
+            if len(results) >= top_k:
+                break
         return results
 
-    def hybrid_search_text(self, query, top_k=5):
-        dense = self.dense_search_text(query, top_k=top_k)
-        sparse = self.bm25_search_text(query, top_k=top_k)
-        combined = {}
-        for rank, item in enumerate(dense):
-            key = (item["doc_id"], item["page"], item["text"][:50])
-            combined[key] = combined.get(key, 0) + 1.0 / (rank + 1)
-        for rank, item in enumerate(sparse):
-            key = (item["doc_id"], item["page"], item["text"][:50])
-            combined[key] = combined.get(key, 0) + 1.0 / (rank + 1)
-        lookup = {}
-        for item in dense + sparse:
-            key = (item["doc_id"], item["page"], item["text"][:50])
-            lookup[key] = item
-        ranked_keys = sorted(combined.keys(), key=lambda k: combined[k], reverse=True)[:top_k]
-        return [lookup[k] for k in ranked_keys]
+    @staticmethod
+    def key(item):
+        return (item["doc_id"], item["page"], item.get("figure_id", ""), item["text"][:60])
 
-    def find_figure_by_label(self, label):
-        results = self.figure_collection.get(where={"figure_id": label})
-        return self._format_get(results)
+    def fused_ranking(self, query, fetch_k=30, rrf_k=60):
+        scores, lookup = {}, {}
+        for results in (self.dense_search_text(query, top_k=fetch_k), self.bm25_search_text(query, top_k=fetch_k)):
+            for rank, item in enumerate(results):
+                key = self.key(item)
+                scores[key] = scores.get(key, 0.0) + 1.0 / (rrf_k + rank + 1)
+                lookup.setdefault(key, item)
+        return [lookup[k] for k in sorted(scores, key=scores.get, reverse=True)]
+
+    def ranked(self, query, fetch_k=30):
+        ranking = self.fused_ranking(query, fetch_k=fetch_k)
+        if self.reranker is not None and ranking:
+            scores = self.reranker.predict([(query, r["text"]) for r in ranking], batch_size=8, show_progress_bar=False)
+            order = sorted(range(len(ranking)), key=lambda i: float(scores[i]), reverse=True)
+            ranking = [ranking[i] for i in order]
+        return ranking
+
+    def hybrid_search_text(self, query, top_k=5):
+        return self.ranked(query)[:top_k]
+
+    def retrieve(self, query, top_k=8, min_per_doc=0):
+        """Top-k, then top up any document with fewer than min_per_doc chunks. A conflict or
+        revision is only visible if the model sees every document stating the value."""
+        ranking = self.ranked(query)
+        picked = ranking[:top_k]
+        for doc_id in sorted({r["doc_id"] for r in ranking}):
+            have = sum(1 for r in picked if r["doc_id"] == doc_id)
+            for r in ranking[top_k:]:
+                if have >= min_per_doc:
+                    break
+                if r["doc_id"] == doc_id:
+                    picked.append(r)
+                    have += 1
+        return picked
+
+    def all_tables(self):
+        tables = [c for c in self.chunks if c.get("kind") == "table" and c["trust_level"] != "low"]
+        return sorted(tables, key=lambda c: (c["doc_id"], c["page"]))
+
+    def known_labels(self):
+        return {c["figure_id"] for c in self.chunks if c.get("figure_id") and c["trust_level"] != "low"}
+
+    def find_by_label(self, label):
+        return [c for c in self.chunks if c.get("figure_id") == label and c["trust_level"] != "low"]
 
     def find_text_by_page(self, doc_id, page):
-        # A question that names a specific figure/table often doesn't share enough
-        # vocabulary with the surrounding page prose for semantic search to rank that
-        # page highly; fetch it directly by doc_id/page instead of relying on search.
-        results = self.text_collection.get(where={"$and": [{"doc_id": doc_id}, {"page": page}]})
-        return self._format_get(results)
-
-    def _format_results(self, results):
-        out = []
-        docs = results.get("documents", [[]])[0]
-        metas = results.get("metadatas", [[]])[0]
-        for text, meta in zip(docs, metas):
-            out.append({
-                "text": text,
-                "doc_id": meta["doc_id"],
-                "page": meta["page"],
-                "trust_level": meta["trust_level"],
-                "figure_id": meta.get("figure_id", ""),
-            })
-        return out
-
-    def _format_get(self, results):
-        out = []
-        docs = results.get("documents", [])
-        metas = results.get("metadatas", [])
-        for text, meta in zip(docs, metas):
-            out.append({
-                "text": text,
-                "doc_id": meta["doc_id"],
-                "page": meta["page"],
-                "trust_level": meta["trust_level"],
-                "figure_id": meta.get("figure_id", ""),
-            })
-        return out
+        return [c for c in self.chunks
+                if c["doc_id"] == doc_id and c["page"] == page and c.get("kind") == "text" and c["trust_level"] != "low"]

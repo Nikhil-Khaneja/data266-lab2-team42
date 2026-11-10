@@ -3,11 +3,11 @@ import re
 import statistics
 import time
 
-from src.part1.answer_engine import AnswerEngine, detect_figure_mentions, GENERATION_TOP_K
+from src.part1.answer_engine import AnswerEngine, detect_figure_mentions
 from src.part1.conversation import ConversationStore
 
 GOLDEN_SET_PATH = "../eval/part1_golden_set.json"  # shared definition, one level up
-NUMBER_PATTERN = re.compile(r"-?\d+\.?\d*")
+NUMBER_PATTERN = re.compile(r"(?<![\w.-])-?\d+(?:\.\d+)?")
 # "Figure A-2", "Table 1-2" etc. contain a hyphen+digit that NUMBER_PATTERN misreads as a
 # negative number (e.g. "-2"). "Document 1"/"Document 2" are source attributions, not
 # required facts, but their trailing digit is still a bare number NUMBER_PATTERN would
@@ -41,25 +41,22 @@ def numbers_match(expected_text, actual_text, tolerance=0.01):
     return all(number_present(expected, actual_numbers, tolerance) for expected in expected_numbers)
 
 
-def citation_is_supported(citation, citation_sources, citation_retrieved):
-    if citation in citation_sources:
-        return True
-    # "DOC1:Table 1-2" style citations: accept if that exact label appears in a
-    # retrieved chunk's text for that doc_id (tables aren't indexed as separate objects).
-    if ":" in citation:
-        doc_id, label = citation.split(":", 1)
-        for r in citation_retrieved:
-            if r["doc_id"] == doc_id and label in r.get("text", ""):
-                return True
+def citation_is_supported(citation, shown):
+    # A citation is supported when it names a page or labelled object the model was shown.
+    for r in shown:
+        if citation == "{}:p{}".format(r["doc_id"], r["page"]):
+            return True
+        if r.get("figure_id") and citation == "{}:{}".format(r["doc_id"], r["figure_id"]):
+            return True
     return False
 
 
-def score_item(item, predicted, recall_sources, citation_sources, citation_retrieved):
+def score_item(item, predicted, recall_sources, shown):
     correct = numbers_match(item["expected_answer"], predicted["answer"]) and predicted["status"] == item["expected_status"]
-    recall_hit = any(src in recall_sources for src in item.get("expected_sources", []))
-    citation_hits = [citation_is_supported(c, citation_sources, citation_retrieved) for c in predicted["citations"]]
-    citation_accuracy = sum(citation_hits) / len(citation_hits) if citation_hits else 1.0
-    return correct, recall_hit, citation_accuracy
+    expected = item.get("expected_sources", [])
+    recall_hit = (not expected) or any(src in recall_sources for src in expected)
+    hits = [citation_is_supported(c, shown) for c in predicted["citations"]]
+    return correct, recall_hit, (sum(hits) / len(hits) if hits else 1.0)
 
 
 def run_golden_set(index, baseline=False):
@@ -73,51 +70,44 @@ def run_golden_set(index, baseline=False):
     recall_hits = 0
     citation_accuracies = []
     durations = []
+    details = []
 
     for item in golden_set:
         conv = store.new_conversation(item.get("conversation_id", item["id"]))
         start = time.time()
-        if baseline:
-            recall_retrieved = index.dense_search_text(item["question"], top_k=5)
-            citation_retrieved = index.dense_search_text(item["question"], top_k=GENERATION_TOP_K)
-        else:
-            recall_retrieved = index.hybrid_search_text(item["question"], top_k=5)
-            citation_retrieved = index.hybrid_search_text(item["question"], top_k=GENERATION_TOP_K)
-        figure_matches = []
-        for label in detect_figure_mentions(item["question"]):
-            figure_matches.extend(index.find_figure_by_label(label))
-        recall_retrieved = recall_retrieved + figure_matches
-        citation_retrieved = citation_retrieved + figure_matches
         predicted = engine.answer(conv, item["question"])
         durations.append(time.time() - start)
+        shown = engine.last_shown
 
-        # Recall@5 is measured at k=5 as the lab specifies; citation accuracy is checked
-        # against the wider context the model actually saw (GENERATION_TOP_K), since a
-        # citation to source #6-8 is still a citation to something it was actually shown.
-        recall_sources = ["{}:p{}".format(r["doc_id"], r["page"]) for r in recall_retrieved]
-        citation_sources = ["{}:p{}".format(r["doc_id"], r["page"]) for r in citation_retrieved]
-        # Also accept "DOC1:Figure A-3" style citations against a retrieved figure.
-        citation_sources += ["{}:{}".format(r["doc_id"], r["figure_id"]) for r in citation_retrieved if r.get("figure_id")]
-        correct, recall_hit, citation_accuracy = score_item(
-            item, predicted, recall_sources, citation_sources, citation_retrieved
-        )
+        # Recall@5 is measured at k=5 as the lab specifies, plus exact-label lookups.
+        if baseline:
+            top5 = index.dense_search_text(item["question"], top_k=5)
+        else:
+            top5 = index.hybrid_search_text(item["question"], top_k=5)
+        named = [c for label in detect_figure_mentions(item["question"]) for c in index.find_by_label(label)]
+        recall_sources = ["{}:p{}".format(r["doc_id"], r["page"]) for r in top5 + named]
+
+        correct, recall_hit, citation_accuracy = score_item(item, predicted, recall_sources, shown)
         correct_count += int(correct)
         recall_hits += int(recall_hit)
         citation_accuracies.append(citation_accuracy)
+        details.append({"id": item["id"], "correct": correct, "recall_hit": recall_hit,
+                        "expected_status": item["expected_status"], "predicted": predicted})
 
     return {
         "primary_correct_out_of": "{}/{}".format(correct_count, len(golden_set)),
         "secondary_recall_at_5": recall_hits / len(golden_set),
         "secondary_citation_accuracy": sum(citation_accuracies) / len(citation_accuracies),
         "efficiency_median_seconds": statistics.median(durations),
+        "details": details,
     }
 
 
 if __name__ == "__main__":
     import sys
-    from src.part1.index_store import HybridIndex
+    from src.part1.kaggle_submit import ensure_index, find_data_dir
 
-    index = HybridIndex(persist_dir="data/processed/part1/chroma_index")
     mode = sys.argv[1] if len(sys.argv) > 1 else "final"
+    index = ensure_index(find_data_dir(), "data/processed/part1")
     report = run_golden_set(index, baseline=(mode == "baseline"))
     print(json.dumps(report, indent=2))

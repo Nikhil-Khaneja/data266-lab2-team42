@@ -4,8 +4,8 @@ class Conversation:
         self.turns = []
         self.session_values = {}
 
-    def add_turn(self, question, answer_dict):
-        self.turns.append({"question": question, "answer": answer_dict})
+    def add_turn(self, question, answer_dict, labels=None):
+        self.turns.append({"question": question, "answer": answer_dict, "labels": labels or []})
 
     def history_text(self):
         lines = []
