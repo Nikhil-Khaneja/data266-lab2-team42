@@ -21,3 +21,19 @@ Known weak spot: applying a rule stated in prose (for example a slope and a thre
 to a value is still unreliable with the 7B model.
 
 Unit tests for the deterministic layer: `python -m pytest tests -q` from this folder.
+
+## Reranker ablation (golden set, Kaggle T4, same index and model)
+
+Only the cross-encoder (`bge-reranker-v2-m3`) is switched on or off; everything else is the final pipeline.
+Full per-item results: `eval/part1_golden_eval.json`.
+
+| Configuration | Correct (of 25) | Recall@5 | Citation accuracy | Median s/question |
+|---|---|---|---|---|
+| Baseline: dense retrieval only | 12 | 0.88 | 0.99 | 11.8 |
+| Hybrid (dense + BM25, RRF), no reranker | 19 | 0.88 | 0.99 | 11.1 |
+| Final: hybrid + reranker | 19 | 1.00 | 1.00 | 10.6 |
+
+The reranker lifts Recall@5 from 22/25 to 25/25: three questions (two on the Euro area's 2012
+unemployment and one on 2012 world output growth) only get their source page into the top 5 with it.
+It does not change answer accuracy on this set. Those answers come from the table-fact lookup,
+which already finds the right cell. The remaining gap is in generation, not retrieval.
