@@ -1,3 +1,4 @@
+import csv
 import json
 import re
 import statistics
@@ -59,9 +60,37 @@ def score_item(item, predicted, recall_sources, shown):
     return correct, recall_hit, (sum(hits) / len(hits) if hits else 1.0)
 
 
-def run_golden_set(index, baseline=False):
+def cited_text(citations, shown, max_chars=1200):
+    """The text of each cited source the model was shown, for the human groundedness rating."""
+    parts = []
+    for c in citations:
+        for r in shown:
+            ids = {"{}:p{}".format(r["doc_id"], r["page"])}
+            if r.get("figure_id"):
+                ids.add("{}:{}".format(r["doc_id"], r["figure_id"]))
+            if c in ids:
+                parts.append("[{}] {}".format(c, " ".join(r.get("text", "").split())[:max_chars]))
+                break
+        else:
+            parts.append("[{}] (not among the sources shown to the model)".format(c))
+    return "\n\n".join(parts)
+
+
+def run_golden_set(index, baseline=False, rerank=True):
+    """baseline: dense retrieval only. rerank=False: the final pipeline with the cross-encoder
+    switched off, so the reranker's own effect can be measured (everything else unchanged)."""
     with open(GOLDEN_SET_PATH, "r", encoding="utf-8") as f:
         golden_set = json.load(f)
+    saved_reranker = index.reranker
+    if not rerank:
+        index.reranker = None
+    try:
+        return _run(index, golden_set, baseline)
+    finally:
+        index.reranker = saved_reranker
+
+
+def _run(index, golden_set, baseline):
 
     engine = AnswerEngine(index, retrieval_mode=("dense" if baseline else "hybrid"))
     store = ConversationStore()
@@ -91,8 +120,9 @@ def run_golden_set(index, baseline=False):
         correct_count += int(correct)
         recall_hits += int(recall_hit)
         citation_accuracies.append(citation_accuracy)
-        details.append({"id": item["id"], "correct": correct, "recall_hit": recall_hit,
-                        "expected_status": item["expected_status"], "predicted": predicted})
+        details.append({"id": item["id"], "question": item["question"], "correct": correct,
+                        "recall_hit": recall_hit, "expected_status": item["expected_status"],
+                        "predicted": predicted, "cited_text": cited_text(predicted["citations"], shown)})
 
     return {
         "primary_correct_out_of": "{}/{}".format(correct_count, len(golden_set)),
@@ -103,11 +133,40 @@ def run_golden_set(index, baseline=False):
     }
 
 
+RATING_COLUMNS = ["rater_nikhil", "rater_anushka", "note"]
+
+
+def write_rating_sheet(report, path):
+    """One row per golden-set answer with its cited source text and empty 1-5 rating columns."""
+    with open(path, "w", encoding="utf-8", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["id", "question", "status", "answer", "citations", "figure_references", "cited_text"] + RATING_COLUMNS)
+        for d in report["details"]:
+            p = d["predicted"]
+            w.writerow([d["id"], d["question"], p["status"], p["answer"], ",".join(p["citations"]),
+                        ",".join(p.get("figure_references", [])), d["cited_text"]] + [""] * len(RATING_COLUMNS))
+
+
+def summarize_ratings(path, raters=("rater_nikhil", "rater_anushka")):
+    """Mean groundedness per rater and overall, and the share of items rated within one point."""
+    with open(path, encoding="utf-8") as f:
+        rows = [r for r in csv.DictReader(f) if all(r[x].strip() for x in raters)]
+    scores = {x: [int(r[x]) for r in rows] for x in raters}
+    pairs = list(zip(*scores.values()))
+    if not pairs:
+        return {"items_rated": 0}
+    return {"items_rated": len(rows),
+            "mean_by_rater": {x: statistics.mean(v) for x, v in scores.items()},
+            "mean_overall": statistics.mean([s for v in scores.values() for s in v]),
+            "within_one_point": sum(max(p) - min(p) <= 1 for p in pairs) / len(pairs),
+            "exact_agreement": sum(len(set(p)) == 1 for p in pairs) / len(pairs)}
+
+
 if __name__ == "__main__":
     import sys
     from src.part1.kaggle_submit import ensure_index, find_data_dir
 
     mode = sys.argv[1] if len(sys.argv) > 1 else "final"
     index = ensure_index(find_data_dir(), "data/processed/part1")
-    report = run_golden_set(index, baseline=(mode == "baseline"))
+    report = run_golden_set(index, baseline=(mode == "baseline"), rerank=(mode != "no_rerank"))
     print(json.dumps(report, indent=2))

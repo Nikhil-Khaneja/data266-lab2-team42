@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Image Pair Rating</title>
+<style>
+  :root { --bg:#fafaf9; --card:#fff; --ink:#1c1917; --muted:#78716c; --line:#e7e5e4; --accent:#2563eb; --done:#16a34a; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1c1917; --card:#292524; --ink:#f5f5f4; --muted:#a8a29e; --line:#44403c; --accent:#60a5fa; --done:#4ade80; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.5 system-ui, sans-serif; }
+  header { position:sticky; top:0; z-index:2; background:var(--bg); border-bottom:1px solid var(--line);
+           padding:12px 16px; display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+  header h1 { font-size:17px; margin:0 auto 0 0; }
+  input[type=text] { font:inherit; padding:6px 10px; border:1px solid var(--line); border-radius:6px;
+                     background:var(--card); color:var(--ink); }
+  button { font:inherit; padding:7px 14px; border-radius:6px; border:0; background:var(--accent); color:#fff; cursor:pointer; }
+  main { max-width:980px; margin:0 auto; padding:16px; }
+  .intro { color:var(--muted); margin:0 0 16px; }
+  .pair { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px; margin-bottom:18px; }
+  .pair.complete { border-color:var(--done); }
+  .pair h2 { font-size:14px; color:var(--muted); margin:0 0 4px; font-weight:600; }
+  .prompt { font-size:17px; margin:0 0 12px; }
+  .images { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  figure { margin:0; text-align:center; }
+  figure img { width:100%; height:auto; border-radius:6px; display:block; }
+  figcaption { font-weight:700; margin-top:4px; }
+  .q { display:flex; flex-wrap:wrap; gap:8px 18px; align-items:center; margin-top:12px; }
+  .q span { min-width:240px; }
+  label { cursor:pointer; }
+  textarea { width:100%; margin-top:10px; font:inherit; padding:6px 10px; border:1px solid var(--line);
+             border-radius:6px; background:var(--card); color:var(--ink); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Image pair rating</h1>
+  <input type="text" id="rater" placeholder="Your name" aria-label="Your name">
+  <span id="progress"></span>
+  <button id="save">Download my ratings</button>
+</header>
+<main>
+  <p class="intro">For each pair, pick <b>L</b> or <b>R</b> twice: which image better matches the
+  training art style (anime / Naruto look), and which better shows what the prompt asks for. Every pair
+  needs both picks; no ties. If they look equal, pick one and write "close" in the note. Work alone and
+  don't discuss pairs with other raters. When finished, click <b>Download my ratings</b> and send the file back.</p>
+  <div id="pairs"></div>
+</main>
+<script>
+const PAIRS = __PAIRS__;
+const KEY = "part2-ratings";
+let state = {};
+try { state = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { state = {}; }
+const persist = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} };
+const root = document.getElementById("pairs");
+const rater = document.getElementById("rater");
+rater.value = state.__rater || "";
+rater.oninput = () => { state.__rater = rater.value; persist(); };
+
+function question(p, criterion, text) {
+  const row = document.createElement("div"); row.className = "q";
+  row.innerHTML = `<span>${text}</span>` + ["L", "R"].map(side =>
+    `<label><input type="radio" name="${p.pair_id}-${criterion}" value="${side}"> ${side}</label>`).join("");
+  row.querySelectorAll("input").forEach(input => {
+    if ((state[p.pair_id] || {})[criterion] === input.value) input.checked = true;
+    input.onchange = () => { (state[p.pair_id] ||= {})[criterion] = input.value; persist(); refresh(); };
+  });
+  return row;
+}
+
+PAIRS.forEach((p, i) => {
+  const card = document.createElement("section"); card.className = "pair"; card.id = p.pair_id;
+  card.innerHTML = `<h2>Pair ${i + 1} of ${PAIRS.length}</h2><p class="prompt">${p.prompt}</p>
+    <div class="images">
+      <figure><img alt="Image L" src="data:image/jpeg;base64,${p.L}"><figcaption>L</figcaption></figure>
+      <figure><img alt="Image R" src="data:image/jpeg;base64,${p.R}"><figcaption>R</figcaption></figure>
+    </div>`;
+  card.append(question(p, "style", "Better domain style:"), question(p, "prompt", "Better prompt match:"));
+  const note = document.createElement("textarea"); note.rows = 1; note.placeholder = "Note (optional)";
+  note.value = (state[p.pair_id] || {}).note || "";
+  note.oninput = () => { (state[p.pair_id] ||= {}).note = note.value; persist(); };
+  card.append(note);
+  root.append(card);
+});
+
+function complete(p) { const s = state[p.pair_id] || {}; return s.style && s.prompt; }
+function refresh() {
+  PAIRS.forEach(p => document.getElementById(p.pair_id).classList.toggle("complete", !!complete(p)));
+  document.getElementById("progress").textContent = `${PAIRS.filter(complete).length} / ${PAIRS.length} done`;
+}
+refresh();
+
+document.getElementById("save").onclick = () => {
+  const name = rater.value.trim();
+  if (!name) { alert("Please type your name first."); rater.focus(); return; }
+  const missing = PAIRS.filter(p => !complete(p));
+  if (missing.length && !confirm(`${missing.length} pair(s) are not finished. Download anyway?`)) {
+    document.getElementById(missing[0].pair_id).scrollIntoView({behavior: "smooth"}); return;
+  }
+  const out = {rater: name, ratings: PAIRS.map(p => ({pair_id: p.pair_id, style: (state[p.pair_id] || {}).style || null,
+    prompt: (state[p.pair_id] || {}).prompt || null, note: (state[p.pair_id] || {}).note || ""}))};
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(out, null, 2)], {type: "application/json"}));
+  a.download = `part2_ratings_${name.toLowerCase().replace(/[^a-z0-9]+/g, "_")}.json`;
+  a.click();
+};
+</script>
+</body>
+</html>
