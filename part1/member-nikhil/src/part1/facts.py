@@ -255,7 +255,7 @@ def lookup_note(key, lookup):
 
 FALLING = re.compile(r"\b(contract\w*|shr[aiu]nk\w*|declin\w*|fell|fall\w*|drop\w*|recession)\b", re.IGNORECASE)
 RISING = re.compile(r"\b(grew|grow\w*|expand\w*|rose|rise\w*|increas\w*)\b", re.IGNORECASE)
-PRESUPPOSES = re.compile(r"\b(why|how did|since|given that|as|because)\b", re.IGNORECASE)
+PRESUPPOSES = re.compile(r"\b(why|how did|since|given that|as|because|what (made|caused|led|drove))\b", re.IGNORECASE)
 
 
 def direction_conflict(question, key, lookup):

@@ -174,6 +174,24 @@ def check_arithmetic(evidence, answer):
     return answer
 
 
+def correct_arithmetic(text):
+    """Rewrite each "expression = result" in free-text working with the recomputed result."""
+    text = (text or "").replace("−", "-").replace("–", "-")
+
+    def fix(match):
+        try:
+            value = _evaluate(match.group(1).replace("x", "*").replace("×", "*"))
+        except (ValueError, SyntaxError, ZeroDivisionError):
+            return match.group(0)
+        stated = match.group(2)
+        decimals = max(len(stated.split(".")[1]) if "." in stated else 0, 1)
+        if abs(value - float(stated)) < 0.5 * 10 ** -decimals + 1e-9:
+            return match.group(0)
+        shown = "{:.2f}".format(value).rstrip("0").rstrip(".")
+        return "{} = {}".format(match.group(1).rstrip(), shown)
+    return ARITHMETIC.sub(fix, text)
+
+
 def _mentions(text, number):
     return bool(re.search(r"(?<![\w.])" + re.escape(number.lstrip("-")) + r"(?![\w]|\.\d)", text))
 
