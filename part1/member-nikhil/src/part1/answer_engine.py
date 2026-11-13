@@ -409,6 +409,12 @@ class AnswerEngine:
                              prefill=NARRATIVE_PREFILL if narrative else JSON_PREFILL)
         return parse_answer_json(self.last_raw)
 
+    def fact_chunks(self, lookup):
+        """The chunks a lookup's facts came from: what an answer built from those facts cites."""
+        if not lookup:
+            return []
+        return [c for c in (self.index.chunk_for_fact(f) for f in lookup.get("members", [])) if c]
+
     def answer(self, conversation, question):
         cfg = self.config
         is_change_request = postprocess.is_permanent_change_request(question)
@@ -435,7 +441,7 @@ class AnswerEngine:
         # A refused change request needs no generation: refuse, and say what the documents hold.
         if is_change_request:
             final = self.refusal_answer(key, lookup)
-            self.last_shown = []
+            self.last_shown = self.fact_chunks(lookup)
             conversation.add_turn(question, final, [])
             return final
 
@@ -445,15 +451,14 @@ class AnswerEngine:
             if correction:
                 final = self.lookup_answer(key, lookup)
                 final.update(answer=correction, status="false_premise")
-                self.last_shown = []
+                self.last_shown = self.fact_chunks(lookup)
                 conversation.add_turn(question, final, [])
                 return final
 
         # Plain data question with no assumption in play: the checked facts are the answer.
         if lookup and is_plain_lookup(question) and not (is_new_override or follow_up_override or is_change_request):
             final = self.lookup_answer(key, lookup)
-            self.last_shown = [self.index.chunk_for_fact(f) for f in lookup["members"]]
-            self.last_shown = [c for c in self.last_shown if c]
+            self.last_shown = self.fact_chunks(lookup)
             conversation.add_turn(question, final, [])
             return final
 
