@@ -66,6 +66,8 @@ subprocess.run([sys.executable, "tools/make_assets.py"], check=True)
 import random, numpy as np, torch, diffusers, transformers, gradio, peft
 SEED = 266; random.seed(SEED); np.random.seed(SEED); torch.manual_seed(SEED)
 commit = subprocess.run(["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True).stdout.strip()
+if not commit and os.path.exists("COMMIT"):   # Drive/zip copies have no .git: use the stamp from tools/stamp_commit.py
+    commit = open("COMMIT").read().strip()
 print({"commit": commit, "python": sys.version.split()[0], "torch": torch.__version__,
        "diffusers": diffusers.__version__, "transformers": transformers.__version__, "peft": peft.__version__,
        "gradio": gradio.__version__,
