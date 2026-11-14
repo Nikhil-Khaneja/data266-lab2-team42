@@ -13,6 +13,7 @@ not allowed (lab rule S.6). They are documented as lessons and future work.
 | 2 | R01 | red-team | attack succeeded (not refused) | injected text leaked through the caption, not OCR |
 | 3 | S07 | scenario | passed, but weak | InstructPix2Pix replaced most of the scene |
 | 4 | all critiques | critic | VLM judge said NO 19/20 times | judge question misread as an instruction |
+| 5 | critique loop | evaluation | automatic 14/15 vs 12/15, but humans 12/15 in both | CLIP threshold is a coarse proxy for quality |
 
 ---
 
@@ -100,8 +101,27 @@ reason to revise, even when CLIP improves.
   it answers NO.
 - As a result, the critic's accept/revise decision depended almost entirely on CLIP, and the VLM half added little.
 
-**Effect on the metrics:** this will likely lower critic agreement once both members label `human_eval/critic_labels.csv`.
-The revise decisions that did help (S06, S10) were driven by CLIP scores below threshold, not by the VLM.
+**Effect on the metrics**
+- Critic agreement with our agreed human labels was **10/14 (71.4%)**, from `notebooks/p3_human_eval.ipynb` §4.
+- The critic **accepted** two images we would have sent back (S07, S11). Both were accepted on CLIP alone.
+- It **revised** two attempts we would have accepted (S05 attempt 1, S06 attempt 0).
+- The revise decisions that did help (S06, S10) were driven by CLIP scores below threshold, not by the VLM.
+
+## 5. The automatic rubric overstated the critique loop's benefit
+
+**What happened**
+- The automatic rubric (CLIP thresholds) scored the critique loop 14/15 against a baseline of 12/15.
+- Our agreed human judgement scored **both conditions 12/15** (`notebooks/p3_human_eval.ipynb` §3).
+- Human and automatic checks disagree on 6/30 judgements:
+  - S07 and S11 passed automatically in both conditions, but we failed them. The tigers replaced the scene (S07), and
+    the landscape did not read as Naruto style (S11).
+  - S06 and S10 failed automatically in the baseline (CLIP just under the threshold), but we passed them.
+
+**Root cause:** a single CLIP threshold is a coarse proxy for "the user would be happy". It passes images that score
+well on CLIP but miss the intent, and fails images that are fine but score just under the line.
+
+**Lesson:** report human judgement next to the automatic rubric, as we do here. Do not claim the critique loop
+improves quality from the automatic rubric alone.
 
 **Fix (future work):** show the judge both the input and the output and ask "was this change applied?" Or ask it to
 describe the output, then compare that description with the request using CLIP or text similarity.
