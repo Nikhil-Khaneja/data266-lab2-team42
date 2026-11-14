@@ -1,7 +1,7 @@
 import json
 import os
 import subprocess
-import threading
+import sys
 import time
 
 from safetensors import safe_open
@@ -20,7 +20,7 @@ SHARED_ARGS = {
     "resolution": 512,
     "train_batch_size": 1,
     "gradient_accumulation_steps": 4,
-    "max_train_steps": 1200,
+    "max_train_steps": int(os.environ.get("P2_MAX_STEPS", "1200")),   # override only for smoke tests
     "learning_rate": 1e-4,
     "lr_scheduler": "constant",
     "lr_warmup_steps": 0,
@@ -34,18 +34,6 @@ SHARED_ARGS = {
 SHARED_FLAGS = ["gradient_checkpointing"]
 
 
-def sample_gpu_memory(samples, stop_event):
-    while not stop_event.is_set():
-        try:
-            out = subprocess.check_output(
-                ["nvidia-smi", "--query-gpu=memory.used", "--format=csv,noheader,nounits"]
-            )
-            samples.append(int(out.decode().strip().splitlines()[0]))
-        except Exception:
-            pass
-        time.sleep(2)
-
-
 def count_trainable_params(lora_weights_path):
     total = 0
     with safe_open(lora_weights_path, framework="pt") as f:
@@ -55,12 +43,30 @@ def count_trainable_params(lora_weights_path):
     return total
 
 
-def run_training(run_name):
+def torch_device_name():
+    import torch
+    return torch.cuda.get_device_name(0) if torch.cuda.is_available() else "cpu"
+
+
+def run_training(run_name, reuse=True):
+    """Trains one run and returns its report. With reuse=True, a run already trained here with the
+    same settings (weights + report on disk) is not trained again: its saved report is returned,
+    marked reused=True. On a fresh machine there is nothing to reuse, so it always trains."""
     config = RUN_CONFIGS[run_name]
     output_dir = config["output_dir"]
+    report_path = os.path.join(output_dir, "run_report.json")
+    weights = os.path.join(output_dir, "pytorch_lora_weights.safetensors")
+    if reuse and os.path.exists(report_path) and os.path.exists(weights):
+        with open(report_path, encoding="utf-8") as f:
+            saved = json.load(f)
+        if saved.get("max_train_steps") == SHARED_ARGS["max_train_steps"] and saved.get("rank") == config["rank"]:
+            saved["reused"] = True
+            saved["trained_at"] = time.strftime("%Y-%m-%d %H:%M", time.localtime(os.path.getmtime(weights)))
+            return saved
     os.makedirs(output_dir, exist_ok=True)
 
-    args = ["python", SCRIPT_PATH, "--pretrained_model_name_or_path", BASE_MODEL,
+    # sys.executable: the same interpreter as the notebook (a bare "python" can resolve to another install).
+    args = [sys.executable, SCRIPT_PATH, "--pretrained_model_name_or_path", BASE_MODEL,
              "--rank", str(config["rank"]), "--output_dir", output_dir]
     for key, value in SHARED_ARGS.items():
         args.append("--{}".format(key))
@@ -68,17 +74,18 @@ def run_training(run_name):
     for flag in SHARED_FLAGS:
         args.append("--{}".format(flag))
 
-    samples = []
-    stop_event = threading.Event()
-    monitor_thread = threading.Thread(target=sample_gpu_memory, args=(samples, stop_event))
-    monitor_thread.start()
-
+    # The script's step-by-step log goes to a file; the notebook shows only the report.
+    log_path = os.path.join(output_dir, "train.log")
     start_time = time.time()
-    subprocess.run(args, check=True)
+    with open(log_path, "w", encoding="utf-8") as log:
+        result = subprocess.run(args, stdout=log, stderr=subprocess.STDOUT)
     training_time_seconds = time.time() - start_time
+    if result.returncode != 0:
+        with open(log_path, encoding="utf-8", errors="replace") as log:
+            raise RuntimeError("training failed:" + chr(10) + log.read()[-3000:])
 
-    stop_event.set()
-    monitor_thread.join()
+    with open(os.path.join(output_dir, "peak_memory.json"), encoding="utf-8") as f:
+        peak = json.load(f)
 
     lora_weights_path = os.path.join(output_dir, "pytorch_lora_weights.safetensors")
     trainable_params = count_trainable_params(lora_weights_path) if os.path.exists(lora_weights_path) else None
@@ -90,8 +97,11 @@ def run_training(run_name):
         "learning_rate": SHARED_ARGS["learning_rate"],
         "max_train_steps": SHARED_ARGS["max_train_steps"],
         "effective_batch_size": SHARED_ARGS["train_batch_size"] * SHARED_ARGS["gradient_accumulation_steps"],
-        "peak_gpu_memory_mb": max(samples) if samples else None,
-        "training_time_seconds": training_time_seconds,
+        "peak_gpu_memory_gb": round(peak["max_memory_reserved_mb"] / 1024, 2),
+        "training_time_seconds": round(training_time_seconds, 1),
+        "gpu_hours": round(training_time_seconds / 3600, 3),
+        "gpu": torch_device_name(),
+        "reused": False,
     }
     with open(os.path.join(output_dir, "run_report.json"), "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2)

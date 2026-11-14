@@ -8,8 +8,14 @@ requirements PDF for full task details and grading rubric.
 
 ## Hosted APIs
 
-None. All language/vision model inference uses local open-source models
-(Qwen/Qwen2.5-VL-3B-Instruct for vision understanding and answer generation).
+None. Every model runs locally from open weights on the Hugging Face Hub:
+
+| Part | Models |
+|---|---|
+| 1 | `Qwen/Qwen2.5-VL-7B-Instruct` (4-bit, bitsandbytes) for figure descriptions and answers; `BAAI/bge-small-en-v1.5` embeddings; `BAAI/bge-reranker-v2-m3` reranker |
+| 2 | `stable-diffusion-v1-5/stable-diffusion-v1-5` + our LoRA runs; `openai` CLIP ViT-B-32 (open_clip) and LPIPS (AlexNet) for evaluation |
+| 3 (`member-nikhil`) | `Qwen/Qwen2.5-VL-3B-Instruct` (fp16); SD 1.5 img2img; `timbrooks/instruct-pix2pix`; our Part 2 LoRA `nikhilkhaneja/sd15-naruto-lora-run2`; CLIP ViT-B-32 |
+| 3 (`member-anushka`) | See `part3/member-anushka/README.md` |
 
 ## Repo layout
 
@@ -125,9 +131,9 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-`requirements.txt` pins a CUDA 13.0 build of torch/torchvision for local dev on an
-RTX 5090 (Blackwell). On Kaggle/Colab, the preinstalled torch already matches their GPU
-(T4/P100) — skip those two lines or let Kaggle's environment take precedence.
+`requirements.txt` pins the versions the notebooks were executed with, including the CUDA 12.8
+build of torch/torchvision (RTX 4090). On Kaggle/Colab, keep the preinstalled torch: Part 1's
+Kaggle notebook installs only `part1/member-nikhil/kaggle_requirements.txt`.
 
 ## Running each part
 
@@ -146,21 +152,24 @@ DATA266_Lab2_Part1) or the Kaggle competition's Data tab: `Document.pdf`,
 `Document3_Briefing_B_Labour_Prices_Policy.pdf`, `kb_manifest.json`, `Questions.csv`,
 `sample_submission.csv`, `validate_submission.py`. Place them under
 `part1/member-nikhil/data/raw/part1/`, then run
-`part1/member-nikhil/notebooks/p1_rag.ipynb` top to bottom (cwd = that notebook's own
-folder, which is the Jupyter default).
+`part1/member-nikhil/notebooks/p1_rag.ipynb` top to bottom. On Kaggle the same notebook runs
+with the competition data and the code attached as a dataset; it reads `QUESTIONS_PATH`
+(default `Questions.csv`) and writes `submission.csv` with no manual step.
 
 **Part 2** only needs public data (`lambdalabs/naruto-blip-captions` + Stable Diffusion
 1.5) and runs end to end via `part2/member-nikhil/notebooks/p2_finetune.ipynb`, or the
 individual scripts in `part2/member-nikhil/src/part2/` (`data_prep.py`, `train_runs.py`,
 `generate.py`, `evaluate.py`, `human_eval.py`, `push_to_hf.py`), run with
-`part2/member-nikhil/` as the working directory. Pushing to Hugging Face needs
-`huggingface-cli login` (or the `huggingface_hub` Python login call) first.
+`part2/member-nikhil/` as the working directory (the notebook switches there itself). It
+trains both runs, generates 120 images, evaluates them and builds the blinded rater page; the
+last cell pushes both adapters and the images to Hugging Face when `hf auth login` has been run.
 
-**Part 3** needs sample input images under `part3/member-nikhil/data/raw/part3/`
-matching the file names in `part3/eval/part3_scenarios.json` /
-`part3/eval/part3_redteam.json` (already generated — see `part3/member-nikhil/src/part3/make_test_images.py`),
-then run `part3/member-nikhil/notebooks/p3_agents.ipynb`, or from
-`part3/member-nikhil/`: `python app/gradio_app.py` for the interactive demo.
+**Part 3** (`member-nikhil`): `part3/member-nikhil/notebooks/p3_agents.ipynb` makes its own test
+images (`src/part3/make_test_images.py`), runs the 15 scenarios with and without the critique loop
+and the 10 red-team cases, saves a JSON trace per request plus the input and output images, and
+writes the human-evaluation sheets. Interactive demo, from `part3/member-nikhil/`:
+`python app/gradio_app.py`. Anushka's implementation has its own instructions in
+`part3/member-anushka/README.md`.
 
 ## Weights and datasets
 

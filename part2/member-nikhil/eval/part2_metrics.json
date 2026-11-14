@@ -1,23 +1,23 @@
 [
   {
     "model": "base",
-    "kid_mean": 0.11890864372253418,
-    "kid_std": 0.012560894712805748,
-    "clip_score_mean": 0.3116380274295807,
-    "lpips_diversity_mean": 0.6867398858070374
+    "kid_mean": 0.11830870062112808,
+    "kid_std": 0.01246869470924139,
+    "clip_score_mean": 0.3117850452661514,
+    "lpips_diversity_mean": 0.6863699525594711
   },
   {
     "model": "run1_lora_r4",
-    "kid_mean": 0.04984574392437935,
-    "kid_std": 0.00892680324614048,
-    "clip_score_mean": 0.3032644562423229,
-    "lpips_diversity_mean": 0.6716904222965241
+    "kid_mean": 0.05051242187619209,
+    "kid_std": 0.008437261916697025,
+    "clip_score_mean": 0.30527791380882263,
+    "lpips_diversity_mean": 0.6742793560028076
   },
   {
     "model": "run2_lora_r16",
-    "kid_mean": 0.023817921057343483,
-    "kid_std": 0.00593169592320919,
-    "clip_score_mean": 0.3043290976434946,
-    "lpips_diversity_mean": 0.6598382622003556
+    "kid_mean": 0.023302268236875534,
+    "kid_std": 0.005658172536641359,
+    "clip_score_mean": 0.3040283598005772,
+    "lpips_diversity_mean": 0.6608159750699997
   }
 ]

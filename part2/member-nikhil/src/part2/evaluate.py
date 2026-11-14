@@ -100,22 +100,24 @@ def lpips_distance(image_a, image_b, size=256):
 def evaluate_model(model_name, generated_dir, metadata, test_dir):
     model_records = [r for r in metadata if r["model"] == model_name]
 
-    clip_scores = []
+    clip_scores, per_image = [], []
     for record in model_records:
         image = load_image(os.path.join(generated_dir, record["file_name"]))
         clip_scores.append(clip_score(image, record["prompt"]))
+        per_image.append(dict(record, clip=clip_scores[-1]))
 
     by_prompt = {}
     for record in model_records:
         by_prompt.setdefault(record["prompt"], []).append(record)
 
-    lpips_distances = []
+    lpips_distances, per_prompt = [], []
     for prompt, records in by_prompt.items():
         if len(records) < 2:
             continue
         image_a = load_image(os.path.join(generated_dir, records[0]["file_name"]))
         image_b = load_image(os.path.join(generated_dir, records[1]["file_name"]))
         lpips_distances.append(lpips_distance(image_a, image_b))
+        per_prompt.append({"prompt": prompt, "category": records[0]["category"], "lpips": lpips_distances[-1]})
 
     in_domain_files = [r["file_name"] for r in model_records if r["category"] == "in_domain"]
     kid_mean, kid_std = compute_kid(generated_dir, in_domain_files, test_dir)
@@ -126,6 +128,8 @@ def evaluate_model(model_name, generated_dir, metadata, test_dir):
         "kid_std": kid_std,
         "clip_score_mean": sum(clip_scores) / len(clip_scores) if clip_scores else None,
         "lpips_diversity_mean": sum(lpips_distances) / len(lpips_distances) if lpips_distances else None,
+        "per_image": per_image,
+        "per_prompt": per_prompt,
     }
 
 
@@ -159,7 +163,7 @@ if __name__ == "__main__":
         results.append(result)
 
     with open("eval/part2_metrics.json", "w", encoding="utf-8") as f:
-        json.dump(results, f, indent=2)
+        json.dump([{k: v for k, v in r.items() if not k.startswith("per_")} for r in results], f, indent=2)
     print(json.dumps(results, indent=2))
 
     final_in_domain_files = [

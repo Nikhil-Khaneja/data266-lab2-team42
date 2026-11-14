@@ -1,0 +1,30 @@
+[
+  {
+    "run_name": "run1_lora_r4",
+    "rank": 4,
+    "trainable_params": 797184,
+    "learning_rate": 0.0001,
+    "max_train_steps": 1200,
+    "effective_batch_size": 4,
+    "peak_gpu_memory_gb": 4.12,
+    "training_time_seconds": 1323.8,
+    "gpu_hours": 0.368,
+    "gpu": "NVIDIA GeForce RTX 4090",
+    "reused": true,
+    "trained_at": "2026-11-14 02:27"
+  },
+  {
+    "run_name": "run2_lora_r16",
+    "rank": 16,
+    "trainable_params": 3188736,
+    "learning_rate": 0.0001,
+    "max_train_steps": 1200,
+    "effective_batch_size": 4,
+    "peak_gpu_memory_gb": 4.15,
+    "training_time_seconds": 1304.5,
+    "gpu_hours": 0.362,
+    "gpu": "NVIDIA GeForce RTX 4090",
+    "reused": true,
+    "trained_at": "2026-11-14 02:49"
+  }
+]

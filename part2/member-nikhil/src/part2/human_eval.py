@@ -7,7 +7,8 @@ SEED = 266
 
 def build_blind_pairs(generated_root, base_model, final_model, metadata_path, output_dir, num_pairs=25):
     with open(metadata_path, "r", encoding="utf-8") as f:
-        metadata = [m for m in json.load(f) if m["model"] in (base_model, final_model)]
+        # Pairs only from images the safety checker passed: a blacked-out image cannot be rated.
+        metadata = [m for m in json.load(f) if m["model"] in (base_model, final_model) and not m.get("nsfw")]
 
     by_key = {}
     for record in metadata:
@@ -60,7 +61,7 @@ def _hub_path(local_path):
 def prepare_rater_sheet(blind_pairs_path, output_path, hf_repo=HF_IMAGE_DATASET):
     """One self-contained HTML page for raters: each pair's prompt and its two images under
     neutral L/R labels, with no file names or model names, so the page itself cannot unblind
-    the rater. Images come from the already-pushed Hub dataset; nothing is regenerated."""
+    the rater. Nothing is regenerated: images are read from disk or the pushed Hub dataset."""
     import base64
     import io
     from huggingface_hub import hf_hub_download
@@ -70,7 +71,8 @@ def prepare_rater_sheet(blind_pairs_path, output_path, hf_repo=HF_IMAGE_DATASET)
         pairs = json.load(f)
 
     def encoded(local_path):
-        file = hf_hub_download(hf_repo, _hub_path(local_path), repo_type="dataset")
+        # The local file when this machine generated it; otherwise the pushed Hub copy.
+        file = local_path if os.path.exists(local_path) else hf_hub_download(hf_repo, _hub_path(local_path), repo_type="dataset")
         buffer = io.BytesIO()
         Image.open(file).convert("RGB").save(buffer, format="JPEG", quality=92)
         return base64.b64encode(buffer.getvalue()).decode("ascii")

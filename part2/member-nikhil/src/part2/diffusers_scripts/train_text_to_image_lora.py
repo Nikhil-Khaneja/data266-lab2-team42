@@ -1032,6 +1032,14 @@ def main():
                 ignore_patterns=["step_*", "epoch_*"],
             )
 
+    # Team 42 addition: this process's own peak GPU memory, so the report is not inflated by
+    # other programs sharing the GPU (nvidia-smi reports the whole card).
+    if accelerator.is_main_process and torch.cuda.is_available():
+        import json as _json
+        with open(os.path.join(args.output_dir, "peak_memory.json"), "w") as _f:
+            _json.dump({"max_memory_allocated_mb": torch.cuda.max_memory_allocated() / 2**20,
+                        "max_memory_reserved_mb": torch.cuda.max_memory_reserved() / 2**20}, _f)
+
     accelerator.end_training()
 
 

@@ -6,13 +6,13 @@
   },
   {
     "pair_id": "pair_01",
-    "left_model": "base",
-    "right_model": "run2_lora_r16"
+    "left_model": "run2_lora_r16",
+    "right_model": "base"
   },
   {
     "pair_id": "pair_02",
-    "left_model": "run2_lora_r16",
-    "right_model": "base"
+    "left_model": "base",
+    "right_model": "run2_lora_r16"
   },
   {
     "pair_id": "pair_03",
@@ -21,13 +21,13 @@
   },
   {
     "pair_id": "pair_04",
-    "left_model": "run2_lora_r16",
-    "right_model": "base"
+    "left_model": "base",
+    "right_model": "run2_lora_r16"
   },
   {
     "pair_id": "pair_05",
-    "left_model": "run2_lora_r16",
-    "right_model": "base"
+    "left_model": "base",
+    "right_model": "run2_lora_r16"
   },
   {
     "pair_id": "pair_06",
@@ -41,8 +41,8 @@
   },
   {
     "pair_id": "pair_08",
-    "left_model": "base",
-    "right_model": "run2_lora_r16"
+    "left_model": "run2_lora_r16",
+    "right_model": "base"
   },
   {
     "pair_id": "pair_09",
@@ -66,8 +66,8 @@
   },
   {
     "pair_id": "pair_13",
-    "left_model": "run2_lora_r16",
-    "right_model": "base"
+    "left_model": "base",
+    "right_model": "run2_lora_r16"
   },
   {
     "pair_id": "pair_14",
@@ -76,18 +76,18 @@
   },
   {
     "pair_id": "pair_15",
-    "left_model": "base",
-    "right_model": "run2_lora_r16"
-  },
-  {
-    "pair_id": "pair_16",
     "left_model": "run2_lora_r16",
     "right_model": "base"
   },
   {
-    "pair_id": "pair_17",
+    "pair_id": "pair_16",
     "left_model": "base",
     "right_model": "run2_lora_r16"
+  },
+  {
+    "pair_id": "pair_17",
+    "left_model": "run2_lora_r16",
+    "right_model": "base"
   },
   {
     "pair_id": "pair_18",
@@ -106,8 +106,8 @@
   },
   {
     "pair_id": "pair_21",
-    "left_model": "base",
-    "right_model": "run2_lora_r16"
+    "left_model": "run2_lora_r16",
+    "right_model": "base"
   },
   {
     "pair_id": "pair_22",
@@ -121,7 +121,7 @@
   },
   {
     "pair_id": "pair_24",
-    "left_model": "base",
-    "right_model": "run2_lora_r16"
+    "left_model": "run2_lora_r16",
+    "right_model": "base"
   }
 ]
