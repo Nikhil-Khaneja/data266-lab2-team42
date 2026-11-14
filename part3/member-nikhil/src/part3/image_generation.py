@@ -1,13 +1,26 @@
+import json
+import os
+
 import torch
 from diffusers import StableDiffusionImg2ImgPipeline, StableDiffusionInstructPix2PixPipeline
 
 BASE_MODEL = "stable-diffusion-v1-5/stable-diffusion-v1-5"
 EDIT_MODEL = "timbrooks/instruct-pix2pix"
-# Local LoRA weights from Part 2 (run1_lora_r4), used until the model is pushed to
-# Hugging Face; LORA_REPO overrides this once a HF repo id is set (e.g. after
-# huggingface-cli login + push_to_hf.py).
-LORA_LOCAL_PATH = "models/part2/run1_lora_r4"
-LORA_REPO = None
+# The run Part 2 selected as final (recorded in its memorization report), loaded from Hugging Face.
+# P3_LORA overrides it, e.g. with a local folder.
+PART2_REPOS = {"run1_lora_r4": "nikhilkhaneja/sd15-naruto-lora-run1", "run2_lora_r16": "nikhilkhaneja/sd15-naruto-lora-run2"}
+PART2_FINAL_RECORD = os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "part2", "member-nikhil", "eval", "part2_memorization.json")
+
+
+def part2_final_repo():
+    try:
+        with open(PART2_FINAL_RECORD, encoding="utf-8") as f:
+            return PART2_REPOS[json.load(f)["model"]]
+    except (OSError, KeyError, ValueError):
+        return PART2_REPOS["run2_lora_r16"]
+
+
+LORA_REPO = os.environ.get("P3_LORA") or part2_final_repo()
 
 _img2img_pipe = None
 _edit_pipe = None
@@ -33,7 +46,7 @@ def get_edit_pipe():
 
 
 def domain_lora_source():
-    return LORA_REPO or LORA_LOCAL_PATH
+    return LORA_REPO
 
 
 def load_domain_lora(pipe):
@@ -43,7 +56,10 @@ def load_domain_lora(pipe):
         _lora_loaded = True
 
 
-def generate(state, seed=0, steps=30, strength=0.6):
+def generate(state, seed=None, steps=30, strength=0.6):
+    # Each revision uses the next seed (0, 1, 2): a revised prompt that happens to match the
+    # previous one still gives the critic a new image, never the identical image again.
+    seed = state.revision_count if seed is None else seed
     generator = torch.Generator(device="cuda" if torch.cuda.is_available() else "cpu").manual_seed(seed)
 
     if state.route == "edit":
@@ -68,6 +84,9 @@ def generate(state, seed=0, steps=30, strength=0.6):
                       num_inference_steps=steps, generator=generator)
 
     state.generated_image = result.images[0]
+    # Both pipelines keep Stable Diffusion's safety checker; a hit is passed to the Critique agent.
+    flags = getattr(result, "nsfw_content_detected", None)
+    state.output_flagged = bool(flags and flags[0])
     state.generation_mode = mode
     state.generation_model = model_name
     state.generation_seed = seed

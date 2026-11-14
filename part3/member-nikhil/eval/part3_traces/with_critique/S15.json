@@ -1,0 +1,33 @@
+{
+  "user_request": "Generate something cool.",
+  "use_critique": true,
+  "route": "domain_style_generation",
+  "refused": true,
+  "refusal_reason": "missing_or_broken_input_image",
+  "image_text": "",
+  "final_status": "refused",
+  "critique_history": [],
+  "revision_count": 0,
+  "generation": {
+    "mode": null,
+    "model": null,
+    "prompt": null,
+    "seed": null,
+    "steps": null,
+    "safety_flagged": false
+  },
+  "images": {},
+  "trace": [
+    {
+      "agent": "planner",
+      "input": "Generate something cool.",
+      "output": {
+        "route": "domain_style_generation",
+        "refused": false,
+        "refusal_reason": null,
+        "image_text": ""
+      },
+      "duration_seconds": 0.3360886573791504
+    }
+  ]
+}

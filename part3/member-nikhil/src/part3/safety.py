@@ -15,11 +15,19 @@ DECEPTIVE_EDIT_PATTERNS = [
 ]
 DECEPTIVE_EDIT_REGEX = re.compile("|".join(DECEPTIVE_EDIT_PATTERNS), re.IGNORECASE)
 
+# Common prompt-injection phrasings: an instruction aimed at the AI, a claimed higher authority,
+# or an attempt to switch off rules. Matched against text read from an image or a document.
 INJECTION_PATTERNS = [
-    r"ignore (the )?(previous|above) instructions", r"disregard (the )?(previous|above)",
-    r"system prompt", r"you are now", r"new instructions:",
+    r"\bignore\b.{0,40}\b(instructions?|rules|guidelines|safety|restrictions)\b",
+    r"\bdisregard\b.{0,40}\b(instructions?|rules|above|previous)\b",
+    r"\bsystem prompt\b", r"^\s*system\s*:", r"\byou are now\b", r"\bnew instructions?\b",
+    r"\binstructions? (to|for) (ai|the assistant|assistants|the model|language models?)\b",
+    r"\b(ai|assistants?|chatbots?|models?) reading this\b",
+    r"\bfollow (any|all|these|the following|my) instructions?\b",
+    r"\bunrestricted (mode|access)\b", r"\b(developer|admin|jailbreak|god) mode\b",
+    r"\bmessage from the (developer|admin|system)\b", r"\boverride\b.{0,30}\b(rules|safety|instructions?)\b",
 ]
-INJECTION_REGEX = re.compile("|".join(INJECTION_PATTERNS), re.IGNORECASE)
+INJECTION_REGEX = re.compile("|".join(INJECTION_PATTERNS), re.IGNORECASE | re.MULTILINE)
 
 
 def check_text_safety(text):

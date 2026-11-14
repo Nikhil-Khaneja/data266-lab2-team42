@@ -8,8 +8,9 @@ from src.common.vlm import chat
 from src.part3.safety import check_text_safety
 
 SYSTEM_PROMPT = """You are the Critique agent. Judge whether the generated image matches the
-generation prompt and looks acceptable. Respond with ONLY a JSON object:
-{"judgement": "<=40 words", "meets_prompt": true or false}
+generation prompt and looks acceptable. If it does not, give ONE concrete change to the prompt that
+would fix it (what to add, remove or emphasise). Respond with ONLY a JSON object:
+{"judgement": "<=40 words", "meets_prompt": true or false, "revision": "<one concrete prompt change, or empty>"}
 """
 
 _clip_model = None
@@ -48,36 +49,34 @@ def vlm_judgement(image, prompt):
     raw = chat(SYSTEM_PROMPT, user_prompt, image=image)
     match = re.search(r"\{.*\}", raw, re.DOTALL)
     if not match:
-        return raw, False
+        return raw, False, ""
     try:
         data = json.loads(match.group(0))
     except json.JSONDecodeError:
-        return raw, False
-    return data.get("judgement", raw), bool(data.get("meets_prompt", False))
+        return raw, False, ""
+    return data.get("judgement", raw), bool(data.get("meets_prompt", False)), data.get("revision", "") or ""
 
 
-def critique(state, clip_threshold=0.25, max_revisions=2):
+def critique(state, clip_threshold=0.25):
+    """Scores the image (CLIP similarity + a VLM judgement), checks it is safe, and decides
+    accept or revise. The revise limit is enforced by the orchestrator, not here, so a decision
+    is never turned into "accept" just because the limit was reached."""
     similarity = clip_similarity(state.generated_image, state.generation_prompt)
-    judgement_text, meets_prompt = vlm_judgement(state.generated_image, state.generation_prompt)
-
-    is_safe, reason = check_text_safety(judgement_text)
-    if not is_safe:
-        state.critique_decision = "revise"
-        state.critique_feedback = "Output flagged unsafe ({}); regenerate a safe alternative.".format(reason)
-        state.critique_score = similarity
-        return state
-
+    judgement_text, meets_prompt, revision = vlm_judgement(state.generated_image, state.generation_prompt)
     state.critique_score = similarity
-    accept = meets_prompt and similarity >= clip_threshold
 
-    if accept or state.revision_count >= max_revisions:
+    # Output safety: Stable Diffusion's safety checker on the image, plus the judgement text.
+    is_safe, reason = check_text_safety(judgement_text)
+    if state.output_flagged or not is_safe:
+        state.critique_decision = "revise"
+        state.critique_feedback = "Output flagged unsafe ({}); regenerate a safe alternative.".format(
+            "safety checker" if state.output_flagged else reason)
+    elif meets_prompt and similarity >= clip_threshold:
         state.critique_decision = "accept"
         state.critique_feedback = judgement_text
     else:
         state.critique_decision = "revise"
-        state.critique_feedback = "CLIP similarity {:.2f} below target or prompt not met: {}".format(
-            similarity, judgement_text
-        )
-        state.revision_count += 1
-
+        state.critique_feedback = "CLIP similarity {:.2f} (target {:.2f}); {}. Change: {}".format(
+            similarity, clip_threshold, judgement_text, revision or "make the requested change more explicit")
+    state.critique_history.append(state.critique_decision)
     return state
