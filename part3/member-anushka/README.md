@@ -50,7 +50,7 @@ Python and writes a JSON trace per request (`outputs/traces/<request_id>.json`: 
    `outputs/results_table.md`, `outputs/traces/` and the filled `human_eval/*.csv`.
    Copy `outputs/part3_eval_anushka.json` to the shared `part3/eval/` folder, next to the other member's final results.
 
-The first cell prints an empty commit hash on Colab because the Drive copy has no `.git`; the run belongs to the commit tagged `p3-v1.0`.
+Before uploading to Drive, run `python tools/stamp_commit.py` in the repo clone and upload the `COMMIT` file too. The Drive copy has no `.git`, so the first cell prints the commit from that file.
 Without Drive, `python tools/make_zip.py` makes `part3_colab.zip`. Upload it to `/content` and the notebook unzips it.
 
 **Local**
