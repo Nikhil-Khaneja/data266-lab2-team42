@@ -1,0 +1,110 @@
+{
+  "request_id": "S03_nocrit_8cb297",
+  "user_request": "What route number or destination is written on the front of the bus?",
+  "image_path": "/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/data/images/bus.jpg",
+  "use_critique": false,
+  "planner": {
+    "intent": "caption_question",
+    "route": [
+      "planner",
+      "vision"
+    ],
+    "reason": "caption or question about the image",
+    "safety_flags": [],
+    "image_ok": true,
+    "image_issue": null,
+    "image_text_scan": "15\nALDWYCH"
+  },
+  "vision": {
+    "caption": "A red double decker bus is driving down the street with a sign on it that says Aldwych.",
+    "objects": [
+      "bus",
+      "people",
+      "buildings",
+      "trees",
+      "sky"
+    ],
+    "visible_text": "15\nALDWYCH",
+    "qa": [
+      {
+        "question": "What route number or destination is written on the front of the bus?",
+        "answer": "The route number or destination written on the front of the bus is \"15 ALDWYCH.\""
+      },
+      {
+        "question": "Where does this scene take place? Answer in one short sentence.",
+        "answer": "This scene takes place in London, England."
+      },
+      {
+        "question": "What are the main colors in this image? Answer briefly.",
+        "answer": "The main colors in this image are red and green."
+      }
+    ]
+  },
+  "prompt": null,
+  "generations": [],
+  "critiques": [],
+  "revisions": 0,
+  "status": "completed",
+  "message": "The route number or destination written on the front of the bus is \"15 ALDWYCH.\"",
+  "final_image_path": null,
+  "trace": [
+    {
+      "agent": "planner",
+      "started": 1794639211.7584193,
+      "seconds": 0.556,
+      "input": {
+        "request": "What route number or destination is written on the front of the bus?",
+        "image_path": "/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/data/images/bus.jpg",
+        "use_critique": false
+      },
+      "output": {
+        "intent": "caption_question",
+        "route": [
+          "planner",
+          "vision"
+        ],
+        "reason": "caption or question about the image",
+        "safety_flags": [],
+        "image_ok": true,
+        "image_issue": null,
+        "image_text_scan": "15\nALDWYCH"
+      }
+    },
+    {
+      "agent": "vision",
+      "started": 1794639212.3147163,
+      "seconds": 4.248,
+      "input": {
+        "image_path": "/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/data/images/bus.jpg",
+        "intent": "caption_question"
+      },
+      "output": {
+        "caption": "A red double decker bus is driving down the street with a sign on it that says Aldwych.",
+        "objects": [
+          "bus",
+          "people",
+          "buildings",
+          "trees",
+          "sky"
+        ],
+        "visible_text": "15\nALDWYCH",
+        "qa": [
+          {
+            "question": "What route number or destination is written on the front of the bus?",
+            "answer": "The route number or destination written on the front of the bus is \"15 ALDWYCH.\""
+          },
+          {
+            "question": "Where does this scene take place? Answer in one short sentence.",
+            "answer": "This scene takes place in London, England."
+          },
+          {
+            "question": "What are the main colors in this image? Answer briefly.",
+            "answer": "The main colors in this image are red and green."
+          }
+        ]
+      }
+    }
+  ],
+  "started": 1794639211.7584035,
+  "total_seconds": 4.804
+}
