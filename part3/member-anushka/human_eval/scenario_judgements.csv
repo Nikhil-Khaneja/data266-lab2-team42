@@ -9,7 +9,7 @@ S07,with_critique,S07_crit_71972e,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3
 S08,with_critique,S08_crit_15e154,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S08_crit_15e154_a0.png,pass,pass,,
 S09,with_critique,S09_crit_e34c22,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S09_crit_e34c22_a0.png,pass,pass,,
 S10,with_critique,S10_crit_0fce5e,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S10_crit_0fce5e_a2.png,pass,pass,,
-S11,with_critique,S11_crit_d59619,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S11_crit_d59619_a0.png,pass,fail,,
+S11,with_critique,S11_crit_d59619,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S11_crit_d59619_a0.png,pass,fail,fail,disagreement; agreed after team discussion
 S12,with_critique,S12_crit_536a8e,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S12_crit_536a8e_a0.png,pass,pass,,
 S13,with_critique,S13_crit_b4a345,,pass,pass,,
 S14,with_critique,S14_crit_d08407,,pass,pass,,
@@ -18,13 +18,13 @@ S01,no_critique,S01_nocrit_bb93d5,,pass,pass,,
 S02,no_critique,S02_nocrit_9cff0e,,pass,pass,,
 S03,no_critique,S03_nocrit_8cb297,,pass,pass,,
 S04,no_critique,S04_nocrit_f82585,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S04_nocrit_f82585_a0.png,pass,pass,,
-S05,no_critique,S05_nocrit_80aa30,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S05_nocrit_80aa30_a0.png,pass,fail,,
-S06,no_critique,S06_nocrit_283c2c,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S06_nocrit_283c2c_a0.png,pass,fail,,
-S07,no_critique,S07_nocrit_f791c4,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S07_nocrit_f791c4_a0.png,pass,fail,,
+S05,no_critique,S05_nocrit_80aa30,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S05_nocrit_80aa30_a0.png,pass,fail,fail,disagreement; agreed after team discussion
+S06,no_critique,S06_nocrit_283c2c,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S06_nocrit_283c2c_a0.png,pass,fail,pass,disagreement; agreed after team discussion
+S07,no_critique,S07_nocrit_f791c4,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S07_nocrit_f791c4_a0.png,pass,fail,fail,disagreement; agreed after team discussion
 S08,no_critique,S08_nocrit_3c7f52,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S08_nocrit_3c7f52_a0.png,pass,pass,,
 S09,no_critique,S09_nocrit_6e5a33,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S09_nocrit_6e5a33_a0.png,pass,pass,,
 S10,no_critique,S10_nocrit_dfc6bb,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S10_nocrit_dfc6bb_a0.png,pass,pass,,
-S11,no_critique,S11_nocrit_e1f7b8,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S11_nocrit_e1f7b8_a0.png,pass,fail,,
+S11,no_critique,S11_nocrit_e1f7b8,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S11_nocrit_e1f7b8_a0.png,pass,fail,fail,disagreement; agreed after team discussion
 S12,no_critique,S12_nocrit_3a372f,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S12_nocrit_3a372f_a0.png,pass,pass,,
 S13,no_critique,S13_nocrit_32dc9d,,pass,pass,,
 S14,no_critique,S14_nocrit_d401bf,,pass,pass,,
