@@ -11,7 +11,7 @@ cells = [
 md("""# DATA 266 Lab 2 - Part 3: A Multimodal Multi-Agent System for Image Understanding and Generation
 
 **Runs on one free Colab T4 (16 GB).** Put the contents of `part3/member-anushka/` in
-*My Drive / Sem3 / DATA266 / lab2 / Part3* (so that folder contains `p3/`, `data/`, `notebooks/`, ...), open
+*My Drive / Sem3 / DATA266 / Lab2 / Part3* (so that folder contains `p3/`, `eval/`, `notebooks/`, ...), open
 this notebook from there, choose *Runtime -> Change runtime type -> T4 GPU*, then *Runtime -> Run all*
 (~45-60 min). The first cell mounts Drive; outputs are written back to `Part3/outputs/`.
 Alternatives: upload `part3_colab.zip` to `/content`, attach it as a Kaggle dataset, or run locally from the project root.
@@ -32,13 +32,19 @@ No hosted APIs are used."""),
 code("""# Cell 1 - setup + run information (required)
 import os, sys, subprocess, zipfile, glob, shutil
 IN_COLAB = "google.colab" in sys.modules
-DRIVE_DIR = "/content/drive/MyDrive/Sem3/DATA266/lab2/Part3"   # project folder on Google Drive
+DRIVE_DIR = "/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3"   # project folder on Google Drive
 if IN_COLAB and not os.path.isdir("/content/drive/MyDrive"):
     from google.colab import drive
     drive.mount("/content/drive")
-# find the project folder (contains p3/); on Colab/Kaggle unzip the uploaded project first
+# Drive folder names are case-sensitive here; also accept lab2/Lab2, a Part3 found a few levels
+# deep, or a member-anushka subfolder created by a folder upload
+drive_cands = [DRIVE_DIR, DRIVE_DIR.replace("/Lab2/", "/lab2/")]
+for pat in ["/content/drive/MyDrive/*/Part3", "/content/drive/MyDrive/*/*/Part3",
+            "/content/drive/MyDrive/*/*/*/Part3", "/content/drive/MyDrive/*/*/*/*/Part3"]:
+    drive_cands += sorted(glob.glob(pat)) if IN_COLAB else []
+drive_cands += [d + "/member-anushka" for d in drive_cands]
 if not os.path.isdir("p3"):
-    for cand in [DRIVE_DIR, "/content/part3", "/kaggle/working/part3", "..", "../part3"]:
+    for cand in drive_cands + ["/content/part3", "/kaggle/working/part3", "..", "../part3"]:
         if os.path.isdir(os.path.join(cand, "p3")):
             os.chdir(cand); break
     else:
