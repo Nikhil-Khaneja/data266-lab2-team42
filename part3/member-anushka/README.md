@@ -40,7 +40,7 @@ Python and writes a JSON trace per request (`outputs/traces/<request_id>.json`: 
 
 **Colab (free T4, the graded setting)**
 1. Copy the contents of this folder (`part3/member-anushka/`) to Google Drive at
-   *My Drive / Sem3 / DATA266 / lab2 / Part3*, so that `Part3/p3/`, `Part3/eval/` and `Part3/notebooks/` exist.
+   *My Drive / Sem3 / DATA266 / Lab2 / Part3*, so that `Part3/p3/`, `Part3/eval/` and `Part3/notebooks/` exist.
 2. Open `Part3/notebooks/p3_agents.ipynb` in Colab and choose *Runtime → Change runtime type → T4 GPU*.
 3. *Runtime → Run all* (~45-60 min). The first cell mounts Drive (approve the prompt), switches to
    the Part3 folder, installs `requirements-colab.txt`, and downloads/generates the test images into
