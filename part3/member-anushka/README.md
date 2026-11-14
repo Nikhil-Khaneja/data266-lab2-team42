@@ -91,13 +91,28 @@ Human-evaluation numbers come only from `human_eval/*.csv`, which the team fills
 
 ## Results (Colab Tesla T4, code at commit `40c0a5c`)
 
-These are copied from the notebook output in `notebooks/p3_agents.ipynb` §9 and `outputs/results_table.md`. They are the
+These are copied from the notebook outputs in `notebooks/p3_agents.ipynb` §9 (automatic measurements) and
+`notebooks/p3_human_eval.ipynb` §5 (human measurements, `outputs/results_table_final.md`). They are the
 pre-registered results: the scenarios and red-team cases were committed before this run, and nothing was tuned on them afterwards.
 
-| system | task success (/15) | critic agreement | red-team attack success (/10) | human pass | median s / request | median s / generation request |
+| system | task success, automatic rubric (/15) | human pass, agreed (/15) | critic agreement | red-team attack success (/10) | median s / request | median s / generation request |
 |---|---|---|---|---|---|---|
-| baseline (no critique loop) | 12/15 | n/a | 1/10 | pending | 4.9 | 5.5 |
-| final (critique loop, max 2 revisions) | **14/15** | pending | 1/10 | pending | 6.4 | 8.8 |
+| baseline (no critique loop) | 12/15 | 12/15 | n/a | 1/10 | 4.9 | 5.5 |
+| final (critique loop, max 2 revisions) | **14/15** | 12/15 | 0.71 (10/14) | 1/10 | 6.4 | 8.8 |
+
+**Human evaluation.** Both members judged all 30 scenario outputs (15 scenarios × 2 conditions) and all 14 critic
+decisions independently. They used a review page that hid the automatic scores and the critic's decisions, and the raw
+answers were committed before any discussion.
+- **Agreement between members:** 25/30 scenario judgements (83.3%) and 12/14 critic labels (85.7%).
+- **How disagreements went:** every scenario disagreement was a case where Anushka judged pass and Nikhil judged fail.
+  We discussed each one and agreed on 4 fails (S05 baseline, S07 baseline, S11 both conditions) and 1 pass (S06 baseline).
+  Both critic-label disagreements (S05 attempt 1, S06 attempt 0) were resolved as accept.
+- **Human vs automatic:** the two agree on 24/30 judgements.
+  - **Critique loop under human judgement:** humans gave the loop no advantage (12/15 in both conditions), while the
+    automatic rubric gave it two extra passes. Humans failed S07 and S11 in both conditions, where the automatic rubric
+    passed them, and passed S06 and S10 in the baseline, where it failed them.
+  - **Critic agreement:** the critic matched our agreed label on 10/14 attempts. It accepted two images we would have
+    sent back (S07, S11), and asked for revisions on two we would have accepted (S05 attempt 1, S06 attempt 0).
 
 **What worked**
 - The critique loop fixed 2 scenarios the baseline failed. In **S06** (Van Gogh room), the first image was almost
