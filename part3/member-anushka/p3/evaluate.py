@@ -116,8 +116,16 @@ HUMAN_DIR = Path(os.environ.get("P3_HUMAN_DIR", ROOT / "human_eval"))
 
 def write_templates(scen_rows: list[dict], out_dir: str) -> None:
     HUMAN_DIR.mkdir(exist_ok=True)
+
+    def unfilled(path: Path) -> bool:
+        """True if the file is missing or nobody has entered a judgement yet (safe to regenerate)."""
+        if not path.exists():
+            return True
+        rows = list(csv.DictReader(open(path, encoding="utf-8")))
+        return not any((v or "").strip() for r in rows for k, v in r.items() if k and k.startswith(("member", "resolved", "agreed")))
+
     p = HUMAN_DIR / "scenario_judgements.csv"
-    if not p.exists():
+    if unfilled(p):
         with open(p, "w", newline="", encoding="utf-8") as f:
             w = csv.writer(f)
             w.writerow(["scenario_id", "condition", "request_id", "final_image", "member1_pass", "member2_pass",
@@ -125,7 +133,7 @@ def write_templates(scen_rows: list[dict], out_dir: str) -> None:
             for r in scen_rows:
                 w.writerow([r["id"], r["condition"], r["request_id"], r["final_image"] or "", "", "", "", ""])
     p = HUMAN_DIR / "critic_labels.csv"
-    if not p.exists():
+    if unfilled(p):
         with open(p, "w", newline="", encoding="utf-8") as f:
             w = csv.writer(f)
             w.writerow(["scenario_id", "request_id", "attempt", "image_path", "critic_decision", "member1_decision",
