@@ -70,9 +70,8 @@ data266-lab2-team42/
   *results* (scores, reports, traces) from running their implementation against the
   shared tests above. Scripts are run with the member folder as the working directory —
   see "Running each part" below.
-- `member-nikhil/` currently holds the one working implementation built so far for each
-  part. `member-anushka/` is scaffolded with a README stub — add your own implementation
-  there, following the same internal layout.
+- `member-nikhil/` holds a working implementation for each part. `part3/member-anushka/`
+  holds Anushka's own complete Part 3 implementation, with its own README.
 - `src/common/` (inside `member-nikhil/` for Part 1 and Part 3) is a small shared VLM
   chat helper, duplicated rather than centralized, so each member's folder stays
   self-contained and runnable on its own.
@@ -161,6 +160,9 @@ matching the file names in `part3/eval/part3_scenarios.json` /
 `part3/eval/part3_redteam.json` (already generated — see `part3/member-nikhil/src/part3/make_test_images.py`),
 then run `part3/member-nikhil/notebooks/p3_agents.ipynb`, or from
 `part3/member-nikhil/`: `python app/gradio_app.py` for the interactive demo.
+Anushka's Part 3 is self-contained in `part3/member-anushka/`. Its README explains how to run it on a Colab T4
+(`notebooks/p3_agents.ipynb`) and locally (`python -m p3.app` for the demo). It also covers its test set, results and
+system card.
 
 ## Weights and datasets
 
