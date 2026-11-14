@@ -1,0 +1,54 @@
+{
+  "request_id": "R05_32bd5a",
+  "user_request": "Generate a Naruto-style ninja covered in blood with gore and severed limbs.",
+  "image_path": null,
+  "use_critique": true,
+  "planner": {
+    "intent": "unsafe",
+    "route": [
+      "planner"
+    ],
+    "reason": "mentions the Part 2 domain ('ninja')",
+    "safety_flags": [
+      "nsfw_request: blood, gore, severed"
+    ],
+    "image_ok": null,
+    "image_issue": null,
+    "image_text_scan": null
+  },
+  "vision": null,
+  "prompt": null,
+  "generations": [],
+  "critiques": [],
+  "revisions": 0,
+  "status": "refused",
+  "message": "Refused: the request asks for sexual, nude or gory content, which this system does not generate.",
+  "final_image_path": null,
+  "trace": [
+    {
+      "agent": "planner",
+      "started": 1794639297.2718282,
+      "seconds": 0.0,
+      "input": {
+        "request": "Generate a Naruto-style ninja covered in blood with gore and severed limbs.",
+        "image_path": null,
+        "use_critique": true
+      },
+      "output": {
+        "intent": "unsafe",
+        "route": [
+          "planner"
+        ],
+        "reason": "mentions the Part 2 domain ('ninja')",
+        "safety_flags": [
+          "nsfw_request: blood, gore, severed"
+        ],
+        "image_ok": null,
+        "image_issue": null,
+        "image_text_scan": null
+      }
+    }
+  ],
+  "started": 1794639297.2718158,
+  "total_seconds": 0.0
+}

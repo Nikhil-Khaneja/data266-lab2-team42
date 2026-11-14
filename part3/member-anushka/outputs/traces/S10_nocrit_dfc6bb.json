@@ -1,0 +1,184 @@
+{
+  "request_id": "S10_nocrit_dfc6bb",
+  "user_request": "Draw these two cats in Naruto anime style.",
+  "image_path": "/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/data/images/cats.jpg",
+  "use_critique": false,
+  "planner": {
+    "intent": "domain_generation",
+    "route": [
+      "planner",
+      "vision",
+      "prompt_engineering",
+      "image_generation"
+    ],
+    "reason": "mentions the Part 2 domain ('naruto')",
+    "safety_flags": [],
+    "image_ok": true,
+    "image_issue": null,
+    "image_text_scan": ""
+  },
+  "vision": {
+    "caption": "Two cats are laying on a pink couch with remote controls nearby.",
+    "objects": [
+      "cats",
+      "remote controls",
+      "pink blanket"
+    ],
+    "visible_text": "",
+    "qa": [
+      {
+        "question": "Where does this scene take place? Answer in one short sentence.",
+        "answer": "in living room"
+      },
+      {
+        "question": "What are the main colors in this image? Answer briefly.",
+        "answer": "Pink and brown."
+      }
+    ]
+  },
+  "prompt": {
+    "mode": "domain_img2img",
+    "prompt": "naruto anime style, Two cats are laying on a pink couch with remote controls nearby, two cats in Naruto anime style, anime illustration, clean line art",
+    "negative_prompt": "lowres, blurry, deformed, distorted, disfigured, bad anatomy, extra limbs, watermark, signature, text, nsfw, nude, gore, photo, photorealistic",
+    "strength": 0.7,
+    "guidance_scale": 7.5,
+    "image_guidance_scale": null,
+    "applied_revision": null
+  },
+  "generations": [
+    {
+      "attempt": 0,
+      "mode": "domain_img2img",
+      "model": "stable-diffusion-v1-5/stable-diffusion-v1-5 + Anushka1202/data266-lab2-part2-lora-rank16",
+      "lora": "Anushka1202/data266-lab2-part2-lora-rank16",
+      "prompt": "naruto anime style, Two cats are laying on a pink couch with remote controls nearby, two cats in Naruto anime style, anime illustration, clean line art",
+      "negative_prompt": "lowres, blurry, deformed, distorted, disfigured, bad anatomy, extra limbs, watermark, signature, text, nsfw, nude, gore, photo, photorealistic",
+      "seed": 266,
+      "steps": 30,
+      "strength": 0.7,
+      "guidance_scale": 7.5,
+      "image_guidance_scale": null,
+      "resolution": [
+        512,
+        384
+      ],
+      "nsfw_flagged": false,
+      "image_path": "/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S10_nocrit_dfc6bb_a0.png",
+      "seconds": 3.22
+    }
+  ],
+  "critiques": [],
+  "revisions": 0,
+  "status": "completed",
+  "message": "Generated with stable-diffusion-v1-5/stable-diffusion-v1-5 + Anushka1202/data266-lab2-part2-lora-rank16 (mode domain_img2img, seed 266, 30 steps).",
+  "final_image_path": "/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S10_nocrit_dfc6bb_a0.png",
+  "trace": [
+    {
+      "agent": "planner",
+      "started": 1794639257.0233831,
+      "seconds": 0.267,
+      "input": {
+        "request": "Draw these two cats in Naruto anime style.",
+        "image_path": "/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/data/images/cats.jpg",
+        "use_critique": false
+      },
+      "output": {
+        "intent": "domain_generation",
+        "route": [
+          "planner",
+          "vision",
+          "prompt_engineering",
+          "image_generation"
+        ],
+        "reason": "mentions the Part 2 domain ('naruto')",
+        "safety_flags": [],
+        "image_ok": true,
+        "image_issue": null,
+        "image_text_scan": ""
+      }
+    },
+    {
+      "agent": "vision",
+      "started": 1794639257.2905936,
+      "seconds": 1.914,
+      "input": {
+        "image_path": "/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/data/images/cats.jpg",
+        "intent": "domain_generation"
+      },
+      "output": {
+        "caption": "Two cats are laying on a pink couch with remote controls nearby.",
+        "objects": [
+          "cats",
+          "remote controls",
+          "pink blanket"
+        ],
+        "visible_text": "",
+        "qa": [
+          {
+            "question": "Where does this scene take place? Answer in one short sentence.",
+            "answer": "in living room"
+          },
+          {
+            "question": "What are the main colors in this image? Answer briefly.",
+            "answer": "Pink and brown."
+          }
+        ]
+      }
+    },
+    {
+      "agent": "prompt_engineering",
+      "started": 1794639259.2045474,
+      "seconds": 0.0,
+      "input": {
+        "request": "Draw these two cats in Naruto anime style.",
+        "caption": "Two cats are laying on a pink couch with remote controls nearby.",
+        "revision": null
+      },
+      "output": {
+        "mode": "domain_img2img",
+        "prompt": "naruto anime style, Two cats are laying on a pink couch with remote controls nearby, two cats in Naruto anime style, anime illustration, clean line art",
+        "negative_prompt": "lowres, blurry, deformed, distorted, disfigured, bad anatomy, extra limbs, watermark, signature, text, nsfw, nude, gore, photo, photorealistic",
+        "strength": 0.7,
+        "guidance_scale": 7.5,
+        "image_guidance_scale": null,
+        "applied_revision": null
+      }
+    },
+    {
+      "agent": "image_generation",
+      "started": 1794639259.2046661,
+      "seconds": 3.303,
+      "input": {
+        "mode": "domain_img2img",
+        "prompt": "naruto anime style, Two cats are laying on a pink couch with remote controls nearby, two cats in Naruto anime style, anime illustration, clean line art",
+        "negative_prompt": "lowres, blurry, deformed, distorted, disfigured, bad anatomy, extra limbs, watermark, signature, text, nsfw, nude, gore, photo, photorealistic",
+        "strength": 0.7,
+        "guidance_scale": 7.5,
+        "image_guidance_scale": null,
+        "applied_revision": null
+      },
+      "output": {
+        "attempt": 0,
+        "mode": "domain_img2img",
+        "model": "stable-diffusion-v1-5/stable-diffusion-v1-5 + Anushka1202/data266-lab2-part2-lora-rank16",
+        "lora": "Anushka1202/data266-lab2-part2-lora-rank16",
+        "prompt": "naruto anime style, Two cats are laying on a pink couch with remote controls nearby, two cats in Naruto anime style, anime illustration, clean line art",
+        "negative_prompt": "lowres, blurry, deformed, distorted, disfigured, bad anatomy, extra limbs, watermark, signature, text, nsfw, nude, gore, photo, photorealistic",
+        "seed": 266,
+        "steps": 30,
+        "strength": 0.7,
+        "guidance_scale": 7.5,
+        "image_guidance_scale": null,
+        "resolution": [
+          512,
+          384
+        ],
+        "nsfw_flagged": false,
+        "image_path": "/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S10_nocrit_dfc6bb_a0.png",
+        "seconds": 3.22
+      }
+    }
+  ],
+  "started": 1794639257.0233727,
+  "total_seconds": 5.484
+}
