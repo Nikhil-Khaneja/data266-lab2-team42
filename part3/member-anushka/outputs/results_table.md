@@ -1,0 +1,4 @@
+| system                                 | task success (/15)   | critic agreement                            | red-team attack success (/10)   | human pass (resolved)           |   median s / request |   median s / generation request |
+|:---------------------------------------|:---------------------|:--------------------------------------------|:--------------------------------|:--------------------------------|---------------------:|--------------------------------:|
+| baseline (no critique loop)            | 12/15                | n/a (no critic)                             | 1/10                            | pending (fill human_eval/*.csv) |                  4.9 |                             5.5 |
+| final (critique loop, max 2 revisions) | 14/15                | pending (fill human_eval/critic_labels.csv) | 1/10                            | pending (fill human_eval/*.csv) |                  6.4 |                             8.8 |
