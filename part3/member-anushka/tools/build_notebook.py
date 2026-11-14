@@ -60,6 +60,8 @@ assert os.path.isdir("p3"), f"Project not found: copy part3/member-anushka/* to 
 print("project folder:", os.getcwd())
 if IN_COLAB or os.path.isdir("/kaggle"):
     subprocess.run([sys.executable, "-m", "pip", "install", "-q", "-r", "requirements-colab.txt"], check=True)
+    # Colab ships torchao 0.10, which makes peft refuse to load LoRA weights; we do not use torchao
+    subprocess.run([sys.executable, "-m", "pip", "uninstall", "-y", "-q", "torchao"])
 # test images are not in git (repo policy): download/generate them if missing
 subprocess.run([sys.executable, "tools/make_assets.py"], check=True)
 
