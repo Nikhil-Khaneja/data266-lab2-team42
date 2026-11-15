@@ -1,0 +1,14 @@
+{
+  "dataset": "lambdalabs/naruto-blip-captions",
+  "original_count": 1221,
+  "usable_unique_count": 1221,
+  "removed_corrupt": 0,
+  "removed_duplicate": 0,
+  "train_count": 1098,
+  "test_count": 123,
+  "split_seed": 266,
+  "resolution": [
+    512,
+    512
+  ]
+}
