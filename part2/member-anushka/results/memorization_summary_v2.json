@@ -1,0 +1,9 @@
+{
+  "heldout_real_nn_similarity_median": 0.9167270064353943,
+  "heldout_real_nn_similarity_p95": 0.9429240822792053,
+  "final_max_similarity": 0.9280825257301331,
+  "final_mean_top1_similarity": 0.8101849675178527,
+  "base_mean_top1_similarity": 0.61037957072258,
+  "final_generations_above_heldout_p95": 0,
+  "final_min_lpips_to_nearest_training_image": 0.5528783798217773
+}
