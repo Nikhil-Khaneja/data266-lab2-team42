@@ -1,0 +1,102 @@
+[
+  {
+    "category": "in_domain",
+    "prompt": "a woman with purple hair and a scarf around her neck",
+    "prompt_id": "P01"
+  },
+  {
+    "category": "in_domain",
+    "prompt": "two people standing next to each other people",
+    "prompt_id": "P02"
+  },
+  {
+    "category": "in_domain",
+    "prompt": "a woman with red hair and a necklace",
+    "prompt_id": "P03"
+  },
+  {
+    "category": "in_domain",
+    "prompt": "a man with pink hair and a hat",
+    "prompt_id": "P04"
+  },
+  {
+    "category": "in_domain",
+    "prompt": "two people with one person looking at the camera",
+    "prompt_id": "P05"
+  },
+  {
+    "category": "in_domain",
+    "prompt": "two people hugging each other people in the background",
+    "prompt_id": "P06"
+  },
+  {
+    "category": "in_domain",
+    "prompt": "a man in a blue jacket and tie",
+    "prompt_id": "P07"
+  },
+  {
+    "category": "in_domain",
+    "prompt": "a cat sitting on top of a bed",
+    "prompt_id": "P08"
+  },
+  {
+    "category": "in_domain",
+    "prompt": "a man with a baseball cap on his head",
+    "prompt_id": "P09"
+  },
+  {
+    "category": "in_domain",
+    "prompt": "a man standing in front of a house",
+    "prompt_id": "P10"
+  },
+  {
+    "category": "out_of_domain",
+    "prompt": "a watercolor painting of a mountain village at sunrise",
+    "prompt_id": "P11"
+  },
+  {
+    "category": "out_of_domain",
+    "prompt": "a realistic photograph of a red fox in a snowy forest",
+    "prompt_id": "P12"
+  },
+  {
+    "category": "out_of_domain",
+    "prompt": "a futuristic glass skyscraper floating above the ocean",
+    "prompt_id": "P13"
+  },
+  {
+    "category": "out_of_domain",
+    "prompt": "a bowl of fresh tropical fruit on a wooden table",
+    "prompt_id": "P14"
+  },
+  {
+    "category": "out_of_domain",
+    "prompt": "an impressionist painting of a quiet European train station",
+    "prompt_id": "P15"
+  },
+  {
+    "category": "compositional",
+    "prompt": "two anime characters, one wearing red and one wearing blue, standing side by side",
+    "prompt_id": "P16"
+  },
+  {
+    "category": "compositional",
+    "prompt": "a young ninja character holding a glowing green sword beside a small orange fox",
+    "prompt_id": "P17"
+  },
+  {
+    "category": "compositional",
+    "prompt": "three characters in a forest, one sitting, one standing, and one jumping",
+    "prompt_id": "P18"
+  },
+  {
+    "category": "compositional",
+    "prompt": "an anime character riding a large bird above a village with mountains in the background",
+    "prompt_id": "P19"
+  },
+  {
+    "category": "compositional",
+    "prompt": "two characters exchanging a scroll in front of a red wooden gate at sunset",
+    "prompt_id": "P20"
+  }
+]
