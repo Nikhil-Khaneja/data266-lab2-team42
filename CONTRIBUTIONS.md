@@ -14,68 +14,43 @@ scaffolded and pending her own implementation.
 
 ## Part 1 — MultiModal RAG
 
-- Ingestion (PDF text/figure extraction), hybrid retrieval (dense + BM25 + ChromaDB),
-  conversation memory, answering-rules engine, Kaggle submission script, golden-set
-  scoring harness: implemented and run against the real documents.
-- 25-question golden set written and verified by hand against the real documents.
-- Current real results (both baseline-dense and final-hybrid): 11/25 correct, 72%
-  Recall@5, 100% citation accuracy, ~2.5s median per question. Baseline and final match
-  on this small a corpus (78 chunks) — hybrid retrieval and dense-only retrieval return
-  the same top-5 results for nearly every golden-set question here.
-- Found and fixed several real bugs during evaluation: 800-char chunking was splitting
-  tables mid-row (caused wrong numbers); DOC1's vector-drawn charts weren't extracted at
-  all (get_images() only finds embedded raster images); generation wasn't deterministic
-  (same question, different answers across runs); several golden-set scoring bugs.
-- Ran the real Kaggle submission pipeline locally against the 40-question practice set
-  (`Questions.csv`) and the lab's own `validate_submission.py`: found that 18/40 (45%)
-  of citations and 1/40 figure references failed the required strict format, because
-  the model was copying stray text (a " trust=high" annotation, or a citation-style
-  "DOCn:" prefix) out of the retrieved-context labels into its output. Fixed with a
-  tightened prompt plus a regex sanitizer applied to every answer. This also raised
-  golden-set citation accuracy from 86% to 100%, since the same malformed citations
-  were failing the golden-set checker too. `submission.csv` passed
-  `validate_submission.py` cleanly (40/40 valid rows) and was submitted to the real
-  competition (`data-266-fall-2026-lab-2-part-1-multimodal-rag`): **public leaderboard
-  score 0.571** (submission ref 57729902, 2026-10-28).
-- Found and fixed a second real bug while trying to improve that score: `HybridIndex`'s
-  BM25 index was only ever built once, in the (never fully executed) notebook, during
-  initial ingestion. Every other entry point re-opens the persisted Chroma directory
-  with a fresh `HybridIndex`, so `self.bm25` stayed `None` and "hybrid" retrieval had
-  silently been pure dense search the whole time — including for the first Kaggle
-  submission above. Also found the BM25 tokenizer stripped no punctuation, so a query
-  word like `"slowdown?"` never matched `"slowdown"` in the documents. Fixed both:
-  BM25 now rebuilds from the persisted collection on load, with a proper regex
-  tokenizer. Golden-set recall@5 rose from 72% to 80% (11/25 to 12/25 correct); also
-  fixed a prompt gap that dropped the minus sign on negative values (budget deficits).
-  Resubmitted: **public score 0.555** (ref 57789018, 2026-10-30) — slightly lower than
-  before on this public ~20-question sample, which we read as sampling noise rather
-  than a regression, since the retrieval bug fixed here was objectively broken (BM25
-  was never running at all) rather than a judgment call.
-- Pushed further for a better score and found a real scoring-harness bug: `ConversationStore`
-  overwrote its stored `Conversation` every time it was called with the same
-  `conversation_id`, so our own per-item golden-set/diagnostic loop silently lost all
-  session-override state and turn history on every multi-turn item (the real
-  `kaggle_submit.py` path groups by conversation first and was not affected). Also added:
-  a fallback that salvages citations/figure-refs/answer text from the model's raw output
-  when it skips the required JSON envelope instead of discarding a correct answer as
-  `not_found`; a direct doc_id/page lookup for figure-naming questions, since they often
-  don't share enough vocabulary with the surrounding page prose for semantic search to
-  rank it highly; retrieval-query widening for short follow-ups; and several prompt
-  strengthenings (trust-precedence between sources, a concrete false-premise example,
-  and a rule to include every context-given value related to the question, not just the
-  one asked for). Golden-set correct count rose from 11/25 to 15/25 and recall@5 from 72%
-  to 80%. Resubmitted: **public score 0.531** (ref 57811667, 2026-10-30) — lower than
-  both prior submissions, despite every one of these changes improving our own 25-question
-  golden set. This is the first result in the series that looks like a real regression
-  rather than sampling noise: three submissions in a row moved the same direction (down)
-  while our local proxy moved the opposite direction each time, which is the signature of
-  overfitting to our own golden set rather than the actual held-out question distribution
-  (most likely culprit: the "include every related value" completeness rule, which makes
-  answers longer and asserts more facts/citations, each one a new chance to be wrong on
-  questions our golden set doesn't cover). The team's best submission remains **0.571**
-  (ref 57729902). We stopped spending the daily submission quota on further unvalidated
-  prompt changes pending a clearer hypothesis, rather than keep guessing against a
-  3-submission/day budget.
+Part 1 is shared. Both members built a complete pipeline.
+
+### Nikhil — `part1/member-nikhil/`
+
+All numbers below are printed by `part1/member-nikhil/notebooks/p1_rag.ipynb` (Kaggle T4, version 7,
+code at commit `9d19eb1`) and saved in `part1/member-nikhil/eval/`. Change-by-change history: `part1/member-nikhil/EXPERIMENTS.md`.
+
+- Ingestion with PyMuPDF: text passages, numbered tables read cell by cell, every numbered figure and
+  table cropped, with captions matched to figures by page geometry. Figures are searchable through
+  VLM-written descriptions.
+- Retrieval: ChromaDB (bge-small) plus BM25, fused with RRF and reranked by a cross-encoder
+  (bge-reranker-v2-m3). Low-trust content (Document 3, Appendix C) is filtered before ranking.
+- Answering with Qwen2.5-VL-7B (4-bit). Table cells become facts keyed by place, variable and year,
+  so revisions, outturns that replace forecasts, and conflicts are decided in code. Named figures go to
+  a focused chart reader. The model writes its arithmetic and code recomputes it. Conversation memory
+  is kept per `conversation_id`, and user-supplied values stay in their own conversation.
+- Golden set of 25 questions (`part1/eval/part1_golden_set.json`). Four items that overlapped
+  practice questions were replaced on 2026-11-15; see EXPERIMENTS.md.
+- Results on the golden set:
+
+  | System | Correct (/25) | Recall@5 | Citation accuracy | Median s/question |
+  |---|---|---|---|---|
+  | Baseline: dense retrieval only | 12 | 0.88 | 0.99 | 12.0 |
+  | Hybrid, no reranker | 20 | 0.92 | 0.99 | 12.1 |
+  | Final: hybrid + reranker | 20 | 1.00 | 1.00 | 11.8 |
+
+- Kaggle: best public score 0.867, from the Kaggle notebook (submissions 58293679 and 58381645). The full
+  run answers the 40 questions in about 6.5 minutes with 12.0 GB peak GPU memory.
+- Safety: neither the reader-comment false claim nor the instruction printed inside Figure C-1 was
+  followed on the golden set (G18, G19).
+- Human evaluation: groundedness sheet with the cited text for each answer
+  (`part1/member-nikhil/eval/part1_groundedness_sheet.csv`), rated 1-5 by both members.
+
+### Anushka — `part1/member-anushka/`
+
+Her pipeline produced the team's best public score, 0.881 (submission 58377565, 2026-11-15).
+Her code and executed notebook go in `part1/member-anushka/`.
 
 ## Part 2 — Diffusion Fine-Tuning
 

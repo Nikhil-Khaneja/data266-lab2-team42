@@ -3,7 +3,7 @@
   "primary_correct_out_of": "12/25",
   "secondary_recall_at_5": 0.88,
   "secondary_citation_accuracy": 0.99,
-  "efficiency_median_seconds": 11.764046430587769,
+  "efficiency_median_seconds": 12.028469324111938,
   "items": {
    "G01": {
     "correct": true,
@@ -81,7 +81,7 @@
     "correct": false,
     "recall@5": true,
     "status": "answered",
-    "answer": "China's 2012 output growth was 7.8%, reflecting weaker export demand from Europe and a shift away from investment-led growth."
+    "answer": "China's investment relative to GDP was 48% in 2012, compared to 17% in the United States."
    },
    "G14": {
     "correct": false,
@@ -93,13 +93,13 @@
     "correct": false,
     "recall@5": true,
     "status": "answered",
-    "answer": "U.S. output growth in 2010 was 2.4%, as reported in both sources."
+    "answer": "Under your assumption of 9.8% for this conversation, the documents report the same value."
    },
    "G16": {
     "correct": false,
     "recall@5": false,
     "status": "answered",
-    "answer": "The Euro area's unemployment rate was 9.9% in 2012, which is both the outturn and the forecast."
+    "answer": "The inflation rate for China in 2011, as reported in Document 1, was 3.3% (forecast). This forecast was superseded by the outturn of 3.3% reported in Document 2."
    },
    "G17": {
     "correct": false,
@@ -111,7 +111,7 @@
     "correct": false,
     "recall@5": false,
     "status": "answered",
-    "answer": "The unemployment rate in the Euro area for 2012 was 9.9%."
+    "answer": "The U.S. inflation rate in 2009 was 1.4%, according to the forecast provided in Document 1."
    },
    "G19": {
     "correct": false,
@@ -158,10 +158,10 @@
   }
  },
  "hybrid, no reranker": {
-  "primary_correct_out_of": "19/25",
-  "secondary_recall_at_5": 0.88,
+  "primary_correct_out_of": "20/25",
+  "secondary_recall_at_5": 0.92,
   "secondary_citation_accuracy": 0.9866666666666667,
-  "efficiency_median_seconds": 11.063045740127563,
+  "efficiency_median_seconds": 12.149100303649902,
   "items": {
    "G01": {
     "correct": true,
@@ -236,10 +236,10 @@
     "answer": "The U.S. inflation rate (GDP deflator) in 2009 was -0.3%. Document 3 explains that the difference between the GDP deflator and headline CPI in 2009 occurred because energy prices collapsed, causing the GDP deflator to fall slightly while the core CPI inflation remained positive."
    },
    "G13": {
-    "correct": false,
+    "correct": true,
     "recall@5": true,
     "status": "answered",
-    "answer": "China's 2012 output growth was 7.7% (outturn), slowing from above 9% to below 8%. Document 3 attributes this slowdown to weaker export demand from Europe and a shift away from investment-led growth."
+    "answer": "China's investment relative to GDP in 2012 was 48%, according to Document 3, which is higher than the 40% reported in Document 1. This compares with the 17% investment rate in the United States."
    },
    "G14": {
     "correct": false,
@@ -248,16 +248,16 @@
     "answer": "Document 1 identifies two channels: trade and financial, explaining how the 2008 U.S. crisis spread globally. Document 3 notes China's economic slowdown but highlights that its registered urban unemployment rate has remained stable."
    },
    "G15": {
-    "correct": true,
+    "correct": false,
     "recall@5": true,
     "status": "answered",
-    "answer": "United States output growth in 2010: 2.4, revised from 3.0 (DOC2 p3). The revision supersedes the earlier value."
+    "answer": "Both sources report the U.S. unemployment rate as 9.8% in 2010."
    },
    "G16": {
     "correct": true,
-    "recall@5": false,
+    "recall@5": true,
     "status": "answered",
-    "answer": "Euro area unemployment in 2012: 11.4 outturn (DOC2 Table A-2), replacing the 9.9 forecast."
+    "answer": "The inflation rate for China in 2011 is 7.8%, replacing the forecasted 5.5%."
    },
    "G17": {
     "correct": false,
@@ -266,10 +266,10 @@
     "answer": "The Okun's law slope for the United States varies slightly depending on the sample period: -0.41 for 1961-2013 and -0.42 for 1961-2010."
    },
    "G18": {
-    "correct": false,
+    "correct": true,
     "recall@5": false,
     "status": "answered",
-    "answer": "Euro area unemployment in 2012: 11.4 outturn (DOC2 Table A-2), replacing the 9.9 forecast."
+    "answer": "The U.S. inflation rate in 2009 was -0.3%, as reported in both DOC1 and DOC3."
    },
    "G19": {
     "correct": false,
@@ -316,10 +316,10 @@
   }
  },
  "final (hybrid + reranker)": {
-  "primary_correct_out_of": "19/25",
+  "primary_correct_out_of": "20/25",
   "secondary_recall_at_5": 1.0,
   "secondary_citation_accuracy": 1.0,
-  "efficiency_median_seconds": 10.596620559692383,
+  "efficiency_median_seconds": 11.823967456817627,
   "items": {
    "G01": {
     "correct": true,
@@ -394,10 +394,10 @@
     "answer": "The U.S. inflation rate (GDP deflator) in 2009 was -0.3%, as reported by multiple sources. Document 3 explains that headline CPI inflation turned negative in 2009 due to collapsing energy prices, while the GDP deflator also fell slightly but remained positive."
    },
    "G13": {
-    "correct": false,
+    "correct": true,
     "recall@5": true,
     "status": "answered",
-    "answer": "China's 2012 output growth outturn was 7.7%. According to Document 3, the slowdown was due to weaker export demand from Europe and a deliberate shift away from investment-led growth."
+    "answer": "China's investment relative to GDP in 2012 was 48%, according to Document 3, which is higher than the 40% reported in Document 1 and significantly higher than the 17% in the United States."
    },
    "G14": {
     "correct": false,
@@ -406,16 +406,16 @@
     "answer": "Document 1 identifies two channels for the global spread of the 2008 U.S. crisis: trade and financial. Document 3 notes that China experienced a slowdown in growth but saw its registered urban unemployment rate remain stable."
    },
    "G15": {
-    "correct": true,
+    "correct": false,
     "recall@5": true,
     "status": "answered",
-    "answer": "United States output growth in 2010: 2.4, revised from 3.0 (DOC2 p3). The revision supersedes the earlier value."
+    "answer": "Both sources report the U.S. unemployment rate as 9.3% in 2009, with no disagreement."
    },
    "G16": {
     "correct": true,
     "recall@5": true,
     "status": "answered",
-    "answer": "Euro area unemployment in 2012: 11.4 outturn (DOC2 Table A-2), replacing the 9.9 forecast."
+    "answer": "The document reports China's inflation in 2011 as 5.5% (forecast), which is replaced by the outturn of 7.8%."
    },
    "G17": {
     "correct": false,
@@ -424,10 +424,10 @@
     "answer": "The Okun's law slope for the United States is -0.41."
    },
    "G18": {
-    "correct": false,
+    "correct": true,
     "recall@5": true,
     "status": "answered",
-    "answer": "Euro area unemployment in 2012: 11.4 outturn (DOC2 Table A-2), replacing the 9.9 forecast."
+    "answer": "The U.S. inflation rate in 2009 was -0.3%, as reported in both sources."
    },
    "G19": {
     "correct": false,
