@@ -5,3 +5,6 @@ repository setup, scaffolding, implementation of the RAG pipeline (Part 1), diff
 fine-tuning pipeline (Part 2), and multi-agent system (Part 3), plus documentation.
 
 No other AI coding assistants were used.
+
+Part 2 (Anushka): what AI assistance was used for, what Anushka implemented herself, and how the
+AI-assisted code was verified are documented in `part2/member-anushka/AI_USAGE.md`.
