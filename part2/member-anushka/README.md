@@ -23,7 +23,19 @@ part2/member-anushka/
 ├── notebooks/
 │   ├── p2_finetune.ipynb        2.1 data preparation, 2.2 training, 2.3 generation   (executed)
 │   └── p2_evaluate.ipynb        2.3 grids, 2.4 evaluation, safety, human eval, release (executed)
-├── results/                     CSV/JSON/log outputs of both notebooks (tables, metrics, ratings, decision)
+├── results/                     key outputs of the notebooks (everything is also printed in them)
+│   ├── part2_results_table_v2.md         the one results table (C2.1)
+│   ├── training_summary.csv              parameters, LR, steps, batch, time, GPU-hours, peak memory (2.2)
+│   ├── data_cleaning_report.json         images loaded / removed, split sizes (2.1)
+│   ├── kid_scores_in_domain_v2.csv       KID mean ± std per model (primary)
+│   ├── clip_scores.csv                   CLIP score per image (primary)
+│   ├── lpips_scores.csv                  LPIPS between the two seeds of each prompt (secondary)
+│   ├── human_evaluation_25_pairs_v2.csv  the 25 blinded pairs and all 75 ratings
+│   ├── human_evaluation_stats_v2.json    win rates, agreement, Fleiss' kappa, position bias
+│   ├── human_eval/raters.json            who rated (2 members + 1 outside rater)
+│   ├── safety_filter_report_v2.csv       NSFW flag for every generated image
+│   ├── memorization_generated_vs_train.csv  nearest training image for each in-domain generation
+│   └── final_run_decision.json           facts behind the rank-16 choice
 └── scripts/
     ├── p2_cells.py              source of every cell of p2_evaluate.ipynb
     └── build_p2_notebooks.py    rebuilds the notebooks from p2_cells.py

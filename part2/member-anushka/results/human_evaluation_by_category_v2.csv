@@ -1,4 +1,0 @@
-category,ratings,final_wins,base_wins,ties,final_win_rate_excl_ties,final_win_rate_ties_as_half
-in_domain,33,7,18,8,0.28,0.3333333333333333
-out_of_domain,21,8,3,10,0.7272727272727273,0.6190476190476191
-compositional,21,8,10,3,0.4444444444444444,0.4523809523809524
