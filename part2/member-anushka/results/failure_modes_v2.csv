@@ -1,0 +1,6 @@
+failure_mode,prompt_id,metric,value
+out_of_domain_largest_clip_drop,P12,clip_final_minus_base,-0.03936046361923218
+compositional_binding,P20,clip_lora_rank16,0.29929983615875244
+low_seed_diversity,P14,lpips_seed_distance,0.5527058839797974
+nsfw_false_positive,P04,lora_rank4_seed0_flagged,1.0
+nsfw_false_positive,P06,lora_rank4_seed0_flagged,1.0

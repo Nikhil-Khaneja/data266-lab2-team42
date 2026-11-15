@@ -1,0 +1,5 @@
+| model | KID in-domain (lower better) | CLIP score, 20 prompts | CLIP score, in-domain | LPIPS seed diversity | Human win rate vs base (excl. ties) | NSFW flagged / 40 | Training GPU-hours | Peak GPU memory (GiB) | Trainable parameters |
+|---|---|---|---|---|---|---|---|---|---|
+| base | 0.1420 ± 0.0260 | 0.3126 | 0.2953 | 0.6902 | reference | 0 | 0.0 | - | 0 |
+| lora_rank4 | 0.0336 ± 0.0155 | 0.3067 | 0.2885 | 0.6924 | not rated | 2 | 0.812 | 6.15 | 797184 |
+| lora_rank16 | 0.0351 ± 0.0162 | 0.3037 | 0.2865 | 0.6761 | 42.6% | 0 | 0.808 | 6.17 | 3188736 |
