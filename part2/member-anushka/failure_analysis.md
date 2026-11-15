@@ -21,7 +21,7 @@ failure-mode cell of that notebook draws and embeds (rows in the same order as t
 
 ## Summary of the measurements behind the analysis
 
-[results-table cell, `results/part2_results_table_v2.md`]
+[results-table cell; `eval/part2_metrics.json`]
 
 | model | KID in-domain ↓ (mean ± std, 100 subsets of 10) | CLIP, 20 prompts | CLIP, in-domain | LPIPS seed diversity | human win rate vs base (excl. ties) | NSFW flagged / 40 | GPU-hours | peak GiB |
 |---|---|---|---|---|---|---|---|---|
@@ -172,7 +172,7 @@ higher-capacity adapter fitting the training distribution more tightly, but the 
 
 ## Which run we choose and why
 
-**Final run: LoRA rank 16** [decision cell, `results/final_run_decision.json`].
+**Final run: LoRA rank 16** [decision cell; `eval/part2_data_and_decision.json`].
 
 | criterion | r4 | r16 | verdict |
 |---|---|---|---|

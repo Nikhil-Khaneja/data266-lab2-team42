@@ -19,23 +19,18 @@ part2/member-anushka/
 ├── failure_analysis.md          failure modes with examples, and the final-run choice (2.4.1)
 ├── requirements-p2.txt          pinned Colab environment (pip freeze of the training runtime + lpips)
 ├── eval/
-│   └── p2_fixed_20_prompts.json the 20 evaluation prompts, frozen before training (2.3.1)
+│   ├── p2_fixed_20_prompts.json        the 20 evaluation prompts, frozen before training (2.3.1)
+│   ├── part2_metrics.json              per model: KID ± std, CLIP and LPIPS (overall + by category), NSFW flags,
+│   │                                   human win rate, training parameters / time / GPU-hours / peak memory
+│   ├── part2_memorization.json         3 closest generated/training pairs, all 10 top-1 matches, calibration (C4)
+│   ├── part2_data_and_decision.json    data cleaning counts and split (2.1); facts behind the final-run choice (2.4.1)
+│   └── part2_human_eval/
+│       ├── blind_pairs.json            the 25 blinded pairs with all 75 ratings
+│       ├── answer_key.json             which model was shown on each side
+│       └── summary.json                raters, win rates per rater / category, agreement, Fleiss' kappa, position bias
 ├── notebooks/
 │   ├── p2_finetune.ipynb        2.1 data preparation, 2.2 training, 2.3 generation   (executed)
 │   └── p2_evaluate.ipynb        2.3 grids, 2.4 evaluation, safety, human eval, release (executed)
-├── results/                     key outputs of the notebooks (everything is also printed in them)
-│   ├── part2_results_table_v2.md         the one results table (C2.1)
-│   ├── training_summary.csv              parameters, LR, steps, batch, time, GPU-hours, peak memory (2.2)
-│   ├── data_cleaning_report.json         images loaded / removed, split sizes (2.1)
-│   ├── kid_scores_in_domain_v2.csv       KID mean ± std per model (primary)
-│   ├── clip_scores.csv                   CLIP score per image (primary)
-│   ├── lpips_scores.csv                  LPIPS between the two seeds of each prompt (secondary)
-│   ├── human_evaluation_25_pairs_v2.csv  the 25 blinded pairs and all 75 ratings
-│   ├── human_evaluation_stats_v2.json    win rates, agreement, Fleiss' kappa, position bias
-│   ├── human_eval/raters.json            who rated (2 members + 1 outside rater)
-│   ├── safety_filter_report_v2.csv       NSFW flag for every generated image
-│   ├── memorization_generated_vs_train.csv  nearest training image for each in-domain generation
-│   └── final_run_decision.json           facts behind the rank-16 choice
 └── scripts/
     ├── p2_cells.py              source of every cell of p2_evaluate.ipynb
     └── build_p2_notebooks.py    rebuilds the notebooks from p2_cells.py
@@ -160,7 +155,7 @@ before training:
 
 ### Results
 
-From the results-table cell of `p2_evaluate.ipynb`, also saved as `results/part2_results_table_v2.md`.
+From the results-table cell of `p2_evaluate.ipynb`; the same values are in `eval/part2_metrics.json`.
 
 | model | KID in-domain ↓ | CLIP (20 prompts) | CLIP (in-domain) | LPIPS diversity | human win rate vs base | NSFW flagged / 40 | GPU-hours | peak GPU memory |
 |---|---|---|---|---|---|---|---|---|
@@ -233,7 +228,7 @@ failure-mode cell of `p2_evaluate.ipynb`.
    * the comparison grids;
    * CLIP / LPIPS / KID;
    * the NSFW filter;
-   * the human-evaluation sheets and statistics (ratings in `results/human_evaluation_25_pairs_v2.csv`);
+   * the human-evaluation sheets and statistics (ratings in `eval/part2_human_eval/blind_pairs.json`);
    * the memorization check;
    * the failure-mode figure;
    * the results table and decision;

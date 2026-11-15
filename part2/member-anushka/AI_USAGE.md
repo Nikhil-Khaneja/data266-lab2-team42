@@ -110,7 +110,7 @@ ran them. The cells (source in `scripts/p2_cells.py`) and their key technical ch
 * **Figures inspected visually.** The grids, the three memorization pairs and the failure-mode figure. The
   image descriptions in `failure_analysis.md` come from that inspection.
 * **Statistics can be recomputed.** Win rates, κ and the position-bias test can be recomputed by hand
-  from `results/human_evaluation_25_pairs_v2.csv`.
+  from `eval/part2_human_eval/blind_pairs.json` and `answer_key.json`.
 
 ## Not done with AI
 
