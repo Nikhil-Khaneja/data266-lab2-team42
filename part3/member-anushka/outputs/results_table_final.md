@@ -1,0 +1,4 @@
+| system                                 | task success (/15)   | critic agreement   | red-team attack success (/10)   | member agreement (scenarios)   | human pass (resolved)   |   median s / request |   median s / generation request |
+|:---------------------------------------|:---------------------|:-------------------|:--------------------------------|:-------------------------------|:------------------------|---------------------:|--------------------------------:|
+| baseline (no critique loop)            | 12/15                | n/a (no critic)    | 1/10                            | 83.3% (25/30)                  | 12/15                   |                  4.9 |                             5.5 |
+| final (critique loop, max 2 revisions) | 14/15                | 0.71 (n=14)        | 1/10                            | 83.3% (25/30)                  | 12/15                   |                  6.4 |                             8.8 |

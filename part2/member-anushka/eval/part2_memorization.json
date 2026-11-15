@@ -1,0 +1,195 @@
+{
+  "model": "lora_rank16",
+  "method": "OpenCLIP ViT-B/32 cosine similarity of each of the 10 in-domain generations (seed 0) to all 1,098 training images; LPIPS (AlexNet) for the top-1 pair",
+  "closest_pairs": [
+    {
+      "generated": "lora_rank16/P07_seed0.png",
+      "closest_train": "00814.png",
+      "similarity": 0.9280825257301331,
+      "lpips": 0.6675177812576294
+    },
+    {
+      "generated": "lora_rank16/P09_seed0.png",
+      "closest_train": "00484.png",
+      "similarity": 0.9028930068016052,
+      "lpips": 0.6612743735313416
+    },
+    {
+      "generated": "lora_rank16/P04_seed0.png",
+      "closest_train": "01012.png",
+      "similarity": 0.8881484866142273,
+      "lpips": 0.583189845085144
+    }
+  ],
+  "all_top1": [
+    {
+      "prompt_id": "P07",
+      "generated": "lora_rank16/P07_seed0.png",
+      "closest_train": "00814.png",
+      "similarity": 0.9280825257301331,
+      "share_heldout_real_at_least_this_close": 0.2764227642276423,
+      "lpips": 0.6675177812576294
+    },
+    {
+      "prompt_id": "P09",
+      "generated": "lora_rank16/P09_seed0.png",
+      "closest_train": "00484.png",
+      "similarity": 0.9028930068016052,
+      "share_heldout_real_at_least_this_close": 0.6178861788617886,
+      "lpips": 0.6612743735313416
+    },
+    {
+      "prompt_id": "P04",
+      "generated": "lora_rank16/P04_seed0.png",
+      "closest_train": "01012.png",
+      "similarity": 0.8881484866142273,
+      "share_heldout_real_at_least_this_close": 0.7560975609756098,
+      "lpips": 0.583189845085144
+    },
+    {
+      "prompt_id": "P05",
+      "generated": "lora_rank16/P05_seed0.png",
+      "closest_train": "00861.png",
+      "similarity": 0.8408390283584595,
+      "share_heldout_real_at_least_this_close": 0.943089430894309,
+      "lpips": 0.6172164678573608
+    },
+    {
+      "prompt_id": "P02",
+      "generated": "lora_rank16/P02_seed0.png",
+      "closest_train": "01075.png",
+      "similarity": 0.8261055946350098,
+      "share_heldout_real_at_least_this_close": 0.967479674796748,
+      "lpips": 0.683789849281311
+    },
+    {
+      "prompt_id": "P06",
+      "generated": "lora_rank16/P06_seed0.png",
+      "closest_train": "00730.png",
+      "similarity": 0.8258280158042908,
+      "share_heldout_real_at_least_this_close": 0.967479674796748,
+      "lpips": 0.6437253952026367
+    },
+    {
+      "prompt_id": "P01",
+      "generated": "lora_rank16/P01_seed0.png",
+      "closest_train": "00872.png",
+      "similarity": 0.7971301674842834,
+      "share_heldout_real_at_least_this_close": 0.983739837398374,
+      "lpips": 0.5528783798217773
+    },
+    {
+      "prompt_id": "P08",
+      "generated": "lora_rank16/P08_seed0.png",
+      "closest_train": "00968.png",
+      "similarity": 0.7151629328727722,
+      "share_heldout_real_at_least_this_close": 0.991869918699187,
+      "lpips": 0.7343406677246094
+    },
+    {
+      "prompt_id": "P10",
+      "generated": "lora_rank16/P10_seed0.png",
+      "closest_train": "00188.png",
+      "similarity": 0.6923278570175171,
+      "share_heldout_real_at_least_this_close": 0.991869918699187,
+      "lpips": 0.7545615434646606
+    },
+    {
+      "prompt_id": "P03",
+      "generated": "lora_rank16/P03_seed0.png",
+      "closest_train": "00565.png",
+      "similarity": 0.6853320598602295,
+      "share_heldout_real_at_least_this_close": 0.991869918699187,
+      "lpips": 0.7188647389411926
+    },
+    {
+      "prompt_id": "P08",
+      "generated": "base/P08_seed0.png",
+      "closest_train": "00968.png",
+      "similarity": 0.6801132559776306,
+      "share_heldout_real_at_least_this_close": 0.991869918699187,
+      "lpips": 0.7803812623023987
+    },
+    {
+      "prompt_id": "P10",
+      "generated": "base/P10_seed0.png",
+      "closest_train": "00053.png",
+      "similarity": 0.6445151567459106,
+      "share_heldout_real_at_least_this_close": 0.991869918699187,
+      "lpips": 0.7515612840652466
+    },
+    {
+      "prompt_id": "P04",
+      "generated": "base/P04_seed0.png",
+      "closest_train": "00264.png",
+      "similarity": 0.6438395977020264,
+      "share_heldout_real_at_least_this_close": 0.991869918699187,
+      "lpips": 0.6948535442352295
+    },
+    {
+      "prompt_id": "P03",
+      "generated": "base/P03_seed0.png",
+      "closest_train": "00565.png",
+      "similarity": 0.6325974464416504,
+      "share_heldout_real_at_least_this_close": 0.991869918699187,
+      "lpips": 0.7250627279281616
+    },
+    {
+      "prompt_id": "P09",
+      "generated": "base/P09_seed0.png",
+      "closest_train": "00202.png",
+      "similarity": 0.6102159023284912,
+      "share_heldout_real_at_least_this_close": 0.991869918699187,
+      "lpips": 0.7173795104026794
+    },
+    {
+      "prompt_id": "P02",
+      "generated": "base/P02_seed0.png",
+      "closest_train": "00173.png",
+      "similarity": 0.6076211333274841,
+      "share_heldout_real_at_least_this_close": 0.991869918699187,
+      "lpips": 0.7477672696113586
+    },
+    {
+      "prompt_id": "P06",
+      "generated": "base/P06_seed0.png",
+      "closest_train": "00102.png",
+      "similarity": 0.5776364207267761,
+      "share_heldout_real_at_least_this_close": 1.0,
+      "lpips": 0.6649178266525269
+    },
+    {
+      "prompt_id": "P07",
+      "generated": "base/P07_seed0.png",
+      "closest_train": "00147.png",
+      "similarity": 0.569847822189331,
+      "share_heldout_real_at_least_this_close": 1.0,
+      "lpips": 0.7153818607330322
+    },
+    {
+      "prompt_id": "P01",
+      "generated": "base/P01_seed0.png",
+      "closest_train": "00050.png",
+      "similarity": 0.5687826871871948,
+      "share_heldout_real_at_least_this_close": 1.0,
+      "lpips": 0.721774160861969
+    },
+    {
+      "prompt_id": "P05",
+      "generated": "base/P05_seed0.png",
+      "closest_train": "00388.png",
+      "similarity": 0.5686262845993042,
+      "share_heldout_real_at_least_this_close": 1.0,
+      "lpips": 0.6656171083450317
+    }
+  ],
+  "calibration": {
+    "heldout_real_nn_similarity_median": 0.9167270064353943,
+    "heldout_real_nn_similarity_p95": 0.9429240822792053,
+    "final_max_similarity": 0.9280825257301331,
+    "final_mean_top1_similarity": 0.8101849675178527,
+    "base_mean_top1_similarity": 0.61037957072258,
+    "final_generations_above_heldout_p95": 0,
+    "final_min_lpips_to_nearest_training_image": 0.5528783798217773
+  }
+}

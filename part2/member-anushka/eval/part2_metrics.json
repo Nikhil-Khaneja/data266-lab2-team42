@@ -1,0 +1,102 @@
+[
+  {
+    "model": "base",
+    "kid_mean": 0.14197540283203125,
+    "kid_std": 0.026034506037831306,
+    "kid_setup": {
+      "generated": 20,
+      "real_test_images": 123,
+      "subset_size": 10,
+      "subsets": 100
+    },
+    "clip_score_mean": 0.312557167,
+    "clip_score_by_category": {
+      "in_domain": 0.2952515085,
+      "out_of_domain": 0.31703795500000004,
+      "compositional": 0.342687696
+    },
+    "lpips_diversity_mean": 0.690198478102684,
+    "lpips_diversity_by_category": {
+      "in_domain": 0.6906494855880737,
+      "out_of_domain": 0.7082272291183471,
+      "compositional": 0.6712677121162415
+    },
+    "nsfw_flagged": 0,
+    "images": 40
+  },
+  {
+    "model": "lora_rank4",
+    "kid_mean": 0.03356349468231201,
+    "kid_std": 0.015470629557967186,
+    "kid_setup": {
+      "generated": 20,
+      "real_test_images": 123,
+      "subset_size": 10,
+      "subsets": 100
+    },
+    "clip_score_mean": 0.3066529535,
+    "clip_score_by_category": {
+      "in_domain": 0.288489547,
+      "out_of_domain": 0.321928112,
+      "compositional": 0.327704608
+    },
+    "lpips_diversity_mean": 0.6924009770154953,
+    "lpips_diversity_by_category": {
+      "in_domain": 0.6971875369548798,
+      "out_of_domain": 0.6759274959564209,
+      "compositional": 0.6993013381958008
+    },
+    "nsfw_flagged": 2,
+    "images": 40,
+    "training": {
+      "rank": 4,
+      "trainable_parameters": 797184,
+      "learning_rate": 0.0001,
+      "steps": 1500,
+      "batch_size": 1,
+      "gradient_accumulation": 4,
+      "training_seconds": 2921.4441781044006,
+      "gpu_hours": 0.8115122716956669,
+      "peak_gpu_memory_mib": 6301,
+      "peak_gpu_memory_gib": 6.1533203125
+    }
+  },
+  {
+    "model": "lora_rank16",
+    "kid_mean": 0.03508102521300316,
+    "kid_std": 0.01616360992193222,
+    "kid_setup": {
+      "generated": 20,
+      "real_test_images": 123,
+      "subset_size": 10,
+      "subsets": 100
+    },
+    "clip_score_mean": 0.3037481105,
+    "clip_score_by_category": {
+      "in_domain": 0.286503597,
+      "out_of_domain": 0.319573588,
+      "compositional": 0.32241166
+    },
+    "lpips_diversity_mean": 0.676149320602417,
+    "lpips_diversity_by_category": {
+      "in_domain": 0.6787465929985046,
+      "out_of_domain": 0.6696335315704346,
+      "compositional": 0.6774705648422241
+    },
+    "nsfw_flagged": 0,
+    "images": 40,
+    "training": {
+      "rank": 16,
+      "trainable_parameters": 3188736,
+      "learning_rate": 0.0001,
+      "steps": 1500,
+      "batch_size": 1,
+      "gradient_accumulation": 4,
+      "training_seconds": 2907.9562287330627,
+      "gpu_hours": 0.8077656190925174,
+      "peak_gpu_memory_mib": 6323,
+      "peak_gpu_memory_gib": 6.1748046875
+    },
+    "human_win_rate_vs_base_excl_ties": 0.42592592592592593
+  }
+]

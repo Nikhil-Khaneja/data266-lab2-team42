@@ -76,9 +76,8 @@ data266-lab2-team42/
   *results* (scores, reports, traces) from running their implementation against the
   shared tests above. Scripts are run with the member folder as the working directory —
   see "Running each part" below.
-- `member-nikhil/` currently holds the one working implementation built so far for each
-  part. `member-anushka/` is scaffolded with a README stub — add your own implementation
-  there, following the same internal layout.
+- `member-nikhil/` holds a working implementation for each part. `part3/member-anushka/`
+  holds Anushka's own complete Part 3 implementation, with its own README.
 - `src/common/` (inside `member-nikhil/` for Part 1 and Part 3) is a small shared VLM
   chat helper, duplicated rather than centralized, so each member's folder stays
   self-contained and runnable on its own.
@@ -164,12 +163,12 @@ individual scripts in `part2/member-nikhil/src/part2/` (`data_prep.py`, `train_r
 trains both runs, generates 120 images, evaluates them and builds the blinded rater page; the
 last cell pushes both adapters and the images to Hugging Face when `hf auth login` has been run.
 
-**Part 3** (`member-nikhil`): `part3/member-nikhil/notebooks/p3_agents.ipynb` makes its own test
-images (`src/part3/make_test_images.py`), runs the 15 scenarios with and without the critique loop
-and the 10 red-team cases, saves a JSON trace per request plus the input and output images, and
-writes the human-evaluation sheets. Interactive demo, from `part3/member-nikhil/`:
-`python app/gradio_app.py`. Anushka's implementation has its own instructions in
-`part3/member-anushka/README.md`.
+**Part 3** has two implementations. Anushka's (`part3/member-anushka/`) is self-contained: its README explains how to run it on a Colab T4
+(`notebooks/p3_agents.ipynb`) and locally (`python -m p3.app` for the demo), and covers its test set, results and system card.
+Nikhil's (`part3/member-nikhil/`): `notebooks/p3_agents.ipynb` makes its own test images (`src/part3/make_test_images.py`),
+runs the 15 scenarios with and without the critique loop and the 10 red-team cases, saves a JSON trace per request plus the
+input and output images, and writes the human-evaluation sheets. Interactive demo, from `part3/member-nikhil/`:
+`python app/gradio_app.py`.
 
 ## Weights and datasets
 

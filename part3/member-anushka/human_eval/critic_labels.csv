@@ -1,0 +1,15 @@
+scenario_id,request_id,attempt,image_path,critic_decision,member1_decision,member2_decision,agreed_decision
+S04,S04_crit_b7eff2,0,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S04_crit_b7eff2_a0.png,accept,accept,accept,
+S05,S05_crit_7eb878,0,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S05_crit_7eb878_a0.png,revise,revise,revise,
+S05,S05_crit_7eb878,1,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S05_crit_7eb878_a1.png,revise,revise,accept,accept
+S05,S05_crit_7eb878,2,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S05_crit_7eb878_a2.png,accept,accept,accept,
+S06,S06_crit_e6dae9,0,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S06_crit_e6dae9_a0.png,revise,accept,revise,accept
+S06,S06_crit_e6dae9,1,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S06_crit_e6dae9_a1.png,accept,accept,accept,
+S07,S07_crit_71972e,0,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S07_crit_71972e_a0.png,accept,revise,revise,
+S08,S08_crit_15e154,0,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S08_crit_15e154_a0.png,accept,accept,accept,
+S09,S09_crit_e34c22,0,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S09_crit_e34c22_a0.png,accept,accept,accept,
+S10,S10_crit_0fce5e,0,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S10_crit_0fce5e_a0.png,revise,revise,revise,
+S10,S10_crit_0fce5e,1,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S10_crit_0fce5e_a1.png,revise,revise,revise,
+S10,S10_crit_0fce5e,2,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S10_crit_0fce5e_a2.png,accept,accept,accept,
+S11,S11_crit_d59619,0,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S11_crit_d59619_a0.png,accept,revise,revise,
+S12,S12_crit_536a8e,0,/content/drive/MyDrive/Sem3/DATA266/Lab2/Part3/outputs/images/S12_crit_536a8e_a0.png,accept,accept,accept,

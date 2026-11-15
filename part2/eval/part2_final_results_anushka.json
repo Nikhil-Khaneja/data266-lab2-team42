@@ -1,0 +1,83 @@
+{
+  "member": "anushka",
+  "base_model": "stable-diffusion-v1-5/stable-diffusion-v1-5",
+  "dataset": "lambdalabs/naruto-blip-captions",
+  "split": {
+    "original_count": 1221,
+    "removed_corrupt": 0,
+    "removed_duplicate": 0,
+    "train_count": 1098,
+    "test_count": 123,
+    "split_seed": 266
+  },
+  "runs_compared": "LoRA rank 4 (run 1) vs LoRA rank 16 (run 2): same data, 1,500 steps, lr 1e-4, batch 1 x accumulation 4, fp16, seed 266",
+  "kid_setup": "20 in-domain generations vs 123 test images, 100 subsets of size 10 (mean +- std over subsets)",
+  "results_table": [
+    {
+      "model": "base",
+      "kid_in_domain_mean": 0.14197540283203125,
+      "kid_in_domain_std": 0.026034506037831306,
+      "clip_score_20_prompts": 0.312557167,
+      "clip_score_in_domain": 0.2952515085,
+      "lpips_seed_diversity": 0.690198478102684,
+      "human_win_rate_vs_base_excl_ties": "reference",
+      "nsfw_flagged_of_40": 0,
+      "training_gpu_hours": null,
+      "peak_gpu_memory_gib": null,
+      "trainable_parameters": 0
+    },
+    {
+      "model": "lora_rank4",
+      "kid_in_domain_mean": 0.03356349468231201,
+      "kid_in_domain_std": 0.015470629557967186,
+      "clip_score_20_prompts": 0.3066529535,
+      "clip_score_in_domain": 0.288489547,
+      "lpips_seed_diversity": 0.6924009770154953,
+      "human_win_rate_vs_base_excl_ties": "not rated",
+      "nsfw_flagged_of_40": 2,
+      "training_gpu_hours": 0.8115122716956669,
+      "peak_gpu_memory_gib": 6.1533203125,
+      "trainable_parameters": 797184
+    },
+    {
+      "model": "lora_rank16",
+      "kid_in_domain_mean": 0.03508102521300316,
+      "kid_in_domain_std": 0.01616360992193222,
+      "clip_score_20_prompts": 0.3037481105,
+      "clip_score_in_domain": 0.286503597,
+      "lpips_seed_diversity": 0.676149320602417,
+      "human_win_rate_vs_base_excl_ties": 0.42592592592592593,
+      "nsfw_flagged_of_40": 0,
+      "training_gpu_hours": 0.8077656190925174,
+      "peak_gpu_memory_gib": 6.1748046875,
+      "trainable_parameters": 3188736
+    }
+  ],
+  "human_evaluation": {
+    "pairs": 25,
+    "raters": [
+      "Anushka (team member)",
+      "Nikhil (team member)",
+      "Ayush (outside the team)"
+    ],
+    "pooled_final_win_rate_excl_ties": 0.42592592592592593,
+    "fleiss_kappa": 0.0863562533838658
+  },
+  "memorization": {
+    "final_generations_above_heldout_p95": 0,
+    "final_max_clip_similarity": 0.9280825257301331,
+    "heldout_real_p95_similarity": 0.9429240822792053
+  },
+  "final_run": {
+    "choice": "lora_rank16",
+    "reason": "it is the only run with no NSFW-flagged outputs on the fixed prompts",
+    "kid_gap_r16_minus_r4": 0.0015175305306911469,
+    "kid_subset_std": 0.01616360992193222
+  },
+  "hugging_face": {
+    "run1_rank4": "https://huggingface.co/Anushka1202/data266-lab2-part2-lora-rank4",
+    "run2_rank16_final": "https://huggingface.co/Anushka1202/data266-lab2-part2-lora-rank16",
+    "images_dataset": "https://huggingface.co/datasets/Anushka1202/data266-lab2-part2-generated-images-safe"
+  },
+  "source": "computed by part2/member-anushka/notebooks/p2_evaluate.ipynb; details in part2/member-anushka/eval/"
+}

@@ -7,9 +7,10 @@ Part 2 (fine-tuning). Part 1 is shared. The partner not leading a part still imp
 and runs a complete working baseline for it.
 
 Each part has one directory per member (`part1/member-nikhil/`, `part1/member-anushka/`,
-and so on) so both implementations live side by side in the same repo. Everything below
-describes the work currently in each `member-nikhil/` folder; the `member-anushka/`
-folders are scaffolded and pending her own implementation.
+and so on) so both implementations live side by side in the same repo. Unless a section
+says otherwise, the work below is in the `member-nikhil/` folders. `part2/member-anushka/`
+and `part3/member-anushka/` hold Anushka's own implementations; `part1/member-anushka/` is
+scaffolded and pending her own implementation.
 
 ## Part 1 — MultiModal RAG
 
@@ -77,6 +78,48 @@ folders are scaffolded and pending her own implementation.
   3-submission/day budget.
 
 ## Part 2 — Diffusion Fine-Tuning
+
+### Anushka (lead) — `part2/member-anushka/`
+
+All numbers below are printed by `part2/member-anushka/notebooks/p2_evaluate.ipynb` and saved in
+`part2/member-anushka/eval/`.
+
+- Data prep on `lambdalabs/naruto-blip-captions` in Colab: 1,221 images, 0 corrupt and
+  0 exact duplicates removed, seed-266 90/10 split into 1,098 train / 123 test, 512x512.
+  Near-duplicate audit (64-bit dHash, Hamming <= 5) found 1 test image with a near-duplicate
+  in the training split; caption audit found 58.8% of captions mention male terms vs 20.6%
+  female.
+- Wrote her own 20 prompts (10 held-out test captions, 5 out-of-domain, 5 compositional) and
+  froze them in the training notebook before training (`eval/p2_fixed_20_prompts.json`).
+- Two LoRA runs on a Colab T4 with the Diffusers `train_text_to_image_lora.py` script, same
+  data and 1,500-step budget (lr 1e-4 constant, batch 1 x gradient accumulation 4, fp16,
+  8-bit AdamW, gradient checkpointing): rank 4 — 797,184 trainable params, 6.15 GiB peak,
+  0.81 GPU-hours; rank 16 — 3,188,736 trainable params, 6.17 GiB peak, 0.81 GPU-hours.
+- Generated 120 images (base + both runs x 20 prompts x seeds 0/1, PNDM 40 steps, guidance
+  7.5) and side-by-side grids for 8 prompts.
+- Evaluation: KID on 20 in-domain generations vs 123 test images (100 subsets of 10) drops
+  from 0.142 (base) to 0.034 (rank 4) and 0.035 (rank 16), a rank-4/rank-16 gap far inside
+  the subset noise; CLIP score 0.313 / 0.307 / 0.304; LPIPS seed diversity 0.690 / 0.692 /
+  0.676.
+- Blinded human evaluation: 25 unique pairs (final run vs base, sides randomized), 3 raters
+  (Anushka, Nikhil, Ayush outside the team), 75 ratings. Final-run win rate 42.6% excluding
+  ties (72.7% on out-of-domain prompts, 28.0% in-domain); Fleiss' kappa 0.086, and a binomial
+  test shows two raters with a significant left/right preference, reported as a limitation.
+- Safety: Stable Diffusion safety checker on all 120 images — rank 4 had 2 false positives on
+  harmless prompts, base and rank 16 had 0; flagged images are excluded from the released
+  dataset and were deleted from the first upload. Memorization: the 10 in-domain rank-16
+  generations vs all 1,098 training images — highest CLIP similarity 0.928, below the 95th
+  percentile of real held-out frames (0.943); smallest LPIPS to a training image 0.553.
+- **Rank 16 selected as the final run**: quality, alignment and cost are indistinguishable
+  from rank 4, and it is the only run with no NSFW-flagged outputs on the fixed prompts.
+  Failure modes and the reasoning are in `part2/member-anushka/failure_analysis.md`.
+- Both adapters, the final run's model card and the safety-filtered image dataset (with
+  prompt/seed/model metadata) are on Hugging Face (`Anushka1202/...`, see `links.txt`).
+- Found and fixed in her own first evaluation pass: KID computed from a single subset
+  (std 0), a memorization check that compared real test images instead of generations, and
+  human-evaluation pairs 21–25 that repeated pairs 1–5.
+
+### Nikhil (baseline) — `part2/member-nikhil/`
 
 - Data prep (dedup/corrupt filtering, 90/10 split, resize) run against the real
   lambdalabs/naruto-blip-captions dataset: 1221 images, 0 removed, 1098 train / 123 test.

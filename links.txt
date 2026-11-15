@@ -8,6 +8,9 @@ Hugging Face:
   Part 2 model (run1, rank 4): https://huggingface.co/nikhilkhaneja/sd15-naruto-lora-run1
   Part 2 model (run2, rank 16): https://huggingface.co/nikhilkhaneja/sd15-naruto-lora-run2
   Part 2 image dataset: https://huggingface.co/datasets/nikhilkhaneja/sd15-naruto-lora-generated-images
+  Part 2 (Anushka) model (run1, rank 4): https://huggingface.co/Anushka1202/data266-lab2-part2-lora-rank4
+  Part 2 (Anushka) model (run2, rank 16, final): https://huggingface.co/Anushka1202/data266-lab2-part2-lora-rank16
+  Part 2 (Anushka) image dataset: https://huggingface.co/datasets/Anushka1202/data266-lab2-part2-generated-images-safe
 
 Kaggle:
   Competition: https://www.kaggle.com/competitions/data-266-fall-2026-lab-2-part-1-multimodal-rag

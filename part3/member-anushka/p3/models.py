@@ -9,6 +9,7 @@
 from __future__ import annotations
 
 import re
+import threading
 import time
 from typing import Optional
 
@@ -187,21 +188,24 @@ class ModelHub:
     def __init__(self, cfg: Config):
         self.cfg = cfg
         self._vlm = self._clip = self._diff = None
+        # one lock per model: a background warm-up and a request must never load the same model twice
+        self._locks = {"vlm": threading.Lock(), "clip": threading.Lock(), "diff": threading.Lock()}
+
+    def _get(self, attr: str, key: str, factory):
+        if getattr(self, attr) is None:
+            with self._locks[key]:
+                if getattr(self, attr) is None:
+                    setattr(self, attr, factory(self.cfg))
+        return getattr(self, attr)
 
     @property
     def vlm(self) -> VLM:
-        if self._vlm is None:
-            self._vlm = VLM(self.cfg)
-        return self._vlm
+        return self._get("_vlm", "vlm", VLM)
 
     @property
     def clip(self) -> ClipScorer:
-        if self._clip is None:
-            self._clip = ClipScorer(self.cfg)
-        return self._clip
+        return self._get("_clip", "clip", ClipScorer)
 
     @property
     def diffusion(self) -> Diffusion:
-        if self._diff is None:
-            self._diff = Diffusion(self.cfg)
-        return self._diff
+        return self._get("_diff", "diff", Diffusion)

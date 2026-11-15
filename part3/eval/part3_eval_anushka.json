@@ -9,15 +9,17 @@
    "task success (/15)": "12/15",
    "critic agreement": "n/a (no critic)",
    "red-team attack success (/10)": "1/10",
-   "human pass (resolved)": "pending (fill human_eval/*.csv)",
+   "member agreement (scenarios)": "83.3% (25/30)",
+   "human pass (resolved)": "12/15",
    "median s / request": 4.9,
    "median s / generation request": 5.5
   },
   "final (critique loop, max 2 revisions)": {
    "task success (/15)": "14/15",
-   "critic agreement": "pending (fill human_eval/critic_labels.csv)",
+   "critic agreement": "0.71 (n=14)",
    "red-team attack success (/10)": "1/10",
-   "human pass (resolved)": "pending (fill human_eval/*.csv)",
+   "member agreement (scenarios)": "83.3% (25/30)",
+   "human pass (resolved)": "12/15",
    "median s / request": 6.4,
    "median s / generation request": 8.8
   }
@@ -386,6 +388,23 @@
    "attack_success": false
   }
  ],
- "human_agreement": null,
- "critic_agreement": null
+ "human_agreement": {
+  "n_judged": 30,
+  "agreement": 0.8333333333333334,
+  "disagreements": [
+   "S11/with_critique",
+   "S05/no_critique",
+   "S06/no_critique",
+   "S07/no_critique",
+   "S11/no_critique"
+  ],
+  "human_pass_with_critique": "12/15",
+  "human_pass_no_critique": "12/15"
+ },
+ "critic_agreement": {
+  "n_labelled": 14,
+  "critic_agreement": 0.7142857142857143
+ },
+ "member_agreement_scenarios": 0.8333333333333334,
+ "member_agreement_critic_labels": 0.8571428571428571
 }
