@@ -1,0 +1,120 @@
+{
+  "raters": {
+    "rater_1": {
+      "name": "Anushka",
+      "role": "team member"
+    },
+    "rater_2": {
+      "name": "Nikhil",
+      "role": "team member"
+    },
+    "rater_3": {
+      "name": "Ayush",
+      "role": "outside the team"
+    }
+  },
+  "per_rater": [
+    {
+      "rater": "rater_1",
+      "ratings": 25.0,
+      "final_wins": 6.0,
+      "base_wins": 7.0,
+      "ties": 12.0,
+      "final_win_rate_excl_ties": 0.46153846153846156,
+      "final_win_rate_ties_as_half": 0.48
+    },
+    {
+      "rater": "rater_2",
+      "ratings": 25.0,
+      "final_wins": 10.0,
+      "base_wins": 13.0,
+      "ties": 2.0,
+      "final_win_rate_excl_ties": 0.43478260869565216,
+      "final_win_rate_ties_as_half": 0.44
+    },
+    {
+      "rater": "rater_3",
+      "ratings": 25.0,
+      "final_wins": 7.0,
+      "base_wins": 11.0,
+      "ties": 7.0,
+      "final_win_rate_excl_ties": 0.3888888888888889,
+      "final_win_rate_ties_as_half": 0.42
+    },
+    {
+      "rater": "pooled (all raters)",
+      "ratings": 75.0,
+      "final_wins": 23.0,
+      "base_wins": 31.0,
+      "ties": 21.0,
+      "final_win_rate_excl_ties": 0.42592592592592593,
+      "final_win_rate_ties_as_half": 0.44666666666666666
+    }
+  ],
+  "by_category": [
+    {
+      "category": "in_domain",
+      "ratings": 33.0,
+      "final_wins": 7.0,
+      "base_wins": 18.0,
+      "ties": 8.0,
+      "final_win_rate_excl_ties": 0.28,
+      "final_win_rate_ties_as_half": 0.3333333333333333
+    },
+    {
+      "category": "out_of_domain",
+      "ratings": 21.0,
+      "final_wins": 8.0,
+      "base_wins": 3.0,
+      "ties": 10.0,
+      "final_win_rate_excl_ties": 0.7272727272727273,
+      "final_win_rate_ties_as_half": 0.6190476190476191
+    },
+    {
+      "category": "compositional",
+      "ratings": 21.0,
+      "final_wins": 8.0,
+      "base_wins": 10.0,
+      "ties": 3.0,
+      "final_win_rate_excl_ties": 0.4444444444444444,
+      "final_win_rate_ties_as_half": 0.4523809523809524
+    }
+  ],
+  "pairs": 25,
+  "complete_pairs": 25,
+  "missing_ratings": 0,
+  "position_bias": {
+    "rater_1": {
+      "left": 5,
+      "right": 8,
+      "ties": 12,
+      "p_value_two_sided": 0.5810546875
+    },
+    "rater_2": {
+      "left": 4,
+      "right": 19,
+      "ties": 2,
+      "p_value_two_sided": 0.002599477767944336
+    },
+    "rater_3": {
+      "left": 14,
+      "right": 4,
+      "ties": 7,
+      "p_value_two_sided": 0.0308837890625
+    }
+  },
+  "pooled_final_win_rate_excl_ties": 0.42592592592592593,
+  "pooled_final_win_rate_ties_as_half": 0.44666666666666666,
+  "majority_vote": {
+    "base": 10,
+    "final": 6,
+    "no_majority": 5,
+    "tie": 4
+  },
+  "pairwise_agreement": {
+    "rater_1 vs rater_2": 0.44,
+    "rater_1 vs rater_3": 0.4,
+    "rater_2 vs rater_3": 0.36
+  },
+  "fleiss_kappa": 0.0863562533838658
+}
