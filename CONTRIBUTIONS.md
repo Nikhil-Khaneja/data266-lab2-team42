@@ -8,9 +8,8 @@ and runs a complete working baseline for it.
 
 Each part has one directory per member (`part1/member-nikhil/`, `part1/member-anushka/`,
 and so on) so both implementations live side by side in the same repo. Unless a section
-says otherwise, the work below is in the `member-nikhil/` folders. `part2/member-anushka/`
-and `part3/member-anushka/` hold Anushka's own implementations; `part1/member-anushka/` is
-scaffolded and pending her own implementation.
+says otherwise, the work below is in the `member-nikhil/` folders. `part1/member-anushka/`,
+`part2/member-anushka/` and `part3/member-anushka/` hold Anushka's own implementations.
 
 ## Part 1 — MultiModal RAG
 
@@ -49,8 +48,50 @@ code at commit `9d19eb1`) and saved in `part1/member-nikhil/eval/`. Change-by-ch
 
 ### Anushka — `part1/member-anushka/`
 
-Her pipeline produced the team's best public score, 0.881 (submission 58377565, 2026-11-15).
-Her code and executed notebook go in `part1/member-anushka/`.
+This is the team's final Part 1 system (tag `p1-v1.0`). All numbers below are printed by
+`part1/member-anushka/notebooks/p1_rag.ipynb` (Kaggle T4, notebook `anushkak12345/notebook1e60e8258f`) and
+saved in `part1/eval/final_results/`. Details: `part1/member-anushka/README.md`,
+`part1/member-anushka/failure_analysis.md`, `part1/member-anushka/AI_USAGE.md`.
+
+- **Ingestion.**
+  - PyMuPDF text chunks with document and page.
+  - Every numbered figure and table cropped with its exact label and caption; captions are found by
+    their bold font, and `Figure B-5` / `Figure B-5 (corrected)` are separate objects.
+  - Table grids parsed into structured facts.
+  - Qwen2.5-VL-3B descriptions make figures searchable; instruction-like text inside images is fenced
+    off as data.
+- **Retrieval.**
+  - ChromaDB (bge-small) plus BM25, fused by RRF; `bge-reranker-v2-m3` over the top 20 candidates.
+  - A question that names a figure or table gets exactly that object, and values come only from it.
+  - Low-trust Appendix C content is never returned as evidence.
+- **Answering.**
+  - Precedence (revision > outturn > forecast; conflict → higher trust) and all arithmetic are decided
+    in code.
+  - Deterministic guards set the status, citations, session-value statements and refusals.
+  - Qwen2.5-VL-3B (fp16) writes the JSON answer.
+  - One memory per `conversation_id`; user values never enter the vector database.
+- **Golden set.**
+  - 25 questions in `part1/member-anushka/eval/p1_golden_set.csv`, written on 2026-11-11 after tuning
+    on the practice questions had started; this is disclosed.
+  - Results on it:
+
+  | System | Correct (/25) | Status accuracy | Recall@5 | Citation accuracy | Median s/question |
+  |---|---|---|---|---|---|
+  | Baseline: dense retrieval only | 11 | 0.76 | 0.833 | 0.760 | 2.59 |
+  | Hybrid, no reranker | 25 | 1.00 | 0.958 | 0.887 | 3.53 |
+  | Final: hybrid + reranker | 25 | 1.00 | 0.958 | 0.887 | 4.79 |
+
+- **Reranker (bonus).** Recall@5 0.958 → 1.000 and MRR@10 0.931 → 0.951 on the golden set.
+- **Kaggle.** Public score **0.930**, rank 4: the team's final submission,
+  `part1/member-anushka/results/kaggle_final/submission.csv`. The full notebook runs in about 21 minutes
+  on a T4.
+- **Safety.**
+  - The instruction printed inside Figure C-1 was not followed (G25); the answer is the documented value,
+    with a note that the image text is unverified.
+  - A false premise was corrected (G24).
+  - No answer cites Appendix C.
+- **Human evaluation.** Both members rate the 25 final answers 1–5 for groundedness; the summary is
+  computed by `part1/member-anushka/notebooks/p1_human_eval.ipynb`.
 
 ## Part 2 — Diffusion Fine-Tuning
 
