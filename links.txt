@@ -1,23 +1,29 @@
-GitHub repository: https://github.com/Nikhil-Khaneja/data266-lab2-team42
-Tags and commits:
-  p1-v1.0: https://github.com/Nikhil-Khaneja/data266-lab2-team42/tree/p1-v1.0 (Part 1 final: code, executed Kaggle notebook, submission, human evaluation)
-  p2-v1.0: TBD
-  p3-v1.0: TBD
+Team: Pair_Programming_Team_42
+Members: Anushka Khadatkar (018383963), Nikhil Khaneja (<SJSU ID>)
 
-Hugging Face:
-  Part 2 model (run1, rank 4): https://huggingface.co/nikhilkhaneja/sd15-naruto-lora-run1
-  Part 2 model (run2, rank 16): https://huggingface.co/nikhilkhaneja/sd15-naruto-lora-run2
-  Part 2 image dataset: https://huggingface.co/datasets/nikhilkhaneja/sd15-naruto-lora-generated-images
-  Part 2 (Anushka) model (run1, rank 4): https://huggingface.co/Anushka1202/data266-lab2-part2-lora-rank4
-  Part 2 (Anushka) model (run2, rank 16, final): https://huggingface.co/Anushka1202/data266-lab2-part2-lora-rank16
-  Part 2 (Anushka) image dataset: https://huggingface.co/datasets/Anushka1202/data266-lab2-part2-generated-images-safe
+# GitHub
+Repository: https://github.com/Nikhil-Khaneja/data266-lab2-team42
+p1-v1.0 commit: <commit hash>
+p2-v1.0 commit: <commit hash>
+p3-v1.0 commit: <commit hash>
 
-Kaggle:
-  Competition: https://www.kaggle.com/competitions/data-266-fall-2026-lab-2-part-1-multimodal-rag
-  Nikhil's Kaggle notebook (version 7, code commit 9d19eb1): https://www.kaggle.com/code/khanejanikhil/data266-team42-p1-rag
-    Submission 58381645 (2026-11-15): public score 0.867
-  Anushka's earlier submission 58377565 (2026-11-15): public score 0.881
-  Final notebook (Anushka, team's final Part 1, code commit 921bfb7): https://www.kaggle.com/code/anushkak12345/notebook1f4786ea97
-    Final submission (selected on the leaderboard): public score 0.930, rank 6
-    File in the repo: part1/member-anushka/results/kaggle_final/submission.csv
-  Earlier run of the same system (identical 40 answers): https://www.kaggle.com/code/anushkak12345/notebook1e60e8258f
+# Kaggle (Part 1)
+Kaggle team name: Pair_Programming_Team_42
+Final notebook: https://www.kaggle.com/code/anushkak12345/notebook1f4786ea97
+Notebook version used for final submission: <version number> (scriptVersionId=370559212, submission 58460119, public score 0.930)
+Baseline notebook (Nikhil): https://www.kaggle.com/code/khanejanikhil/data266-team42-p1-rag (version 7, submission 58381645, public score 0.867)
+
+# Hugging Face (Part 2)
+Model, run 1 (LoRA): https://huggingface.co/Anushka1202/data266-lab2-part2-lora-rank4
+Model, run 2: https://huggingface.co/Anushka1202/data266-lab2-part2-lora-rank16
+Generated images dataset: https://huggingface.co/datasets/Anushka1202/data266-lab2-part2-generated-images-safe
+Baseline model, run 1 (Nikhil, LoRA rank 4): https://huggingface.co/nikhilkhaneja/sd15-naruto-lora-run1
+Baseline model, run 2 (Nikhil, LoRA rank 16): https://huggingface.co/nikhilkhaneja/sd15-naruto-lora-run2
+Baseline generated images dataset (Nikhil): https://huggingface.co/datasets/nikhilkhaneja/sd15-naruto-lora-generated-images
+
+# Hugging Face (Part 3)
+Input images dataset (optional): not provided
+Space (optional, bonus): not deployed
+
+# Recordings
+Folder with meeting recordings (optional): <link>
