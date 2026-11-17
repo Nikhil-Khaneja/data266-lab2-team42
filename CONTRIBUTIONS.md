@@ -151,12 +151,13 @@ All numbers below are printed by `part2/member-anushka/notebooks/p2_evaluate.ipy
 - Data prep (dedup/corrupt filtering, 90/10 split, resize) run against the real
   lambdalabs/naruto-blip-captions dataset: 1221 images, 0 removed, 1098 train / 123 test.
 - 20 fixed evaluation prompts generated from real test-set captions.
-- Two real LoRA training runs completed on an RTX 5090, both under the 16GB GPU budget
-  (gradient checkpointing + fp16): run1 (rank 4) — 797,184 trainable params, 7.3GB peak,
-  946s; run2 (rank 16) — 3,188,736 trainable params, 8.6GB peak, 1046s.
+- Two LoRA training runs on an RTX 4090, both well under the 16 GB GPU budget (gradient
+  checkpointing + fp16, 1,200 steps, lr 1e-4, effective batch 4): run1 (rank 4) — 797,184 trainable
+  params, 4.12 GB peak, 1,323.8 s (0.368 GPU-hours); run2 (rank 16) — 3,188,736 trainable params,
+  4.15 GB peak, 1,304.5 s (0.362 GPU-hours). Numbers from `part2/member-nikhil/notebooks/p2_finetune.ipynb`.
 - Generated all 120 images (base + both runs x 20 fixed prompts x 2 seeds) and ran the
-  real evaluation: KID (in-domain generations vs. real test images) drops from 0.119
-  (base) to 0.050 (run1) to 0.024 (run2); CLIP score holds steady around 0.30-0.31 for
+  real evaluation: KID (in-domain generations vs. real test images) drops from 0.118
+  (base) to 0.051 (run1) to 0.023 (run2); CLIP score holds steady around 0.30-0.31 for
   all three; LPIPS seed diversity dips slightly for the fine-tuned models versus base.
   **run2 (rank 16) selected as the final run** — far better domain fidelity (KID) at
   essentially the same CLIP score as run1.

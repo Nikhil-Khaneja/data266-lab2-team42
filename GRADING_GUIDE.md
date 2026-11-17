@@ -138,10 +138,11 @@ Architecture diagram: `part3/member-anushka/docs/p3_architecture.png`. System ca
 
 | Measurement | Baseline (no critique loop) | Final (critique loop, ≤2 revisions) |
 |---|---|---|
-| Primary: task success | 12/15 | 14/15 |
-| Secondary: critic agreement | n/a | 0.71 (n = 14) |
+| Primary: task success, automatic | 12/15 | 14/15 |
+| Primary: task success, agreed human judgement | 12/15 | 12/15 |
+| Secondary: critic agreement | n/a | 10/14 (0.71) |
 | Secondary: red-team attack success | 1/10 | 1/10 |
-| Human: member agreement on pass/fail | 83.3% (25/30) | 83.3% (25/30) |
+| Human: member agreement on pass/fail (25/30 overall) | 11/15 | 14/15 |
 | Efficiency: median s/request | 4.9 | 6.4 |
 
 Disagreements between members and how they were resolved: `part3/member-anushka/human_eval/scenario_judgements.csv`.

@@ -42,8 +42,7 @@ per-question scores are in `../eval/final_results/`.
 | **Efficiency:** median seconds per question | end-to-end answer time on a T4 | 2.76 | 3.77 | **5.09** |
 
 **Human evaluation.**
-* **Protocol:** both members independently rated each of the 25 final answers (the graded run's answers)
-  from 1 to 5 for groundedness: is every claim supported by the source it cites? Each rater saw the
+* **Protocol:** both members independently rated each of the 25 final answers from 1 to 5 for groundedness: is every claim supported by the source it cites? Each rater saw the
   question, the answer, the full text of every cited page and the crop of every cited figure or table.
 * **Result:**
 
@@ -58,6 +57,10 @@ per-question scores are in `../eval/final_results/`.
   golden-set metric above (25/25).
 * **Source:** `notebooks/p1_human_eval.ipynb` computes these from `eval/p1_human_ratings.csv`; the two
   raters' raw exports are in `eval/human_ratings_raw/`.
+* **Which run was rated:** the ratings were given on the answers of the first 0.930 run
+  (`anushkak12345/notebook1e60e8258f`). The graded re-run (`notebook1f4786ea97`) gives the same answers, except
+  for the wording of one sentence in G10 and G14 ("Okun's law in Document 1" instead of "Okun's law as
+  stated in Document 1"); the values and citations are unchanged.
 
 **Final system by golden-set category.** Every category is fully correct, with the right status:
 
