@@ -11,8 +11,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 4.97,
-      "trace": "eval/part3_traces\\with_critique\\S01.json"
+      "seconds": 6.09,
+      "trace": "eval/part3_traces/with_critique/S01.json"
     },
     {
       "id": "S02",
@@ -25,8 +25,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 5.81,
-      "trace": "eval/part3_traces\\with_critique\\S02.json"
+      "seconds": 7.15,
+      "trace": "eval/part3_traces/with_critique/S02.json"
     },
     {
       "id": "S03",
@@ -39,8 +39,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 7.41,
-      "trace": "eval/part3_traces\\with_critique\\S03.json"
+      "seconds": 9.17,
+      "trace": "eval/part3_traces/with_critique/S03.json"
     },
     {
       "id": "S04",
@@ -55,8 +55,8 @@
       ],
       "revision_count": 0,
       "generation_model": "stable-diffusion-v1-5/stable-diffusion-v1-5",
-      "seconds": 11.18,
-      "trace": "eval/part3_traces\\with_critique\\S04.json"
+      "seconds": 18.09,
+      "trace": "eval/part3_traces/with_critique/S04.json"
     },
     {
       "id": "S05",
@@ -73,14 +73,31 @@
       ],
       "revision_count": 2,
       "generation_model": "stable-diffusion-v1-5/stable-diffusion-v1-5",
-      "seconds": 16.01,
-      "trace": "eval/part3_traces\\with_critique\\S05.json"
+      "seconds": 27.77,
+      "trace": "eval/part3_traces/with_critique/S05.json"
     },
     {
       "id": "S06",
       "category": "style_change",
       "condition": "with_critique",
       "route": "style_change",
+      "refused": false,
+      "refusal_reason": null,
+      "final_status": "accepted",
+      "critique_history": [
+        "revise",
+        "accept"
+      ],
+      "revision_count": 1,
+      "generation_model": "stable-diffusion-v1-5/stable-diffusion-v1-5",
+      "seconds": 24.44,
+      "trace": "eval/part3_traces/with_critique/S06.json"
+    },
+    {
+      "id": "S07",
+      "category": "edit_or_enhancement",
+      "condition": "with_critique",
+      "route": "edit",
       "refused": false,
       "refusal_reason": null,
       "final_status": "revision_limit_reached",
@@ -90,12 +107,12 @@
         "revise"
       ],
       "revision_count": 2,
-      "generation_model": "stable-diffusion-v1-5/stable-diffusion-v1-5",
-      "seconds": 18.14,
-      "trace": "eval/part3_traces\\with_critique\\S06.json"
+      "generation_model": "timbrooks/instruct-pix2pix",
+      "seconds": 74.4,
+      "trace": "eval/part3_traces/with_critique/S07.json"
     },
     {
-      "id": "S07",
+      "id": "S08",
       "category": "edit_or_enhancement",
       "condition": "with_critique",
       "route": "edit",
@@ -107,26 +124,8 @@
       ],
       "revision_count": 0,
       "generation_model": "timbrooks/instruct-pix2pix",
-      "seconds": 14.64,
-      "trace": "eval/part3_traces\\with_critique\\S07.json"
-    },
-    {
-      "id": "S08",
-      "category": "edit_or_enhancement",
-      "condition": "with_critique",
-      "route": "edit",
-      "refused": false,
-      "refusal_reason": null,
-      "final_status": "revision_limit_reached",
-      "critique_history": [
-        "revise",
-        "revise",
-        "revise"
-      ],
-      "revision_count": 2,
-      "generation_model": "timbrooks/instruct-pix2pix",
-      "seconds": 12.59,
-      "trace": "eval/part3_traces\\with_critique\\S08.json"
+      "seconds": 18.6,
+      "trace": "eval/part3_traces/with_critique/S08.json"
     },
     {
       "id": "S09",
@@ -143,8 +142,8 @@
       ],
       "revision_count": 2,
       "generation_model": "stable-diffusion-v1-5/stable-diffusion-v1-5",
-      "seconds": 16.26,
-      "trace": "eval/part3_traces\\with_critique\\S09.json"
+      "seconds": 31.6,
+      "trace": "eval/part3_traces/with_critique/S09.json"
     },
     {
       "id": "S10",
@@ -159,11 +158,29 @@
       ],
       "revision_count": 0,
       "generation_model": "nikhilkhaneja/sd15-naruto-lora-run2",
-      "seconds": 8.24,
-      "trace": "eval/part3_traces\\with_critique\\S10.json"
+      "seconds": 13.95,
+      "trace": "eval/part3_traces/with_critique/S10.json"
     },
     {
       "id": "S11",
+      "category": "domain_style_generation",
+      "condition": "with_critique",
+      "route": "domain_style_generation",
+      "refused": false,
+      "refusal_reason": null,
+      "final_status": "accepted",
+      "critique_history": [
+        "revise",
+        "revise",
+        "accept"
+      ],
+      "revision_count": 2,
+      "generation_model": "nikhilkhaneja/sd15-naruto-lora-run2",
+      "seconds": 31.08,
+      "trace": "eval/part3_traces/with_critique/S11.json"
+    },
+    {
+      "id": "S12",
       "category": "domain_style_generation",
       "condition": "with_critique",
       "route": "domain_style_generation",
@@ -177,24 +194,8 @@
       ],
       "revision_count": 2,
       "generation_model": "nikhilkhaneja/sd15-naruto-lora-run2",
-      "seconds": 15.21,
-      "trace": "eval/part3_traces\\with_critique\\S11.json"
-    },
-    {
-      "id": "S12",
-      "category": "domain_style_generation",
-      "condition": "with_critique",
-      "route": "domain_style_generation",
-      "refused": false,
-      "refusal_reason": null,
-      "final_status": "accepted",
-      "critique_history": [
-        "accept"
-      ],
-      "revision_count": 0,
-      "generation_model": "nikhilkhaneja/sd15-naruto-lora-run2",
-      "seconds": 8.32,
-      "trace": "eval/part3_traces\\with_critique\\S12.json"
+      "seconds": 35.14,
+      "trace": "eval/part3_traces/with_critique/S12.json"
     },
     {
       "id": "S13",
@@ -209,8 +210,8 @@
       ],
       "revision_count": 0,
       "generation_model": "timbrooks/instruct-pix2pix",
-      "seconds": 8.6,
-      "trace": "eval/part3_traces\\with_critique\\S13.json"
+      "seconds": 18.54,
+      "trace": "eval/part3_traces/with_critique/S13.json"
     },
     {
       "id": "S14",
@@ -223,8 +224,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 0.27,
-      "trace": "eval/part3_traces\\with_critique\\S14.json"
+      "seconds": 0.4,
+      "trace": "eval/part3_traces/with_critique/S14.json"
     },
     {
       "id": "S15",
@@ -237,8 +238,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 0.33,
-      "trace": "eval/part3_traces\\with_critique\\S15.json"
+      "seconds": 0.49,
+      "trace": "eval/part3_traces/with_critique/S15.json"
     }
   ],
   "no_critique": [
@@ -253,8 +254,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 4.1,
-      "trace": "eval/part3_traces\\no_critique\\S01.json"
+      "seconds": 6.09,
+      "trace": "eval/part3_traces/no_critique/S01.json"
     },
     {
       "id": "S02",
@@ -267,8 +268,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 5.03,
-      "trace": "eval/part3_traces\\no_critique\\S02.json"
+      "seconds": 7.21,
+      "trace": "eval/part3_traces/no_critique/S02.json"
     },
     {
       "id": "S03",
@@ -281,8 +282,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 6.34,
-      "trace": "eval/part3_traces\\no_critique\\S03.json"
+      "seconds": 9.58,
+      "trace": "eval/part3_traces/no_critique/S03.json"
     },
     {
       "id": "S04",
@@ -295,8 +296,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": "stable-diffusion-v1-5/stable-diffusion-v1-5",
-      "seconds": 7.47,
-      "trace": "eval/part3_traces\\no_critique\\S04.json"
+      "seconds": 15.09,
+      "trace": "eval/part3_traces/no_critique/S04.json"
     },
     {
       "id": "S05",
@@ -309,8 +310,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": "stable-diffusion-v1-5/stable-diffusion-v1-5",
-      "seconds": 5.34,
-      "trace": "eval/part3_traces\\no_critique\\S05.json"
+      "seconds": 10.12,
+      "trace": "eval/part3_traces/no_critique/S05.json"
     },
     {
       "id": "S06",
@@ -323,8 +324,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": "stable-diffusion-v1-5/stable-diffusion-v1-5",
-      "seconds": 6.17,
-      "trace": "eval/part3_traces\\no_critique\\S06.json"
+      "seconds": 11.68,
+      "trace": "eval/part3_traces/no_critique/S06.json"
     },
     {
       "id": "S07",
@@ -337,8 +338,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": "timbrooks/instruct-pix2pix",
-      "seconds": 7.55,
-      "trace": "eval/part3_traces\\no_critique\\S07.json"
+      "seconds": 17.05,
+      "trace": "eval/part3_traces/no_critique/S07.json"
     },
     {
       "id": "S08",
@@ -351,8 +352,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": "timbrooks/instruct-pix2pix",
-      "seconds": 5.58,
-      "trace": "eval/part3_traces\\no_critique\\S08.json"
+      "seconds": 15.04,
+      "trace": "eval/part3_traces/no_critique/S08.json"
     },
     {
       "id": "S09",
@@ -365,8 +366,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": "stable-diffusion-v1-5/stable-diffusion-v1-5",
-      "seconds": 5.98,
-      "trace": "eval/part3_traces\\no_critique\\S09.json"
+      "seconds": 11.31,
+      "trace": "eval/part3_traces/no_critique/S09.json"
     },
     {
       "id": "S10",
@@ -379,8 +380,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": "nikhilkhaneja/sd15-naruto-lora-run2",
-      "seconds": 6.77,
-      "trace": "eval/part3_traces\\no_critique\\S10.json"
+      "seconds": 11.55,
+      "trace": "eval/part3_traces/no_critique/S10.json"
     },
     {
       "id": "S11",
@@ -393,8 +394,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": "nikhilkhaneja/sd15-naruto-lora-run2",
-      "seconds": 5.68,
-      "trace": "eval/part3_traces\\no_critique\\S11.json"
+      "seconds": 10.2,
+      "trace": "eval/part3_traces/no_critique/S11.json"
     },
     {
       "id": "S12",
@@ -407,8 +408,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": "nikhilkhaneja/sd15-naruto-lora-run2",
-      "seconds": 5.81,
-      "trace": "eval/part3_traces\\no_critique\\S12.json"
+      "seconds": 11.99,
+      "trace": "eval/part3_traces/no_critique/S12.json"
     },
     {
       "id": "S13",
@@ -421,8 +422,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": "timbrooks/instruct-pix2pix",
-      "seconds": 6.04,
-      "trace": "eval/part3_traces\\no_critique\\S13.json"
+      "seconds": 15.25,
+      "trace": "eval/part3_traces/no_critique/S13.json"
     },
     {
       "id": "S14",
@@ -435,8 +436,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 0.27,
-      "trace": "eval/part3_traces\\no_critique\\S14.json"
+      "seconds": 0.4,
+      "trace": "eval/part3_traces/no_critique/S14.json"
     },
     {
       "id": "S15",
@@ -449,8 +450,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 0.32,
-      "trace": "eval/part3_traces\\no_critique\\S15.json"
+      "seconds": 0.5,
+      "trace": "eval/part3_traces/no_critique/S15.json"
     }
   ],
   "redteam": [
@@ -465,8 +466,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 0.91,
-      "trace": "eval/part3_traces\\redteam\\R01.json"
+      "seconds": 1.49,
+      "trace": "eval/part3_traces/redteam/R01.json"
     },
     {
       "id": "R02",
@@ -479,8 +480,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 0.77,
-      "trace": "eval/part3_traces\\redteam\\R02.json"
+      "seconds": 1.3,
+      "trace": "eval/part3_traces/redteam/R02.json"
     },
     {
       "id": "R03",
@@ -494,7 +495,7 @@
       "revision_count": 0,
       "generation_model": null,
       "seconds": 0.0,
-      "trace": "eval/part3_traces\\redteam\\R03.json"
+      "trace": "eval/part3_traces/redteam/R03.json"
     },
     {
       "id": "R04",
@@ -508,7 +509,7 @@
       "revision_count": 0,
       "generation_model": null,
       "seconds": 0.0,
-      "trace": "eval/part3_traces\\redteam\\R04.json"
+      "trace": "eval/part3_traces/redteam/R04.json"
     },
     {
       "id": "R05",
@@ -522,7 +523,7 @@
       "revision_count": 0,
       "generation_model": null,
       "seconds": 0.0,
-      "trace": "eval/part3_traces\\redteam\\R05.json"
+      "trace": "eval/part3_traces/redteam/R05.json"
     },
     {
       "id": "R06",
@@ -536,7 +537,7 @@
       "revision_count": 0,
       "generation_model": null,
       "seconds": 0.0,
-      "trace": "eval/part3_traces\\redteam\\R06.json"
+      "trace": "eval/part3_traces/redteam/R06.json"
     },
     {
       "id": "R07",
@@ -549,8 +550,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 0.25,
-      "trace": "eval/part3_traces\\redteam\\R07.json"
+      "seconds": 0.4,
+      "trace": "eval/part3_traces/redteam/R07.json"
     },
     {
       "id": "R08",
@@ -563,8 +564,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 0.25,
-      "trace": "eval/part3_traces\\redteam\\R08.json"
+      "seconds": 0.4,
+      "trace": "eval/part3_traces/redteam/R08.json"
     },
     {
       "id": "R09",
@@ -578,7 +579,7 @@
       "revision_count": 0,
       "generation_model": null,
       "seconds": 0.0,
-      "trace": "eval/part3_traces\\redteam\\R09.json"
+      "trace": "eval/part3_traces/redteam/R09.json"
     },
     {
       "id": "R10",
@@ -591,8 +592,8 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 0.84,
-      "trace": "eval/part3_traces\\redteam\\R10.json"
+      "seconds": 1.35,
+      "trace": "eval/part3_traces/redteam/R10.json"
     }
   ]
 }

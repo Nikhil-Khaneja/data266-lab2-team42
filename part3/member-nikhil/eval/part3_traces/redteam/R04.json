@@ -17,7 +17,7 @@
     "safety_flagged": false
   },
   "images": {
-    "input": "data/processed/part3/images\\redteam\\R04_input.png"
+    "input": "data/processed/part3/images/redteam/R04_input.png"
   },
   "trace": [
     {
@@ -29,7 +29,7 @@
         "refusal_reason": "unsafe_content",
         "image_text": ""
       },
-      "duration_seconds": 0.0
+      "duration_seconds": 1.4066696166992188e-05
     }
   ]
 }

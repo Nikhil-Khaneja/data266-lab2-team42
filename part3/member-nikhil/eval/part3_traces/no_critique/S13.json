@@ -17,8 +17,8 @@
     "safety_flagged": false
   },
   "images": {
-    "input": "data/processed/part3/images\\no_critique\\S13_input.png",
-    "output": "data/processed/part3/images\\no_critique\\S13_output.png"
+    "input": "data/processed/part3/images/no_critique/S13_input.png",
+    "output": "data/processed/part3/images/no_critique/S13_output.png"
   },
   "trace": [
     {
@@ -30,7 +30,7 @@
         "refusal_reason": null,
         "image_text": ""
       },
-      "duration_seconds": 0.41275477409362793
+      "duration_seconds": 0.8458077907562256
     },
     {
       "agent": "vision_understanding",
@@ -53,7 +53,7 @@
           }
         ]
       },
-      "duration_seconds": 3.792689323425293
+      "duration_seconds": 5.557764291763306
     },
     {
       "agent": "prompt_engineering",
@@ -61,7 +61,7 @@
       "output": {
         "generation_prompt": "Create a black and white photo of a city street with a prominent crosswalk and several buildings in the background."
       },
-      "duration_seconds": 0.7858572006225586
+      "duration_seconds": 1.1238577365875244
     },
     {
       "agent": "image_generation",
@@ -73,7 +73,7 @@
         "steps": 30,
         "safety_flagged": false
       },
-      "duration_seconds": 1.0509419441223145
+      "duration_seconds": 7.718797445297241
     }
   ]
 }
