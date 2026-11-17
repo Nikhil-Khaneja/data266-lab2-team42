@@ -1,4 +1,4 @@
-# Part 2 - Fine-tuning Stable Diffusion 1.5 for Naruto-style images (Nikhil, baseline)
+# Part 2 - Fine-tuning Stable Diffusion 1.5 for Naruto-style images (Nikhil, final system)
 
 This folder holds Nikhil's complete Part 2 pipeline (tasks 2.1-2.4):
 
@@ -8,8 +8,8 @@ This folder holds Nikhil's complete Part 2 pipeline (tasks 2.1-2.4):
 * measure quality (KID), prompt alignment (CLIP score), seed diversity (LPIPS), cost, NSFW safety and
   memorization.
 
-The team's **graded** Part 2 system is Anushka's rank-16 run, in [`../member-anushka/`](../member-anushka/).
-This implementation is the partner's working pipeline that the lab requires (requirements S.2).
+This is the team's **graded** Part 2 system (final run: rank 16). Anushka's complete pipeline, in
+[`../member-anushka/`](../member-anushka/), is the partner baseline that the lab requires (requirements S.2).
 
 **Result in one line:** the rank-16 run cuts KID against the real test images from 0.118 (base) to
 **0.023**, half of rank 4's 0.051, at the same cost (0.36 GPU-hours, 4.2 GB peak) and the same CLIP score.
