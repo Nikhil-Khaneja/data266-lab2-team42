@@ -15,12 +15,12 @@ Baseline notebook (Nikhil): https://www.kaggle.com/code/khanejanikhil/data266-te
 Baseline executed-notebook run (Nikhil, code commit 3055126; this run's output is part1/member-nikhil/notebooks/p1_rag.ipynb): https://www.kaggle.com/code/khanejanikhil/data266-team42-p1-rag-exec
 
 # Hugging Face (Part 2)
-Model, run 1 (LoRA): https://huggingface.co/Anushka1202/data266-lab2-part2-lora-rank4
-Model, run 2: https://huggingface.co/Anushka1202/data266-lab2-part2-lora-rank16
-Generated images dataset: https://huggingface.co/datasets/Anushka1202/data266-lab2-part2-generated-images-safe
-Baseline model, run 1 (Nikhil, LoRA rank 4): https://huggingface.co/nikhilkhaneja/sd15-naruto-lora-run1
-Baseline model, run 2 (Nikhil, LoRA rank 16): https://huggingface.co/nikhilkhaneja/sd15-naruto-lora-run2
-Baseline generated images dataset (Nikhil): https://huggingface.co/datasets/nikhilkhaneja/sd15-naruto-lora-generated-images
+Model, run 1 (LoRA rank 4): https://huggingface.co/nikhilkhaneja/sd15-naruto-lora-run1
+Model, run 2 (LoRA rank 16, final): https://huggingface.co/nikhilkhaneja/sd15-naruto-lora-run2
+Generated images dataset: https://huggingface.co/datasets/nikhilkhaneja/sd15-naruto-lora-generated-images
+Baseline model, run 1 (Anushka, LoRA rank 4): https://huggingface.co/Anushka1202/data266-lab2-part2-lora-rank4
+Baseline model, run 2 (Anushka, LoRA rank 16): https://huggingface.co/Anushka1202/data266-lab2-part2-lora-rank16
+Baseline generated images dataset (Anushka): https://huggingface.co/datasets/Anushka1202/data266-lab2-part2-generated-images-safe
 
 # Hugging Face (Part 3)
 Input images dataset (optional): not provided

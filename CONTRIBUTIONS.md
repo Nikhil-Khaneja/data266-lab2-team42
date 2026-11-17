@@ -3,14 +3,14 @@
 Team: Pair_Programming_Team_42 (Nikhil Khaneja, Anushka Khadatkar)
 
 Both members contribute to all three parts, and each member built a complete, executed pipeline for every
-part. Anushka led Part 2 (fine-tuning). Nikhil built the first Part 3 pipeline and the shared Part 3 test set.
-Part 1 is shared. For each part the team compared the two implementations and graded the stronger one; the
+part. Nikhil led Part 2 (fine-tuning) and Anushka led Part 3 (agents); Nikhil also built the first Part 3 pipeline
+and the shared Part 3 test set. Part 1 is shared. For each part the team compared the two implementations and graded the stronger one; the
 other is kept as a working baseline:
 
 | Part | Graded (final) system | Baseline |
 |---|---|---|
 | 1 | `part1/member-anushka/` (Kaggle public score 0.930) | `part1/member-nikhil/` (0.867) |
-| 2 | `part2/member-anushka/` (LoRA rank 16) | `part2/member-nikhil/` |
+| 2 | `part2/member-nikhil/` (LoRA rank 16) | `part2/member-anushka/` |
 | 3 | `part3/member-anushka/` | `part3/member-nikhil/` |
 
 Each part has one directory per member (`part1/member-nikhil/`, `part1/member-anushka/`,
@@ -106,7 +106,7 @@ saved in `part1/eval/final_results/`. Details: `part1/member-anushka/README.md`,
 
 ## Part 2 — Diffusion Fine-Tuning
 
-### Anushka (lead) — `part2/member-anushka/`
+### Anushka (baseline) — `part2/member-anushka/`
 
 All numbers below are printed by `part2/member-anushka/notebooks/p2_evaluate.ipynb` and saved in
 `part2/member-anushka/eval/`.
@@ -146,7 +146,7 @@ All numbers below are printed by `part2/member-anushka/notebooks/p2_evaluate.ipy
   (std 0), a memorization check that compared real test images instead of generations, and
   human-evaluation pairs 21–25 that repeated pairs 1–5.
 
-### Nikhil (baseline) — `part2/member-nikhil/`
+### Nikhil (lead) — `part2/member-nikhil/`
 
 - Data prep (dedup/corrupt filtering, 90/10 split, resize) run against the real
   lambdalabs/naruto-blip-captions dataset: 1221 images, 0 removed, 1098 train / 123 test.
@@ -164,11 +164,13 @@ All numbers below are printed by `part2/member-anushka/notebooks/p2_evaluate.ipy
 - Memorization check (10 in-domain generations from the final run vs. the training set
   by CLIP similarity): closest pairs are 0.90-0.92 similarity — notably similar but
   short of near-exact duplication.
-- Both LoRA models pushed to Hugging Face with model cards (the final run's card
+- Both LoRA models pushed to Hugging Face (2026-11-17, the same adapter files as the notebook) with model cards (the final run's card
   includes the real comparison table); all 120 generated images pushed as a Hugging
   Face dataset with prompt/seed/model/category metadata.
-- Blinded human-eval pairs (25, base vs. final run, left/right randomized) generated;
-  actual rating by both members plus one outside rater is still pending.
+- Blinded human evaluation (25 pairs, base vs. final run, left/right randomized), rated by both members and
+  one outside rater: the final run won 37.3% of style votes (majority 20%, Fleiss' κ 0.03) and 41.3% of
+  prompt-match votes (majority 40%, κ 0.40), so the raters preferred base SD 1.5. Printed by the notebook's
+  human-evaluation cell; ratings in `part2/member-nikhil/eval/part2_human_eval/ratings/`.
 - Found and fixed a real bug during evaluation: KID was being computed over all 40
   generated images per model (including out-of-domain and compositional prompts)
   against the test set, instead of just the 10 in-domain ones the lab spec asks for.

@@ -21,7 +21,7 @@ wrote. The file is named next to each table. `GRADING_GUIDE.md` maps every rubri
 | Part | Primary result | Secondary | Human evaluation | Efficiency |
 |---|---|---|---|---|
 | **1 RAG** | **25/25** golden-set answers correct (baseline 11/25); Kaggle public score **0.930** (rank 6) | Recall@5 0.958; citation accuracy 0.887 | groundedness **5.0/5**; raters within 1 point on 100% of answers | 5.09 s per question (T4) |
-| **2 Diffusion** | KID **0.035** ± 0.016 (base 0.142); CLIP 0.304 (base 0.313) | LPIPS seed diversity 0.676 (base 0.690) | final run vs base: **42.6%** win rate (3 raters, 25 pairs) | 0.81 GPU-hours, 6.17 GiB peak (T4) |
+| **2 Diffusion** | KID **0.023** ± 0.006 (base 0.118); CLIP 0.304 (base 0.312) | LPIPS seed diversity 0.661 (base 0.686) | final run vs base: style **37.3%**, prompt match **41.3%** win rate (3 raters, 25 pairs) | 0.362 GPU-hours, 4.15 GB peak |
 | **3 Agents** | task success **14/15** automatic, 12/15 human (no loop: 12/15, 12/15) | critic agreement 10/14; red-team attack success 1/10 | members agreed on 25/30 judgements | 6.4 s per request (no loop: 4.9 s) |
 
 **Bonus:** a reranker for Part 1. It raises retrieval Recall@5 from 0.958 to 1.000 and MRR@10 from 0.931 to
@@ -34,8 +34,8 @@ wrote. The file is named next to each table. `GRADING_GUIDE.md` maps every rubri
 | Part | Lead (graded system) | Partner (baseline and other contributions) | Why this system is the graded one |
 |---|---|---|---|
 | **1 RAG** | **Anushka**: `part1/member-anushka/` (hybrid retrieval + reranker, Qwen2.5-VL-3B fp16, precedence rules in code) | **Nikhil**: complete baseline in `part1/member-nikhil/` (hybrid + reranker, Qwen2.5-VL-7B 4-bit). He wrote the first golden set, committed Oct 27, and rated groundedness. | Higher Kaggle public score: **0.930 vs 0.867**. The whole notebook runs in about 22 minutes on a T4. Revision, outturn, conflict and arithmetic decisions are made in code, which is where the gain over the baseline came from (11/25 → 25/25). |
-| **2 Diffusion** | **Anushka**: `part2/member-anushka/` (LoRA rank 4 vs rank 16, Colab T4) | **Nikhil**: complete baseline in `part2/member-nikhil/` (two LoRA runs, 4.15 GB peak GPU memory, under the 16 GB budget, 120 images, both adapters and the image dataset on Hugging Face). He was one of the 3 human raters. | Only this pipeline has every Part 2 evaluation item finished: the blinded 3-rater comparison with an outside rater, the NSFW checker on all 120 images (flagged images withheld from the release), a memorization check against a held-out threshold, KID over 100 subsets, and the model card. It was also trained on the required 16 GB-class GPU (T4). Nikhil's rank-16 run has a lower KID (0.023), but it uses a different KID set-up and a 1,200-step budget, and its human evaluation was not run. So the two KIDs are not directly comparable. The safety checker also flagged 11 of Nikhil's 120 images (7 from his rank-16 run), against 0 for the graded rank-16 run. |
-| **3 Agents** | **Anushka**: `part3/member-anushka/` (pydantic state, critique loop with at most 2 revisions, Part 2 rank-16 LoRA, Gradio app and Space build) | **Nikhil**: built the first end-to-end Part 3 pipeline in `part3/member-nikhil/`, with the shared test set (`part3/eval/`, committed Oct 27), traces and a Gradio app. In his run, all 10 red-team cases were refused. He was the second human judge for the graded system. | Only this implementation has the full Part 3 evaluation finished: blinded pass/fail judgements from both members on all 30 scenario outputs, 14 critic labels, and every disagreement resolved. It also uses the team's final Part 2 model. The pass/fail sheets for Nikhil's run have not been filled in. |
+| **2 Diffusion** | **Nikhil**: `part2/member-nikhil/` (LoRA rank 4 vs rank 16, 1,200 steps; adapters and images on Hugging Face) | **Anushka**: complete baseline in `part2/member-anushka/` (LoRA rank 4 vs rank 16, 1,500 steps, KID 0.035, human win rate 42.6%, NSFW checker, memorization check, model card). She was one of the 3 human raters. | Lower KID against the real test images: **0.023 vs 0.035**, at about half the GPU time and memory. Human preference is similar for both: neither fine-tuned model beats base SD 1.5 for the raters (style 37.3% and prompt match 41.3% here, 42.6% on one combined criterion with ties excluded for Anushka's). The two KIDs use different set-ups (20 in-domain images here, 100 subsets of 10 for Anushka's), so the gap is indicative. The safety checker flagged 11 of this run's 120 images (7 from rank 16, mostly in-domain "a man ..." prompts; flagged images are published black), against 0 for Anushka's rank 16. |
+| **3 Agents** | **Anushka**: `part3/member-anushka/` (pydantic state, critique loop with at most 2 revisions, Part 2 rank-16 LoRA, Gradio app and Space build) | **Nikhil**: built the first end-to-end Part 3 pipeline in `part3/member-nikhil/`, with the shared test set (`part3/eval/`, committed Oct 27), traces and a Gradio app. In his run, all 10 red-team cases were refused. He was the second human judge for the graded system. | Only this implementation has the full Part 3 evaluation finished: blinded pass/fail judgements from both members on all 30 scenario outputs, 14 critic labels, and every disagreement resolved. It uses Anushka's own Part 2 rank-16 LoRA. The pass/fail sheets for Nikhil's run have not been filled in. |
 
 What each member did, in detail, is in `CONTRIBUTIONS.md`. Which AI coding assistants were used, and for
 what, is in `AI_USAGE.md`.
@@ -116,7 +116,48 @@ what, is in `AI_USAGE.md`.
 
 ## 4. Part 2 — Diffusion fine-tuning
 
-**Graded system:** `part2/member-anushka/`.
+**Graded system:** `part2/member-nikhil/`.
+**Notebook:** `part2/member-nikhil/notebooks/p2_finetune.ipynb` (data, training, generation, metrics, safety, human
+evaluation, Hugging Face release). **Write-up:** `part2/member-nikhil/README.md`.
+
+- **Data (2.1).** `lambdalabs/naruto-blip-captions`, 1,221 images; 0 corrupt and 0 perceptual-hash duplicates
+  removed; split with seed 266 into 1,098 training and 123 test images, resized to 512×512. Biases: one
+  copyrighted style, generic BLIP captions, a few recurring characters and poses.
+- **Training (2.2).** The diffusers `train_text_to_image_lora.py` script, two runs that differ only in rank:
+  1,200 steps, lr 1e-4 constant, batch 1 × gradient accumulation 4, 512 px, fp16, gradient checkpointing.
+
+  | Run | Trainable parameters | Peak GPU memory | GPU-hours |
+  |---|---|---|---|
+  | LoRA rank 4 | 797,184 | 4.12 GB | 0.368 |
+  | LoRA rank 16 (final) | 3,188,736 | 4.15 GB | 0.362 |
+
+- **Generation (2.3).** The 20 fixed prompts (`part2/eval/part2_prompts.json`, committed 2026-10-27, before
+  training), seeds 0 and 1, 30 steps, guidance 7.5: 40 images per model, 120 in total, with side-by-side grids.
+
+**Results** (`part2/member-nikhil/eval/part2_metrics.json`, `eval/part2_training.json`, `eval/part2_human_eval/`):
+
+| Measurement | Base SD 1.5 | LoRA rank 4 | **LoRA rank 16 (final)** |
+|---|---|---|---|
+| Primary: KID vs test images, in-domain ↓ (mean ± std) | 0.118 ± 0.012 | 0.051 ± 0.008 | **0.023 ± 0.006** |
+| Primary: CLIP score (40 images) | 0.312 | 0.305 | **0.304** |
+| Secondary: LPIPS seed diversity | 0.686 | 0.674 | **0.661** |
+| Human: win rate vs base, style (25 pairs × 3 raters, 1 outside the team) | reference | not rated | **37.3%** (majority 20%, Fleiss' κ 0.03) |
+| Human: win rate vs base, prompt match | reference | not rated | **41.3%** (majority 40%, Fleiss' κ 0.40) |
+| Safety-checker flags (of 40) | 0 | 4 | 7 |
+| Efficiency: GPU-hours / peak memory | – | 0.368 h / 4.12 GB | **0.362 h / 4.15 GB** |
+
+- **What worked.** KID falls about 5× from base (0.118 → 0.023), and rank 16 halves rank 4's KID at the same
+  CLIP score and cost.
+- **What did not work.** The raters preferred the base model, most clearly on style (majority vote for the
+  final run on only 20% of pairs), and barely agreed on style (κ 0.03). The trained style overrides
+  out-of-domain prompts, compositional prompts lose objects and colours, and seed diversity drops slightly.
+- **Safety (C4).** Copyrighted characters, so non-commercial research only. The SD safety checker ran on every
+  image and flagged 11 of 120 (none from base; mostly in-domain "a man ..." prompts, likely false positives
+  triggered by the style); flagged images are published black. Memorization: the closest training image to a
+  final-run in-domain generation scores at most 0.916 CLIP similarity.
+
+### Partner baseline: Anushka's pipeline (`part2/member-anushka/`)
+
 **Notebooks:**
 - `p2_finetune.ipynb`: data preparation, training and generation.
 - `p2_evaluate.ipynb`: metrics, safety, human evaluation and the Hugging Face release.
@@ -146,7 +187,7 @@ what, is in `AI_USAGE.md`.
   - Seeds 0 and 1, PNDM 40 steps, guidance 7.5: 40 images per model, 120 in total.
   - Side-by-side grids for 8 prompts are in the training notebook.
 
-**Results** (`part2/member-anushka/eval/part2_metrics.json`):
+**Baseline results** (`part2/member-anushka/eval/part2_metrics.json`):
 
 | Measurement | Base SD 1.5 | LoRA rank 4 | **LoRA rank 16 (final)** |
 |---|---|---|---|
@@ -264,7 +305,7 @@ The repo uses one folder per member inside each part, instead of a single root `
 | Part | Final (graded) notebook | Partner baseline |
 |---|---|---|
 | 1 | `part1/member-anushka/notebooks/p1_rag.ipynb` (Kaggle T4), `p1_human_eval.ipynb` | `part1/member-nikhil/notebooks/p1_rag.ipynb` |
-| 2 | `part2/member-anushka/notebooks/p2_finetune.ipynb`, `p2_evaluate.ipynb` | `part2/member-nikhil/notebooks/p2_finetune.ipynb` |
+| 2 | `part2/member-nikhil/notebooks/p2_finetune.ipynb` | `part2/member-anushka/notebooks/p2_finetune.ipynb`, `p2_evaluate.ipynb` |
 | 3 | `part3/member-anushka/notebooks/p3_agents.ipynb`, `p3_human_eval.ipynb` | `part3/member-nikhil/notebooks/p3_agents.ipynb` |
 
 ### Environment
@@ -302,14 +343,15 @@ Nikhil's Part 1 Kaggle notebook installs only `part1/member-nikhil/kaggle_requir
 - **Part 1 (baseline).**
   1. Place the competition files under `part1/member-nikhil/data/raw/part1/`.
   2. Run `part1/member-nikhil/notebooks/p1_rag.ipynb`.
-- **Part 2 (final).**
+- **Part 2 (final).** Run `part2/member-nikhil/notebooks/p2_finetune.ipynb` (it switches to `part2/member-nikhil/`
+  itself), or the scripts in `part2/member-nikhil/src/part2/` with that folder as the working directory. It only
+  needs public data; the last cell uploads to Hugging Face after `hf auth login`. Steps are in
+  `part2/member-nikhil/README.md`.
+- **Part 2 (baseline).**
   1. Run `part2/member-anushka/notebooks/p2_finetune.ipynb`, then `p2_evaluate.ipynb`, on a Colab T4.
-     It only needs public data.
   2. Set `UPLOAD_TO_HUB = True` to publish.
 
   Steps are in `part2/member-anushka/README.md`.
-- **Part 2 (baseline).** Run `part2/member-nikhil/notebooks/p2_finetune.ipynb`, or the scripts in
-  `part2/member-nikhil/src/part2/` with `part2/member-nikhil/` as the working directory.
 - **Part 3 (final).**
   1. Run `part3/member-anushka/notebooks/p3_agents.ipynb` on a Colab T4.
   2. For the local demo, run `python -m p3.app` from `part3/member-anushka/`.
