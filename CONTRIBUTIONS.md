@@ -93,8 +93,9 @@ saved in `part1/eval/final_results/`. Details: `part1/member-anushka/README.md`,
     with a note that the image text is unverified.
   - A false premise was corrected (G24).
   - No answer cites Appendix C.
-- **Human evaluation.** Both members rate the 25 final answers 1–5 for groundedness; the summary is
-  computed by `part1/member-anushka/notebooks/p1_human_eval.ipynb`.
+- **Human evaluation.** Both members independently rated the 25 final answers 1–5 for groundedness:
+  mean 5.0 (both raters 5.0), agreement within one point 1.00, exact agreement 1.00. Computed by
+  `part1/member-anushka/notebooks/p1_human_eval.ipynb`.
 
 ## Part 2 — Diffusion Fine-Tuning
 

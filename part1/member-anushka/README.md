@@ -42,10 +42,22 @@ per-question scores are in `../eval/final_results/`.
 | **Efficiency:** median seconds per question | end-to-end answer time on a T4 | 2.59 | 3.53 | **4.79** |
 
 **Human evaluation.**
-* **Protocol:** both members rate each of the 25 final answers from 1 to 5 for groundedness (is every
-  claim supported by the cited source?).
-* **Reported:** the average, and how often the two raters agreed within one point.
-* **Source:** `notebooks/p1_human_eval.ipynb` computes these from `eval/p1_human_ratings.csv`.
+* **Protocol:** both members independently rated each of the 25 final answers (the graded run's answers)
+  from 1 to 5 for groundedness: is every claim supported by the source it cites? Each rater saw the
+  question, the answer, the full text of every cited page and the crop of every cited figure or table.
+* **Result:**
+
+  | answers | mean groundedness | Anushka mean | Nikhil mean | agreement within 1 point | exact agreement |
+  |---|---|---|---|---|---|
+  | 25 | **5.0** | 5.0 | 5.0 | 1.00 | 1.00 |
+
+* **Reading it:** every answer was rated fully grounded by both raters. The scale is at its ceiling, so
+  it does not separate the answers, and a chance-corrected agreement (kappa) is undefined when neither
+  rater varies. Both raters built the system, so the ratings are not blind. Groundedness only checks that
+  the cited sources support the claims; correctness against the reference answers is the separate
+  golden-set metric above (25/25).
+* **Source:** `notebooks/p1_human_eval.ipynb` computes these from `eval/p1_human_ratings.csv`; the two
+  raters' raw exports are in `eval/human_ratings_raw/`.
 
 **Final system by golden-set category.** Every category is fully correct, with the right status:
 
@@ -239,6 +251,8 @@ python3.11 -m venv .venv && .venv/bin/pip install -r requirements.txt
 | `notebooks/p1_rag.ipynb` | the graded Kaggle run, executed, all outputs saved |
 | `results/kaggle_final/submission.csv` | the final leaderboard submission (public score 0.930) |
 | `eval/p1_golden_set.csv` | the 25-question golden set (see note below) |
+| `eval/p1_human_ratings.csv`, `eval/human_ratings_raw/` | groundedness ratings from both members (merged sheet and raw exports) |
+| `notebooks/p1_human_eval.ipynb`, `scripts/build_p1_human_eval.py` | human-evaluation summary notebook (executed) and its builder |
 | `scripts/p1_run.py`, `scripts/build_p1_notebook.py` | local runner and notebook builder |
 | `AI_USAGE.md`, `failure_analysis.md` | AI assistance and failure analysis for Part 1 |
 

@@ -1,6 +1,6 @@
 GitHub repository: https://github.com/Nikhil-Khaneja/data266-lab2-team42
 Tags and commits:
-  p1-v1.0: TBD
+  p1-v1.0: https://github.com/Nikhil-Khaneja/data266-lab2-team42/tree/p1-v1.0 (Part 1 final: code, executed Kaggle notebook, submission, human evaluation)
   p2-v1.0: TBD
   p3-v1.0: TBD
 

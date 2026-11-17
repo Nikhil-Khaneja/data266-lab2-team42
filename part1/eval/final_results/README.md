@@ -17,8 +17,9 @@ outputs, copied unchanged.
 | citation accuracy (gold citations ÷ all citations) | 0.760 (38/50) | 0.887 (55/62) | **0.887 (55/62)** |
 | median seconds per question | 2.59 | 3.53 | **4.79** |
 
-**Human evaluation.** The groundedness ratings (1–5, both members) are reported by
-`part1/member-anushka/notebooks/p1_human_eval.ipynb`.
+**Human evaluation.** Both members rated the 25 final answers 1–5 for groundedness: mean 5.0, agreement
+within one point 1.00, exact agreement 1.00 (`part1/member-anushka/notebooks/p1_human_eval.ipynb`,
+ratings in `part1/member-anushka/eval/p1_human_ratings.csv`).
 
 ## Bonus: reranker ablation (retrieval only)
 
