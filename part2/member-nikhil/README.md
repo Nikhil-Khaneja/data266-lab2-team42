@@ -122,6 +122,25 @@ Still, the gap between the runs (0.027) is about five times rank 16's standard d
   scores at most 0.916 (`eval/part2_memorization.json`). The notebook shows the three closest pairs side by
   side for visual inspection.
 
+## Reproduction on a 16 GB GPU (Kaggle T4)
+
+The same notebook, from code commit `730c3da`, was also run end to end on a Kaggle T4, training both runs from
+scratch: https://www.kaggle.com/code/khanejanikhil/data266-team42-p2-exec (version 3). **The graded numbers,
+the human ratings and the Hugging Face adapters all come from the executed notebook in this repository
+(commit `7daecce`), not from this run.** The T4 run only shows that the pipeline fits and gives the same results
+on one 16 GB GPU. Its outputs were downloaded but not committed:
+
+| Measurement | Graded notebook | Kaggle T4 run |
+|---|---|---|
+| KID, base / rank 4 / rank 16 | 0.118 / 0.051 / 0.023 | 0.118 / 0.052 / 0.024 (0.0235) |
+| CLIP score, base / rank 4 / rank 16 | 0.312 / 0.305 / 0.304 | 0.312 / 0.305 / 0.304 |
+| LPIPS seed diversity, rank 16 | 0.661 | 0.660 |
+| Final run selected | rank 16 | rank 16 |
+| Peak GPU memory, rank 4 / rank 16 | 4.12 / 4.15 GB | 4.12 / 4.15 GB |
+| GPU-hours, rank 4 / rank 16 | 0.368 / 0.362 | 0.646 / 0.629 |
+| Safety-checker flags, rank 4 / rank 16 (of 40) | 4 / 7 | 4 / 6 |
+| Memorization, highest CLIP similarity | 0.916 | 0.912 |
+
 ## How to run
 
 ```bash

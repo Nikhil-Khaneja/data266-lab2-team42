@@ -22,6 +22,10 @@ Baseline model, run 1 (Anushka, LoRA rank 4): https://huggingface.co/Anushka1202
 Baseline model, run 2 (Anushka, LoRA rank 16): https://huggingface.co/Anushka1202/data266-lab2-part2-lora-rank16
 Baseline generated images dataset (Anushka): https://huggingface.co/datasets/Anushka1202/data266-lab2-part2-generated-images-safe
 
+# Part 2 reproduction on one 16 GB GPU (not the graded run)
+Kaggle T4 run of part2/member-nikhil/notebooks/p2_finetune.ipynb (code commit 730c3da, version 3; KID rank 16 0.024, peak 4.15 GB, 0.63 GPU-hours): https://www.kaggle.com/code/khanejanikhil/data266-team42-p2-exec
+Part 3 baseline run (Nikhil, code commit 730c3da, version 3; output = part3/member-nikhil/notebooks/p3_agents.ipynb): https://www.kaggle.com/code/khanejanikhil/data266-team42-p3-exec
+
 # Hugging Face (Part 3)
 Input images dataset (optional): not provided
 Space (optional, bonus): not deployed
