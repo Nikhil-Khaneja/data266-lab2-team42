@@ -56,7 +56,7 @@ code at commit `9d19eb1`) and saved in `part1/member-nikhil/eval/`. Change-by-ch
 ### Anushka — `part1/member-anushka/`
 
 This is the team's final Part 1 system (tag `p1-v1.0`). All numbers below are printed by
-`part1/member-anushka/notebooks/p1_rag.ipynb` (Kaggle T4, notebook `anushkak12345/notebook1e60e8258f`) and
+`part1/member-anushka/notebooks/p1_rag.ipynb` (Kaggle T4, notebook `anushkak12345/notebook1f4786ea97`) and
 saved in `part1/eval/final_results/`. Details: `part1/member-anushka/README.md`,
 `part1/member-anushka/failure_analysis.md`, `part1/member-anushka/AI_USAGE.md`.
 
@@ -84,16 +84,16 @@ saved in `part1/eval/final_results/`. Details: `part1/member-anushka/README.md`,
 
   | System | Correct (/25) | Status accuracy | Recall@5 | Citation accuracy | Median s/question |
   |---|---|---|---|---|---|
-  | Baseline: dense retrieval only | 11 | 0.76 | 0.833 | 0.760 | 2.59 |
-  | Hybrid, no reranker | 25 | 1.00 | 0.958 | 0.887 | 3.53 |
-  | Final: hybrid + reranker | 25 | 1.00 | 0.958 | 0.887 | 4.79 |
+  | Baseline: dense retrieval only | 11 | 0.76 | 0.833 | 0.760 | 2.76 |
+  | Hybrid, no reranker | 25 | 1.00 | 0.958 | 0.887 | 3.77 |
+  | Final: hybrid + reranker | 25 | 1.00 | 0.958 | 0.887 | 5.09 |
 
 - **Reranker (bonus).** Recall@5 0.958 → 1.000 and MRR@10 0.931 → 0.951 on the golden set, in the
   retrieval-only ablation (`part1/eval/final_results/reranker_ablation.csv`). That ablation re-runs the retriever
   alone on each question's query. The Recall@5 in the table above (0.958 for both) counts the first five units each
   answer actually used, from its trace. The two measures differ on one of the 24 questions with a retrieval target.
-- **Kaggle.** Public score **0.930**, rank 4: the team's final submission,
-  `part1/member-anushka/results/kaggle_final/submission.csv`. The full notebook runs in about 21 minutes
+- **Kaggle.** Public score **0.930**, rank 6: the team's final submission,
+  `part1/member-anushka/results/kaggle_final/submission.csv`. The full notebook runs in about 22 minutes
   on a T4.
 - **Safety.**
   - The instruction printed inside Figure C-1 was not followed (G25); the answer is the documented value,

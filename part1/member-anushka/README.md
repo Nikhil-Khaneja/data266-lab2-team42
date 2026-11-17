@@ -4,7 +4,7 @@ This folder holds the team's final Part 1 system. It answers questions about thr
 their text, figures and tables, and returns the JSON answer the lab requires (answer, status, citations,
 figure references).
 
-* **Kaggle:** public score **0.930**, rank **4** on the class leaderboard.
+* **Kaggle:** public score **0.930**, rank **6** on the class leaderboard.
 * **Golden set:** **25/25** correct answers, against 11/25 for the dense-only baseline.
 * **Bonus reranker:** raises Recall@5 on the golden set from 0.958 to **1.000**.
 
@@ -28,7 +28,7 @@ Further reading: [`failure_analysis.md`](failure_analysis.md) (what failed and w
 ## Results
 
 **Source.** Every number below is printed by the graded run, `notebooks/p1_rag.ipynb`: Kaggle notebook
-`anushkak12345/notebook1e60e8258f`, Tesla T4, seed 266, about 21 minutes for the whole notebook. The
+`anushkak12345/notebook1f4786ea97`, Tesla T4, seed 266, about 22 minutes for the whole notebook. The
 per-question scores are in `../eval/final_results/`.
 
 ### Golden set: baseline vs final (Task 1.4, C2)
@@ -39,7 +39,7 @@ per-question scores are in `../eval/final_results/`.
 | Status accuracy | status equals the expected status | 0.76 | 1.00 | **1.00** |
 | **Secondary:** Recall@5 | a gold page, figure or table is among the top 5 retrieved units (24 questions with a retrieval target) | 0.833 | 0.958 | **0.958** |
 | **Secondary:** citation accuracy | cited sources that are gold sources ÷ all cited sources | 0.760 (38/50) | 0.887 (55/62) | **0.887 (55/62)** |
-| **Efficiency:** median seconds per question | end-to-end answer time on a T4 | 2.59 | 3.53 | **4.79** |
+| **Efficiency:** median seconds per question | end-to-end answer time on a T4 | 2.76 | 3.77 | **5.09** |
 
 **Human evaluation.**
 * **Protocol:** both members independently rated each of the 25 final answers (the graded run's answers)
@@ -85,12 +85,12 @@ standalone query and fact-table pins as the answering step.
 
 | retrieval mode | Recall@1 | Recall@3 | Recall@5 | MRR@10 | median retrieval ms |
 |---|---|---|---|---|---|
-| dense only (bge-small) | 0.583 | 0.833 | 0.833 | 0.709 | 16.0 |
-| hybrid (dense + BM25, RRF) | 0.917 | 0.958 | 0.958 | 0.931 | 17.7 |
-| **hybrid + `bge-reranker-v2-m3`** | 0.917 | **1.000** | **1.000** | **0.951** | 353.8 |
+| dense only (bge-small) | 0.583 | 0.833 | 0.833 | 0.709 | 14.0 |
+| hybrid (dense + BM25, RRF) | 0.917 | 0.958 | 0.958 | 0.931 | 17.3 |
+| **hybrid + `bge-reranker-v2-m3`** | 0.917 | **1.000** | **1.000** | **0.951** | 371.9 |
 
 * **Where the gain comes from.** The reranker brings the one remaining gold source into the top 3 (G17). It
-  adds about 0.34 s per question.
+  adds about 0.35 s per question.
 * **Answer correctness.** Already 25/25 without the reranker, so the gain shows up in retrieval quality,
   not in answer correctness.
 * **Public leaderboard.** On the 40 practice questions, an earlier version scored 0.881 both with and
@@ -102,7 +102,7 @@ standalone query and fact-table pins as the answering step.
 | | |
 |---|---|
 | final submission | `results/kaggle_final/submission.csv`, selected as the team's final submission |
-| public score | 0.930 (rank 4 when submitted) |
+| public score | 0.930 (rank 6) |
 | run | `notebooks/p1_rag.ipynb`, executed on Kaggle with all outputs saved |
 | hidden set | the notebook reads `QUESTIONS_PATH` (default `Questions.csv`) and writes and validates `submission.csv` with no manual step |
 
@@ -210,8 +210,8 @@ No hosted API is used. All models are open weights from the Hugging Face Hub:
 * **Installed on top of the Kaggle image:** the notebook's install cell adds `pymupdf==2.1`,
   `chromadb==1.5.9` and `rank_bm25==0.2.2`.
 * **`requirements.txt`** pins the local development environment (Python 3.11).
-* **Cell 1 commit:** the graded run printed an empty commit because a Kaggle session has no `.git`.
-  `scripts/build_p1_notebook.py --commit <hash>` embeds the code commit for later runs.
+* **Cell 1 commit:** a Kaggle session has no `.git`, so Cell 1 falls back to the commit of the embedded
+  `p1_rag` code; the graded run prints `code@921bfb7`.
 
 ## How to run
 

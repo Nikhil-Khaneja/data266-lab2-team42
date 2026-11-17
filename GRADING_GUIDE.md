@@ -72,7 +72,7 @@ Write-ups: `part1/member-anushka/README.md`, `failure_analysis.md`.
 | Secondary: Recall@5 of the evidence used for the answer | 0.833 | 0.958 | 0.958 |
 | Secondary: citation accuracy | 0.760 | 0.887 | 0.887 |
 | Human: groundedness, mean 1–5, and agreement within 1 point (both members, 25 answers) | not rated | not rated | 5.0; 1.00 within 1 point (1.00 exact) |
-| Efficiency: median s/question (T4) | 2.59 | 3.53 | 4.79 |
+| Efficiency: median s/question (T4) | 2.76 | 3.77 | 5.09 |
 
 **Two Recall@5 numbers.** The table above measures the evidence each system used to write its
 answer. The bonus reranker ablation (`reranker_ablation.csv`) measures the ranked retrieval list

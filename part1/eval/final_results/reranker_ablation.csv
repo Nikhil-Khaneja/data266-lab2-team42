@@ -1,4 +1,4 @@
 ,recall@1,recall@3,recall@5,MRR@10,median_retrieval_ms,questions
-dense only,0.583,0.833,0.833,0.709,16.0,24.0
-hybrid,0.917,0.958,0.958,0.931,17.7,24.0
-hybrid + reranker,0.917,1.0,1.0,0.951,353.8,24.0
+dense only,0.583,0.833,0.833,0.709,14.0,24.0
+hybrid,0.917,0.958,0.958,0.931,17.3,24.0
+hybrid + reranker,0.917,1.0,1.0,0.951,371.9,24.0

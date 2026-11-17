@@ -20,7 +20,7 @@ wrote. The file is named next to each table. `GRADING_GUIDE.md` maps every rubri
 
 | Part | Primary result | Secondary | Human evaluation | Efficiency |
 |---|---|---|---|---|
-| **1 RAG** | **25/25** golden-set answers correct (baseline 11/25); Kaggle public score **0.930** (rank 6) | Recall@5 0.958; citation accuracy 0.887 | groundedness **5.0/5**; raters within 1 point on 100% of answers | 4.79 s per question (T4) |
+| **1 RAG** | **25/25** golden-set answers correct (baseline 11/25); Kaggle public score **0.930** (rank 6) | Recall@5 0.958; citation accuracy 0.887 | groundedness **5.0/5**; raters within 1 point on 100% of answers | 5.09 s per question (T4) |
 | **2 Diffusion** | KID **0.035** ± 0.016 (base 0.142); CLIP 0.304 (base 0.313) | LPIPS seed diversity 0.676 (base 0.690) | final run vs base: **42.6%** win rate (3 raters, 25 pairs) | 0.81 GPU-hours, 6.17 GiB peak (T4) |
 | **3 Agents** | task success **14/15** automatic, 12/15 human (no loop: 12/15, 12/15) | critic agreement 10/14; red-team attack success 1/10 | members agreed on 25/30 judgements | 6.4 s per request (no loop: 4.9 s) |
 
@@ -33,7 +33,7 @@ wrote. The file is named next to each table. `GRADING_GUIDE.md` maps every rubri
 
 | Part | Lead (graded system) | Partner (baseline and other contributions) | Why this system is the graded one |
 |---|---|---|---|
-| **1 RAG** | **Anushka**: `part1/member-anushka/` (hybrid retrieval + reranker, Qwen2.5-VL-3B fp16, precedence rules in code) | **Nikhil**: complete baseline in `part1/member-nikhil/` (hybrid + reranker, Qwen2.5-VL-7B 4-bit). He wrote the first golden set, committed Oct 27, and rated groundedness. | Higher Kaggle public score: **0.930 vs 0.867**. The whole notebook runs in about 21 minutes on a T4. Revision, outturn, conflict and arithmetic decisions are made in code, which is where the gain over the baseline came from (11/25 → 25/25). |
+| **1 RAG** | **Anushka**: `part1/member-anushka/` (hybrid retrieval + reranker, Qwen2.5-VL-3B fp16, precedence rules in code) | **Nikhil**: complete baseline in `part1/member-nikhil/` (hybrid + reranker, Qwen2.5-VL-7B 4-bit). He wrote the first golden set, committed Oct 27, and rated groundedness. | Higher Kaggle public score: **0.930 vs 0.867**. The whole notebook runs in about 22 minutes on a T4. Revision, outturn, conflict and arithmetic decisions are made in code, which is where the gain over the baseline came from (11/25 → 25/25). |
 | **2 Diffusion** | **Anushka**: `part2/member-anushka/` (LoRA rank 4 vs rank 16, Colab T4) | **Nikhil**: complete baseline in `part2/member-nikhil/` (two LoRA runs on an RTX 4090, 120 images, both adapters and the image dataset on Hugging Face). He was one of the 3 human raters. | Only this pipeline has every Part 2 evaluation item finished: the blinded 3-rater comparison with an outside rater, the NSFW checker on all 120 images (flagged images withheld from the release), a memorization check against a held-out threshold, KID over 100 subsets, and the model card. It was also trained on the required 16 GB-class GPU (T4). Nikhil's rank-16 run has a lower KID (0.023), but it uses a different KID set-up and a 1,200-step budget, and its human evaluation was not run. So the two KIDs are not directly comparable. |
 | **3 Agents** | **Anushka**: `part3/member-anushka/` (pydantic state, critique loop with at most 2 revisions, Part 2 rank-16 LoRA, Gradio app and Space build) | **Nikhil**: built the first end-to-end Part 3 pipeline in `part3/member-nikhil/`, with the shared test set (`part3/eval/`, committed Oct 27), traces and a Gradio app. In his run, all 10 red-team cases were refused. He was the second human judge for the graded system. | Only this implementation has the full Part 3 evaluation finished: blinded pass/fail judgements from both members on all 30 scenario outputs, 14 critic labels, and every disagreement resolved. It also uses the team's final Part 2 model. The pass/fail sheets for Nikhil's run have not been filled in. |
 
@@ -79,7 +79,7 @@ what, is in `AI_USAGE.md`.
 | Secondary: Recall@5 (24 questions with a retrieval target) | 0.833 | 0.958 | **0.958** |
 | Secondary: citation accuracy | 0.760 (38/50) | 0.887 (55/62) | **0.887 (55/62)** |
 | Human: groundedness, 1–5, both members | not rated | not rated | **5.0** (agreement within 1 point: 1.00) |
-| Efficiency: median seconds per question (T4) | 2.59 | 3.53 | **4.79** |
+| Efficiency: median seconds per question (T4) | 2.76 | 3.77 | **5.09** |
 
 - **Every golden-set category is fully correct:**
 
@@ -100,7 +100,7 @@ what, is in `AI_USAGE.md`.
   - Citation accuracy is still 0.887. Four of the seven unsupported citations are in one question, where
     "share of world output" was resolved as *output growth*.
   - Explanation-style answers can vary between runs.
-  - The reranker costs about 0.34 s per question.
+  - The reranker costs about 0.35 s per question.
 - **Safety (C4).**
   - No answer cites Appendix C of DOC3.
   - The instruction printed inside the Figure C-1 image was not followed (golden question G25).
@@ -294,7 +294,7 @@ Nikhil's Part 1 Kaggle notebook installs only `part1/member-nikhil/kaggle_requir
      GPU and internet on.
   2. Run all cells. The notebook is self-contained: it writes the `p1_rag` package from its own cells. It
      reads `QUESTIONS_PATH` (default `Questions.csv`) and writes `submission.csv` with no manual step, in
-     about 21 minutes.
+     about 22 minutes.
 
   Full steps are in `part1/member-anushka/README.md`.
 - **Part 1 (baseline).**
