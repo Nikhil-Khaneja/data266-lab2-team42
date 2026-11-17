@@ -1,0 +1,202 @@
+{
+ "A01": {
+  "id": "S11",
+  "cond": "with_critique"
+ },
+ "A02": {
+  "id": "S05",
+  "cond": "with_critique"
+ },
+ "A03": {
+  "id": "S05",
+  "cond": "no_critique"
+ },
+ "A04": {
+  "id": "S12",
+  "cond": "no_critique"
+ },
+ "A05": {
+  "id": "S08",
+  "cond": "with_critique"
+ },
+ "A06": {
+  "id": "S08",
+  "cond": "no_critique"
+ },
+ "A07": {
+  "id": "S12",
+  "cond": "with_critique"
+ },
+ "A08": {
+  "id": "S10",
+  "cond": "no_critique"
+ },
+ "A09": {
+  "id": "S02",
+  "cond": "no_critique"
+ },
+ "A10": {
+  "id": "S06",
+  "cond": "with_critique"
+ },
+ "A11": {
+  "id": "S10",
+  "cond": "with_critique"
+ },
+ "A12": {
+  "id": "S01",
+  "cond": "with_critique"
+ },
+ "A13": {
+  "id": "S09",
+  "cond": "with_critique"
+ },
+ "A14": {
+  "id": "S06",
+  "cond": "no_critique"
+ },
+ "A15": {
+  "id": "S01",
+  "cond": "no_critique"
+ },
+ "A16": {
+  "id": "S15",
+  "cond": "no_critique"
+ },
+ "A17": {
+  "id": "S11",
+  "cond": "no_critique"
+ },
+ "A18": {
+  "id": "S02",
+  "cond": "with_critique"
+ },
+ "A19": {
+  "id": "S04",
+  "cond": "no_critique"
+ },
+ "A20": {
+  "id": "S14",
+  "cond": "with_critique"
+ },
+ "A21": {
+  "id": "S13",
+  "cond": "with_critique"
+ },
+ "A22": {
+  "id": "S14",
+  "cond": "no_critique"
+ },
+ "A23": {
+  "id": "S07",
+  "cond": "with_critique"
+ },
+ "A24": {
+  "id": "S09",
+  "cond": "no_critique"
+ },
+ "A25": {
+  "id": "S15",
+  "cond": "with_critique"
+ },
+ "A26": {
+  "id": "S04",
+  "cond": "with_critique"
+ },
+ "A27": {
+  "id": "S13",
+  "cond": "no_critique"
+ },
+ "A28": {
+  "id": "S07",
+  "cond": "no_critique"
+ },
+ "A29": {
+  "id": "S03",
+  "cond": "no_critique"
+ },
+ "A30": {
+  "id": "S03",
+  "cond": "with_critique"
+ },
+ "B01": {
+  "id": "S05",
+  "step": 2,
+  "decision": "accept"
+ },
+ "B02": {
+  "id": "S10",
+  "step": 0,
+  "decision": "accept"
+ },
+ "B03": {
+  "id": "S08",
+  "step": 0,
+  "decision": "accept"
+ },
+ "B04": {
+  "id": "S13",
+  "step": 0,
+  "decision": "accept"
+ },
+ "B05": {
+  "id": "S09",
+  "step": 2,
+  "decision": "revise"
+ },
+ "B06": {
+  "id": "S12",
+  "step": 2,
+  "decision": "revise"
+ },
+ "B07": {
+  "id": "S06",
+  "step": 1,
+  "decision": "accept"
+ },
+ "B08": {
+  "id": "S11",
+  "step": 2,
+  "decision": "accept"
+ },
+ "B09": {
+  "id": "S04",
+  "step": 0,
+  "decision": "accept"
+ },
+ "B10": {
+  "id": "S07",
+  "step": 2,
+  "decision": "revise"
+ },
+ "C01": {
+  "id": "R01"
+ },
+ "C02": {
+  "id": "R02"
+ },
+ "C03": {
+  "id": "R03"
+ },
+ "C04": {
+  "id": "R04"
+ },
+ "C05": {
+  "id": "R05"
+ },
+ "C06": {
+  "id": "R06"
+ },
+ "C07": {
+  "id": "R07"
+ },
+ "C08": {
+  "id": "R08"
+ },
+ "C09": {
+  "id": "R09"
+ },
+ "C10": {
+  "id": "R10"
+ }
+}
