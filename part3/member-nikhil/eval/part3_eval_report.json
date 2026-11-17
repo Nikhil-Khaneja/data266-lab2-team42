@@ -11,7 +11,7 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 4.08,
+      "seconds": 4.97,
       "trace": "eval/part3_traces\\with_critique\\S01.json"
     },
     {
@@ -25,7 +25,7 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 4.96,
+      "seconds": 5.81,
       "trace": "eval/part3_traces\\with_critique\\S02.json"
     },
     {
@@ -39,7 +39,7 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 6.17,
+      "seconds": 7.41,
       "trace": "eval/part3_traces\\with_critique\\S03.json"
     },
     {
@@ -55,7 +55,7 @@
       ],
       "revision_count": 0,
       "generation_model": "stable-diffusion-v1-5/stable-diffusion-v1-5",
-      "seconds": 9.65,
+      "seconds": 11.18,
       "trace": "eval/part3_traces\\with_critique\\S04.json"
     },
     {
@@ -73,7 +73,7 @@
       ],
       "revision_count": 2,
       "generation_model": "stable-diffusion-v1-5/stable-diffusion-v1-5",
-      "seconds": 14.49,
+      "seconds": 16.01,
       "trace": "eval/part3_traces\\with_critique\\S05.json"
     },
     {
@@ -91,7 +91,7 @@
       ],
       "revision_count": 2,
       "generation_model": "stable-diffusion-v1-5/stable-diffusion-v1-5",
-      "seconds": 18.23,
+      "seconds": 18.14,
       "trace": "eval/part3_traces\\with_critique\\S06.json"
     },
     {
@@ -107,7 +107,7 @@
       ],
       "revision_count": 0,
       "generation_model": "timbrooks/instruct-pix2pix",
-      "seconds": 13.24,
+      "seconds": 14.64,
       "trace": "eval/part3_traces\\with_critique\\S07.json"
     },
     {
@@ -125,7 +125,7 @@
       ],
       "revision_count": 2,
       "generation_model": "timbrooks/instruct-pix2pix",
-      "seconds": 12.77,
+      "seconds": 12.59,
       "trace": "eval/part3_traces\\with_critique\\S08.json"
     },
     {
@@ -143,7 +143,7 @@
       ],
       "revision_count": 2,
       "generation_model": "stable-diffusion-v1-5/stable-diffusion-v1-5",
-      "seconds": 16.7,
+      "seconds": 16.26,
       "trace": "eval/part3_traces\\with_critique\\S09.json"
     },
     {
@@ -159,7 +159,7 @@
       ],
       "revision_count": 0,
       "generation_model": "nikhilkhaneja/sd15-naruto-lora-run2",
-      "seconds": 8.5,
+      "seconds": 8.24,
       "trace": "eval/part3_traces\\with_critique\\S10.json"
     },
     {
@@ -177,7 +177,7 @@
       ],
       "revision_count": 2,
       "generation_model": "nikhilkhaneja/sd15-naruto-lora-run2",
-      "seconds": 15.03,
+      "seconds": 15.21,
       "trace": "eval/part3_traces\\with_critique\\S11.json"
     },
     {
@@ -193,7 +193,7 @@
       ],
       "revision_count": 0,
       "generation_model": "nikhilkhaneja/sd15-naruto-lora-run2",
-      "seconds": 8.33,
+      "seconds": 8.32,
       "trace": "eval/part3_traces\\with_critique\\S12.json"
     },
     {
@@ -209,7 +209,7 @@
       ],
       "revision_count": 0,
       "generation_model": "timbrooks/instruct-pix2pix",
-      "seconds": 8.45,
+      "seconds": 8.6,
       "trace": "eval/part3_traces\\with_critique\\S13.json"
     },
     {
@@ -223,7 +223,7 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 0.26,
+      "seconds": 0.27,
       "trace": "eval/part3_traces\\with_critique\\S14.json"
     },
     {
@@ -237,7 +237,7 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 0.34,
+      "seconds": 0.33,
       "trace": "eval/part3_traces\\with_critique\\S15.json"
     }
   ],
@@ -267,7 +267,7 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 4.97,
+      "seconds": 5.03,
       "trace": "eval/part3_traces\\no_critique\\S02.json"
     },
     {
@@ -281,7 +281,7 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 6.4,
+      "seconds": 6.34,
       "trace": "eval/part3_traces\\no_critique\\S03.json"
     },
     {
@@ -295,7 +295,7 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": "stable-diffusion-v1-5/stable-diffusion-v1-5",
-      "seconds": 7.79,
+      "seconds": 7.47,
       "trace": "eval/part3_traces\\no_critique\\S04.json"
     },
     {
@@ -309,7 +309,7 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": "stable-diffusion-v1-5/stable-diffusion-v1-5",
-      "seconds": 5.66,
+      "seconds": 5.34,
       "trace": "eval/part3_traces\\no_critique\\S05.json"
     },
     {
@@ -323,7 +323,7 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": "stable-diffusion-v1-5/stable-diffusion-v1-5",
-      "seconds": 6.49,
+      "seconds": 6.17,
       "trace": "eval/part3_traces\\no_critique\\S06.json"
     },
     {
@@ -337,7 +337,7 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": "timbrooks/instruct-pix2pix",
-      "seconds": 8.03,
+      "seconds": 7.55,
       "trace": "eval/part3_traces\\no_critique\\S07.json"
     },
     {
@@ -351,7 +351,7 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": "timbrooks/instruct-pix2pix",
-      "seconds": 5.76,
+      "seconds": 5.58,
       "trace": "eval/part3_traces\\no_critique\\S08.json"
     },
     {
@@ -365,7 +365,7 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": "stable-diffusion-v1-5/stable-diffusion-v1-5",
-      "seconds": 6.16,
+      "seconds": 5.98,
       "trace": "eval/part3_traces\\no_critique\\S09.json"
     },
     {
@@ -379,7 +379,7 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": "nikhilkhaneja/sd15-naruto-lora-run2",
-      "seconds": 7.08,
+      "seconds": 6.77,
       "trace": "eval/part3_traces\\no_critique\\S10.json"
     },
     {
@@ -393,7 +393,7 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": "nikhilkhaneja/sd15-naruto-lora-run2",
-      "seconds": 5.78,
+      "seconds": 5.68,
       "trace": "eval/part3_traces\\no_critique\\S11.json"
     },
     {
@@ -407,7 +407,7 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": "nikhilkhaneja/sd15-naruto-lora-run2",
-      "seconds": 6.05,
+      "seconds": 5.81,
       "trace": "eval/part3_traces\\no_critique\\S12.json"
     },
     {
@@ -421,7 +421,7 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": "timbrooks/instruct-pix2pix",
-      "seconds": 6.24,
+      "seconds": 6.04,
       "trace": "eval/part3_traces\\no_critique\\S13.json"
     },
     {
@@ -435,7 +435,7 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 0.28,
+      "seconds": 0.27,
       "trace": "eval/part3_traces\\no_critique\\S14.json"
     },
     {
@@ -449,7 +449,7 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 0.31,
+      "seconds": 0.32,
       "trace": "eval/part3_traces\\no_critique\\S15.json"
     }
   ],
@@ -465,7 +465,7 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 0.95,
+      "seconds": 0.91,
       "trace": "eval/part3_traces\\redteam\\R01.json"
     },
     {
@@ -479,7 +479,7 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 0.84,
+      "seconds": 0.77,
       "trace": "eval/part3_traces\\redteam\\R02.json"
     },
     {
@@ -591,7 +591,7 @@
       "critique_history": [],
       "revision_count": 0,
       "generation_model": null,
-      "seconds": 0.82,
+      "seconds": 0.84,
       "trace": "eval/part3_traces\\redteam\\R10.json"
     }
   ]

@@ -30,7 +30,7 @@
         "refusal_reason": null,
         "image_text": ""
       },
-      "duration_seconds": 0.42757654190063477
+      "duration_seconds": 0.4049563407897949
     },
     {
       "agent": "vision_understanding",
@@ -54,7 +54,7 @@
           }
         ]
       },
-      "duration_seconds": 3.943650722503662
+      "duration_seconds": 3.8250620365142822
     },
     {
       "agent": "prompt_engineering",
@@ -62,7 +62,7 @@
       "output": {
         "generation_prompt": "Remove the park bench from the image."
       },
-      "duration_seconds": 0.35664963722229004
+      "duration_seconds": 0.3156089782714844
     },
     {
       "agent": "image_generation",
@@ -74,7 +74,7 @@
         "steps": 30,
         "safety_flagged": false
       },
-      "duration_seconds": 1.0301048755645752
+      "duration_seconds": 1.034754991531372
     }
   ]
 }

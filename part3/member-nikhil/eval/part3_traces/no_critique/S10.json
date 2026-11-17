@@ -30,7 +30,7 @@
         "refusal_reason": null,
         "image_text": "2018"
       },
-      "duration_seconds": 0.6306538581848145
+      "duration_seconds": 0.601372480392456
     },
     {
       "agent": "vision_understanding",
@@ -53,7 +53,7 @@
           }
         ]
       },
-      "duration_seconds": 5.151875257492065
+      "duration_seconds": 4.900889873504639
     },
     {
       "agent": "prompt_engineering",
@@ -61,7 +61,7 @@
       "output": {
         "generation_prompt": "Redraw this character in our Naruto-trained art style."
       },
-      "duration_seconds": 0.4354081153869629
+      "duration_seconds": 0.41463160514831543
     },
     {
       "agent": "image_generation",
@@ -73,7 +73,7 @@
         "steps": 30,
         "safety_flagged": false
       },
-      "duration_seconds": 0.8636951446533203
+      "duration_seconds": 0.8535130023956299
     }
   ]
 }

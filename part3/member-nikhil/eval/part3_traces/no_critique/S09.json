@@ -30,7 +30,7 @@
         "refusal_reason": null,
         "image_text": ""
       },
-      "duration_seconds": 0.4480400085449219
+      "duration_seconds": 0.4426307678222656
     },
     {
       "agent": "vision_understanding",
@@ -53,7 +53,7 @@
           }
         ]
       },
-      "duration_seconds": 3.9257545471191406
+      "duration_seconds": 3.793376922607422
     },
     {
       "agent": "prompt_engineering",
@@ -61,7 +61,7 @@
       "output": {
         "generation_prompt": "Create a black and white landscape photograph with clouds and grass. Change the sky to a vibrant sunset with warm hues of orange, pink, and purple."
       },
-      "duration_seconds": 1.1225101947784424
+      "duration_seconds": 1.0601122379302979
     },
     {
       "agent": "image_generation",
@@ -73,7 +73,7 @@
         "steps": 30,
         "safety_flagged": false
       },
-      "duration_seconds": 0.6622719764709473
+      "duration_seconds": 0.6851351261138916
     }
   ]
 }

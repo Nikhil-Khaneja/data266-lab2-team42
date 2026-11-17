@@ -30,7 +30,7 @@
         "refusal_reason": null,
         "image_text": ""
       },
-      "duration_seconds": 0.490159273147583
+      "duration_seconds": 0.4999430179595947
     },
     {
       "agent": "vision_understanding",
@@ -54,7 +54,7 @@
           }
         ]
       },
-      "duration_seconds": 3.8661134243011475
+      "duration_seconds": 3.6814427375793457
     },
     {
       "agent": "prompt_engineering",
@@ -62,7 +62,7 @@
       "output": {
         "generation_prompt": "Create three anime characters standing side by side in a style that aligns with our fine-tuned aesthetic."
       },
-      "duration_seconds": 0.8141863346099854
+      "duration_seconds": 0.7661614418029785
     },
     {
       "agent": "image_generation",
@@ -74,7 +74,7 @@
         "steps": 30,
         "safety_flagged": false
       },
-      "duration_seconds": 0.8745899200439453
+      "duration_seconds": 0.8654139041900635
     }
   ]
 }

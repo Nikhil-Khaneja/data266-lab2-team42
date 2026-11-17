@@ -32,7 +32,7 @@
         "refusal_reason": null,
         "image_text": "2018"
       },
-      "duration_seconds": 0.6046299934387207
+      "duration_seconds": 0.5700337886810303
     },
     {
       "agent": "vision_understanding",
@@ -55,7 +55,7 @@
           }
         ]
       },
-      "duration_seconds": 5.084447622299194
+      "duration_seconds": 4.940426349639893
     },
     {
       "agent": "prompt_engineering",
@@ -63,7 +63,7 @@
       "output": {
         "generation_prompt": "Redraw this character in our Naruto-trained art style."
       },
-      "duration_seconds": 0.4565465450286865
+      "duration_seconds": 0.4128108024597168
     },
     {
       "agent": "image_generation",
@@ -75,7 +75,7 @@
         "steps": 30,
         "safety_flagged": false
       },
-      "duration_seconds": 0.9048185348510742
+      "duration_seconds": 0.87359619140625
     },
     {
       "agent": "critique",
@@ -85,7 +85,7 @@
         "decision": "accept",
         "feedback": "The image is a black and white drawing of characters in a Naruto-inspired art style."
       },
-      "duration_seconds": 1.4521255493164062
+      "duration_seconds": 1.4396138191223145
     }
   ]
 }

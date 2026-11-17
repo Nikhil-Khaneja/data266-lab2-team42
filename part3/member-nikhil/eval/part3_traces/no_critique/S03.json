@@ -29,7 +29,7 @@
         "refusal_reason": null,
         "image_text": "Quarterly Revenue ($M)\nQ1: 12\nQ2: 15\nQ3: 14\nQ4: 18"
       },
-      "duration_seconds": 1.654773235321045
+      "duration_seconds": 1.6198406219482422
     },
     {
       "agent": "vision_understanding",
@@ -54,7 +54,7 @@
           }
         ]
       },
-      "duration_seconds": 4.743596315383911
+      "duration_seconds": 4.717510938644409
     }
   ]
 }

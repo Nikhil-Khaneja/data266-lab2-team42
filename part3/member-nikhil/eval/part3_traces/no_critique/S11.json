@@ -30,7 +30,7 @@
         "refusal_reason": null,
         "image_text": ""
       },
-      "duration_seconds": 0.49033379554748535
+      "duration_seconds": 0.5004775524139404
     },
     {
       "agent": "vision_understanding",
@@ -53,7 +53,7 @@
           }
         ]
       },
-      "duration_seconds": 3.7139735221862793
+      "duration_seconds": 3.5804505348205566
     },
     {
       "agent": "prompt_engineering",
@@ -61,7 +61,7 @@
       "output": {
         "generation_prompt": "Generate an anime-style character in a dynamic pose inspired by Naruto, with a vibrant and colorful background."
       },
-      "duration_seconds": 0.7410271167755127
+      "duration_seconds": 0.7253282070159912
     },
     {
       "agent": "image_generation",
@@ -73,7 +73,7 @@
         "steps": 30,
         "safety_flagged": false
       },
-      "duration_seconds": 0.8370599746704102
+      "duration_seconds": 0.8732962608337402
     }
   ]
 }

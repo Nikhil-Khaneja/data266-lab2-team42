@@ -30,7 +30,7 @@
         "refusal_reason": null,
         "image_text": ""
       },
-      "duration_seconds": 0.4760606288909912
+      "duration_seconds": 0.45284271240234375
     },
     {
       "agent": "vision_understanding",
@@ -53,7 +53,7 @@
           }
         ]
       },
-      "duration_seconds": 4.209393262863159
+      "duration_seconds": 4.033392667770386
     },
     {
       "agent": "prompt_engineering",
@@ -61,7 +61,7 @@
       "output": {
         "generation_prompt": "Create a close-up image of a person's face with a small, round, white object on their cheek, giving it a vintage film look."
       },
-      "duration_seconds": 1.1359262466430664
+      "duration_seconds": 1.019460916519165
     },
     {
       "agent": "image_generation",
@@ -73,7 +73,7 @@
         "steps": 30,
         "safety_flagged": false
       },
-      "duration_seconds": 0.6647467613220215
+      "duration_seconds": 0.6598310470581055
     }
   ]
 }

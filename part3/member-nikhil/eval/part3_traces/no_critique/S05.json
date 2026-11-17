@@ -30,7 +30,7 @@
         "refusal_reason": null,
         "image_text": ""
       },
-      "duration_seconds": 0.4734032154083252
+      "duration_seconds": 0.44336581230163574
     },
     {
       "agent": "vision_understanding",
@@ -53,7 +53,7 @@
           }
         ]
       },
-      "duration_seconds": 3.9211559295654297
+      "duration_seconds": 3.699868679046631
     },
     {
       "agent": "prompt_engineering",
@@ -61,7 +61,7 @@
       "output": {
         "generation_prompt": "Create a pencil sketch of a city skyline at sunset with reflections in water."
       },
-      "duration_seconds": 0.5845625400543213
+      "duration_seconds": 0.5501387119293213
     },
     {
       "agent": "image_generation",
@@ -73,7 +73,7 @@
         "steps": 30,
         "safety_flagged": false
       },
-      "duration_seconds": 0.6783831119537354
+      "duration_seconds": 0.6440520286560059
     }
   ]
 }

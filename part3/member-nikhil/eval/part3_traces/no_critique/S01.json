@@ -29,7 +29,7 @@
         "refusal_reason": null,
         "image_text": ""
       },
-      "duration_seconds": 0.4743964672088623
+      "duration_seconds": 0.4940941333770752
     },
     {
       "agent": "vision_understanding",
@@ -53,7 +53,7 @@
           }
         ]
       },
-      "duration_seconds": 3.6301403045654297
+      "duration_seconds": 3.6069183349609375
     }
   ]
 }

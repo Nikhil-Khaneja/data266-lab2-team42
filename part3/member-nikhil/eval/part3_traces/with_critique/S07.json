@@ -32,7 +32,7 @@
         "refusal_reason": null,
         "image_text": ""
       },
-      "duration_seconds": 0.426023006439209
+      "duration_seconds": 0.41995811462402344
     },
     {
       "agent": "vision_understanding",
@@ -57,7 +57,7 @@
           }
         ]
       },
-      "duration_seconds": 5.0302574634552
+      "duration_seconds": 4.92789101600647
     },
     {
       "agent": "prompt_engineering",
@@ -65,7 +65,7 @@
       "output": {
         "generation_prompt": "Caption: A cozy living room with a beige sectional sofa adorned with various pillows. Objects: beige sectional sofa, various pillows, plant, table. Make the entire image brighter."
       },
-      "duration_seconds": 1.4091618061065674
+      "duration_seconds": 1.2472169399261475
     },
     {
       "agent": "image_generation",
@@ -77,7 +77,7 @@
         "steps": 30,
         "safety_flagged": false
       },
-      "duration_seconds": 4.607799530029297
+      "duration_seconds": 6.293325185775757
     },
     {
       "agent": "critique",
@@ -87,7 +87,7 @@
         "decision": "accept",
         "feedback": "The image is bright and well-lit, but the prompt suggests making it even brighter."
       },
-      "duration_seconds": 1.7716920375823975
+      "duration_seconds": 1.752359390258789
     }
   ]
 }

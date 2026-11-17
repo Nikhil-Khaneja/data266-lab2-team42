@@ -29,7 +29,7 @@
         "refusal_reason": null,
         "image_text": "BANJO"
       },
-      "duration_seconds": 0.5522518157958984
+      "duration_seconds": 0.597865104675293
     },
     {
       "agent": "vision_understanding",
@@ -54,7 +54,7 @@
           }
         ]
       },
-      "duration_seconds": 4.413689374923706
+      "duration_seconds": 4.436661720275879
     }
   ]
 }
