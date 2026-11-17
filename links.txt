@@ -3,9 +3,9 @@ Members: Anushka Khadatkar (018383963), Nikhil Khaneja (018322096)
 
 # GitHub
 Repository: https://github.com/Nikhil-Khaneja/data266-lab2-team42
-p1-v1.0 commit: (the commit this tag points to; listed in the Canvas copy of links.txt)
-p2-v1.0 commit: (the commit this tag points to; listed in the Canvas copy of links.txt)
-p3-v1.0 commit: (the commit this tag points to; listed in the Canvas copy of links.txt)
+p1-v1.0 commit: beca3d74211661b061c4125711d49f6dac82abb7
+p2-v1.0 commit: beca3d74211661b061c4125711d49f6dac82abb7
+p3-v1.0 commit: beca3d74211661b061c4125711d49f6dac82abb7
 
 # Kaggle (Part 1)
 Kaggle team name: Pair_Programming_Team_42
