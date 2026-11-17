@@ -222,12 +222,9 @@ All numbers below are printed by `part3/member-anushka/notebooks/p3_agents.ipynb
   (Anushka); red-team attack success 0/10; median 18.54 s per request with the loop and 11.31 s without.
   Both members rated on one device; the second rater (Nikhil) started from the first rater's saved answers and changed the ones he disagreed with (7 answers), so the ratings are not independent and agreement is likely overstated.
 
-## Meeting recordings
+## Meetings and decisions
 
-No audio or video recordings were made of our meetings. We met on calls, and the decisions are listed below.
-This log was written afterwards from those decisions. It is not a transcript.
-
-## Decision log (written after our calls)
+We met on calls. The decisions from those calls are listed below. This log was written afterwards; it is not a transcript.
 
 | Date | Topic | Decision |
 |------|-------|----------|
