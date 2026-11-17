@@ -1,4 +1,4 @@
-# Versions the three notebooks were executed with (RTX 4090 workstation; Part 1 also on a Kaggle T4).
+# Versions the three notebooks were executed with (local workstation; Part 1 also on a Kaggle T4).
 # Install torch for your GPU first, e.g. the CUDA 12.8 build:
 #   pip install torch==2.11.0+cu128 torchvision==0.26.0+cu128 --index-url https://download.pytorch.org/whl/cu128
 torch==2.11.0+cu128

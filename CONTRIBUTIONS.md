@@ -151,7 +151,7 @@ All numbers below are printed by `part2/member-anushka/notebooks/p2_evaluate.ipy
 - Data prep (dedup/corrupt filtering, 90/10 split, resize) run against the real
   lambdalabs/naruto-blip-captions dataset: 1221 images, 0 removed, 1098 train / 123 test.
 - 20 fixed evaluation prompts generated from real test-set captions.
-- Two LoRA training runs on an RTX 4090, both well under the 16 GB GPU budget (gradient
+- Two LoRA training runs, both well under the 16 GB GPU budget (gradient
   checkpointing + fp16, 1,200 steps, lr 1e-4, effective batch 4): run1 (rank 4) — 797,184 trainable
   params, 4.12 GB peak, 1,323.8 s (0.368 GPU-hours); run2 (rank 16) — 3,188,736 trainable params,
   4.15 GB peak, 1,304.5 s (0.362 GPU-hours). Numbers from `part2/member-nikhil/notebooks/p2_finetune.ipynb`.

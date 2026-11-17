@@ -8,8 +8,8 @@ The team's **graded** Part 3 system is Anushka's, in [`../member-anushka/`](../m
 is the partner's working pipeline that the lab requires (requirements S.2). It also contributed the shared test
 set in [`../eval/`](../eval/) (15 scenarios and 10 red-team cases, committed on 2026-10-27, before any run).
 
-All numbers below are printed by [`notebooks/p3_agents.ipynb`](notebooks/p3_agents.ipynb). It was executed on an
-RTX 4090 at commit `67fe603` with seed 266 and saved in `eval/`. All paths are relative to `part3/member-nikhil/`.
+All numbers below are printed by [`notebooks/p3_agents.ipynb`](notebooks/p3_agents.ipynb). It was executed
+at commit `67fe603` with seed 266 and saved in `eval/`. All paths are relative to `part3/member-nikhil/`.
 
 ## Architecture
 

@@ -15,7 +15,7 @@ This implementation is the partner's working pipeline that the lab requires (req
 **0.023**, half of rank 4's 0.051, at the same cost (0.36 GPU-hours, 4.2 GB peak) and the same CLIP score.
 
 All numbers below are printed by [`notebooks/p2_finetune.ipynb`](notebooks/p2_finetune.ipynb). It was
-executed on an RTX 4090 at commit `67fe603` with seed 266, and saved to `eval/`. All paths are relative to
+executed at commit `67fe603` with seed 266, and saved to `eval/`. All paths are relative to
 `part2/member-nikhil/`.
 
 ## 2.1 Data preparation
@@ -53,7 +53,6 @@ driven by [`src/part2/train_runs.py`](src/part2/train_runs.py). Both runs share 
 | Resolution / precision | 512, fp16 | 512, fp16 |
 | Peak GPU memory (`max_memory_reserved`) | 4.12 GB | 4.15 GB |
 | Training time | 1,323.8 s (0.368 GPU-h) | 1,304.5 s (0.362 GPU-h) |
-| GPU | RTX 4090 | RTX 4090 |
 
 Both runs fit the 16 GB budget with a wide margin. The notebook reuses adapters already trained on
 2026-11-14 when their rank and step count match (`"reused": true` in `eval/part2_training.json`). The loss
