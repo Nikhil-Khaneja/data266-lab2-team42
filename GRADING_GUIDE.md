@@ -23,7 +23,7 @@ Both members built a complete pipeline for every part, in `part{N}/member-anushk
 | Item | Where |
 |---|---|
 | C1.2 Pinned requirements, how to run | `requirements.txt`; `README.md` → "Running each part"; per-part READMEs in each `member-anushka/` |
-| C1.3 Executed notebooks | `part1/member-anushka/notebooks/p1_rag.ipynb`; `part2/member-anushka/notebooks/p2_finetune.ipynb`, `p2_evaluate.ipynb`; `part3/member-anushka/notebooks/p3_agents.ipynb`, `p3_human_eval.ipynb` |
+| C1.3 Executed notebooks | `part1/member-anushka/notebooks/p1_rag.ipynb`, `p1_human_eval.ipynb`; `part2/member-anushka/notebooks/p2_finetune.ipynb`, `p2_evaluate.ipynb`; `part3/member-anushka/notebooks/p3_agents.ipynb`, `p3_human_eval.ipynb` |
 | C1.4 Cell 1 run info (commit, versions, GPU, seed 266) | First code cell of each notebook above |
 | C1.5 Tags | `p1-v1.0`, `p2-v1.0`, `p3-v1.0`; commits listed in `links.txt` |
 | C1.6 Weights and images on Hugging Face | `links.txt` (no weights or datasets in Git; see `.gitignore`) |
@@ -60,7 +60,7 @@ Write-ups: `part1/member-anushka/README.md`, `failure_analysis.md`.
 | 1.2.3 | JSON answers following the answering rules, with citations | `p1_rag/facts.py` (precedence: revision > outturn > forecast; conflict → higher trust), `p1_rag/answer.py` |
 | 1.3 | Per-conversation memory; user values never in the vector DB | `p1_rag/answer.py` (`RAGSystem.new_conversation()`) |
 | 1.4.1 | 25-item golden set covering all six categories | `part1/member-anushka/eval/p1_golden_set.csv`; per-category scores in the notebook |
-| 1.4.2 | Four measurements, baseline vs final | Table below; `part1/eval/final_results/` |
+| 1.4.2 | Four measurements, baseline vs final | Table below; `part1/eval/final_results/`; human evaluation in `part1/member-anushka/notebooks/p1_human_eval.ipynb` (ratings: `part1/member-anushka/eval/p1_human_ratings.csv`, raw exports in `eval/human_ratings_raw/`) |
 | 1.5 | Kaggle notebook reads `QUESTIONS_PATH`, writes `submission.csv` | Notebook question-run cell; `part1/member-anushka/results/kaggle_final/submission.csv`; Kaggle link in `links.txt` |
 | Bonus | Reranker improvement on the golden set | `part1/eval/final_results/reranker_ablation.csv` |
 
@@ -71,14 +71,14 @@ Write-ups: `part1/member-anushka/README.md`, `failure_analysis.md`.
 | Primary: answer correctness | 11/25 | 25/25 | 25/25 |
 | Secondary: Recall@5 of the evidence used for the answer | 0.833 | 0.958 | 0.958 |
 | Secondary: citation accuracy | 0.760 | 0.887 | 0.887 |
-| Human: groundedness, mean 1–5, and agreement within 1 point | <!-- TODO: from p1_human_eval.ipynb --> | | |
+| Human: groundedness, mean 1–5, and agreement within 1 point (both members, 25 answers) | not rated | not rated | 5.0; 1.00 within 1 point (1.00 exact) |
 | Efficiency: median s/question (T4) | 2.59 | 3.53 | 4.79 |
 
 **Two Recall@5 numbers.** The table above measures the evidence each system used to write its
 answer. The bonus reranker ablation (`reranker_ablation.csv`) measures the ranked retrieval list
 alone, where the reranker lifts Recall@5 from 0.958 to 1.000 and MRR@10 from 0.931 to 0.951.
 
-**Kaggle.** Public score 0.930 (rank 4). No question IDs or question text appear in the source
+**Kaggle.** Public score 0.930 (rank 6). No question IDs or question text appear in the source
 code. The only question IDs in the repository are in a printed `submission.csv` preview in the
 notebook output.
 
