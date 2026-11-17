@@ -4,8 +4,11 @@ Members: Anushka Khadatkar (018383963), Nikhil Khaneja (018322096)
 # GitHub
 Repository: https://github.com/Nikhil-Khaneja/data266-lab2-team42
 p1-v1.0 commit: beca3d74211661b061c4125711d49f6dac82abb7
+  Part 1 final system (Anushka) at this tag: https://github.com/Nikhil-Khaneja/data266-lab2-team42/tree/p1-v1.0/part1/member-anushka
 p2-v1.0 commit: beca3d74211661b061c4125711d49f6dac82abb7
+  Part 2 final system (Nikhil) at this tag: https://github.com/Nikhil-Khaneja/data266-lab2-team42/tree/p2-v1.0/part2/member-nikhil
 p3-v1.0 commit: beca3d74211661b061c4125711d49f6dac82abb7
+  Part 3 final system (Anushka) at this tag: https://github.com/Nikhil-Khaneja/data266-lab2-team42/tree/p3-v1.0/part3/member-anushka
 
 # Kaggle (Part 1)
 Kaggle team name: Pair_Programming_Team_42
