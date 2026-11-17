@@ -12,6 +12,7 @@ Kaggle team name: Pair_Programming_Team_42
 Final notebook: https://www.kaggle.com/code/anushkak12345/notebook1f4786ea97
 Notebook version used for final submission: <version number> (scriptVersionId=370559212, submission 58460119, public score 0.930)
 Baseline notebook (Nikhil): https://www.kaggle.com/code/khanejanikhil/data266-team42-p1-rag (version 7, submission 58381645, public score 0.867)
+Baseline executed-notebook run (Nikhil, code commit 3055126; this run's output is part1/member-nikhil/notebooks/p1_rag.ipynb): https://www.kaggle.com/code/khanejanikhil/data266-team42-p1-rag-exec
 
 # Hugging Face (Part 2)
 Model, run 1 (LoRA): https://huggingface.co/Anushka1202/data266-lab2-part2-lora-rank4

@@ -24,8 +24,8 @@ Part 1 is shared. Both members built a complete pipeline.
 
 ### Nikhil — `part1/member-nikhil/`
 
-All numbers below are printed by `part1/member-nikhil/notebooks/p1_rag.ipynb` (Kaggle T4, version 7,
-code at commit `9d19eb1`) and saved in `part1/member-nikhil/eval/`. Change-by-change history: `part1/member-nikhil/EXPERIMENTS.md`.
+All numbers below are printed by `part1/member-nikhil/notebooks/p1_rag.ipynb` (executed on a Kaggle T4 on 2026-11-16,
+code at commit `3055126`) and saved in `part1/member-nikhil/eval/`. Change-by-change history: `part1/member-nikhil/EXPERIMENTS.md`.
 
 - Ingestion with PyMuPDF: text passages, numbered tables read cell by cell, every numbered figure and
   table cropped, with captions matched to figures by page geometry. Figures are searchable through
@@ -42,12 +42,12 @@ code at commit `9d19eb1`) and saved in `part1/member-nikhil/eval/`. Change-by-ch
 
   | System | Correct (/25) | Recall@5 | Citation accuracy | Median s/question |
   |---|---|---|---|---|
-  | Baseline: dense retrieval only | 12 | 0.88 | 0.99 | 12.0 |
-  | Hybrid, no reranker | 20 | 0.92 | 0.99 | 12.1 |
-  | Final: hybrid + reranker | 20 | 1.00 | 1.00 | 11.8 |
+  | Baseline: dense retrieval only | 12 | 0.88 | 0.99 | 11.4 |
+  | Hybrid, no reranker | 20 | 0.92 | 0.99 | 11.4 |
+  | Final: hybrid + reranker | 20 | 1.00 | 1.00 | 11.0 |
 
 - Kaggle: best public score 0.867, from the Kaggle notebook (submissions 58293679 and 58381645). The full
-  run answers the 40 questions in about 6.5 minutes with 12.0 GB peak GPU memory.
+  run answers the 40 questions in about 6 minutes with 12.0 GB peak GPU memory.
 - Safety: neither the reader-comment false claim nor the instruction printed inside Figure C-1 was
   followed on the golden set (G18, G19).
 - Human evaluation: groundedness sheet with the cited text for each answer

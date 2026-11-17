@@ -122,8 +122,23 @@ def compute_win_rates(ratings_paths, answer_key_path, final_model):
             "majority_win_rate": sum(majority) / len(majority) if majority else None,
             "pairs_with_all_raters": len(majority),
             "unanimous_share": sum(unanimous) / len(unanimous) if unanimous else None,
+            "fleiss_kappa": fleiss_kappa([vs for vs in votes.values() if len(vs) == len(raters)]),
         }
     return report
+
+
+def fleiss_kappa(items):
+    """Fleiss' kappa for a two-way choice: items is one list of votes per pair (True = the
+    final model chosen), the same number of raters on every pair."""
+    if not items or len(items[0]) < 2:
+        return None
+    n = len(items[0])
+    counts = [(sum(vs), n - sum(vs)) for vs in items]
+    p_items = [(a * (a - 1) + b * (b - 1)) / (n * (n - 1)) for a, b in counts]
+    p_bar = sum(p_items) / len(p_items)
+    share = sum(a for a, _ in counts) / (n * len(items))
+    p_e = share ** 2 + (1 - share) ** 2
+    return None if p_e == 1 else (p_bar - p_e) / (1 - p_e)
 
 
 if __name__ == "__main__":
