@@ -48,6 +48,8 @@ Python and writes a JSON trace per request (`outputs/traces/<request_id>.json`: 
    templates to `Part3/human_eval/`. The last cell starts the Gradio app with a public link.
 4. *File → Download .ipynb*, then commit to this folder: the executed notebook, `outputs/results.json`,
    `outputs/results_table.md`, `outputs/traces/` and the filled `human_eval/*.csv`.
+   `outputs/results_table.md` is written before the human evaluation, so its human columns say "pending";
+   the final table with the human measurements is `outputs/results_table_final.md` (from `p3_human_eval.ipynb`).
    Copy `outputs/part3_eval_anushka.json` to the shared `part3/eval/` folder, next to the other member's final results.
 
 Before uploading to Drive, run `python tools/stamp_commit.py` in the repo clone and upload the `COMMIT` file too. The Drive copy has no `.git`, so the first cell prints the commit from that file.
