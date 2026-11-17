@@ -230,7 +230,7 @@ We met on calls. The decisions from those calls are listed below. This log was w
 |------|-------|----------|
 | 2026-11-16 | How to choose the final system per part | Part 1: the better result is final. Parts 2 and 3: each member leads one. The other member's complete pipeline is the documented baseline. Both members' systems are rated with the same human evaluation in every part before the leads are fixed. |
 | 2026-11-17 | Leads | Part 1: Anushka (Kaggle 0.930 vs 0.867, golden set 25/25 vs 20/25). Part 2: Nikhil (KID 0.023 vs 0.035 at under half the compute). Part 3: Anushka. |
-| 2026-11-17 | Part 2 runs | The graded Part 2 numbers come from the notebook committed in the repository. A from-scratch run on a Kaggle T4 is linked as a reproduction on a 16 GB GPU. |
+| 2026-11-17 | Part 2 runs | The graded Part 2 numbers come from the notebook committed in the repository. |
 | 2026-11-17 | Part 3 baseline run | Nikhil's Part 3 baseline uses the Kaggle run (`730c3da`, kernel version 3). |
 | 2026-11-17 | Human evaluation of Nikhil's systems | Part 2: three raters (both members and Ayush, outside the team). Parts 1 and 3: both members. The Part 1 and Part 3 ratings were kept although they were made on one device and are not independent; this is disclosed with the results. |
 | 2026-11-17 | Part 3 disagreements (Nikhil's baseline) | Settled together against the rubric. With critique: S07 pass (subject kept, visibly brighter), S08 pass (extra items fit the prompt). Without critique: S05 pass (good sketch overall), S07 fail (brighter, but the scenery was removed), S08 pass, S12 pass. |

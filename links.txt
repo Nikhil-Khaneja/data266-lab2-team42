@@ -3,9 +3,9 @@ Members: Anushka Khadatkar (018383963), Nikhil Khaneja (018322096)
 
 # GitHub
 Repository: https://github.com/Nikhil-Khaneja/data266-lab2-team42
-p1-v1.0 commit: a9d0838ab14e6e594c3526d783f85b49de59924c
-p2-v1.0 commit: a9d0838ab14e6e594c3526d783f85b49de59924c
-p3-v1.0 commit: a9d0838ab14e6e594c3526d783f85b49de59924c
+p1-v1.0 commit: (the commit this tag points to; listed in the Canvas copy of links.txt)
+p2-v1.0 commit: (the commit this tag points to; listed in the Canvas copy of links.txt)
+p3-v1.0 commit: (the commit this tag points to; listed in the Canvas copy of links.txt)
 
 # Kaggle (Part 1)
 Kaggle team name: Pair_Programming_Team_42
@@ -25,4 +25,4 @@ Input images dataset (optional): not provided
 Space (optional, bonus): not deployed
 
 # Recordings
-Folder with meeting recordings (optional): <link>
+Meetings (decision log): https://github.com/Nikhil-Khaneja/data266-lab2-team42/blob/p1-v1.0/CONTRIBUTIONS.md#meetings-and-decisions

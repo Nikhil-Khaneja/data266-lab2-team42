@@ -75,7 +75,7 @@ answers come from the table-fact lookup, which already finds the right cell.
 | 0.839 | Same pipeline run end to end by the Kaggle notebook (about 32 min, 11.9 GB peak) |
 | **0.867** | Arithmetic written in `evidence` and recomputed in code; change questions get both years' cells; figure references added for named figures on cited pages |
 
-Notebook: https://www.kaggle.com/code/khanejanikhil/data266-team42-p1-rag (also in `links.txt`).
+Notebook: https://www.kaggle.com/code/khanejanikhil/data266-team42-p1-rag.
 No question ID or question text appears in the source code.
 
 ## Architecture
