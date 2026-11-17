@@ -13,8 +13,8 @@ Both members built a complete pipeline for every part, in `part{N}/member-anushk
 | Part | Final system | Tag |
 |---|---|---|
 | 1 | `part1/member-anushka/` (Kaggle public score 0.930) | `p1-v1.0` <!-- TODO: commit hash --> |
-| 2 | `part2/member-anushka/` (LoRA rank 16) | `p2-v1.0` <!-- TODO: commit hash --> |
-| 3 | `part3/member-anushka/` (critique loop, Part 2 rank-16 LoRA; baseline: `part3/member-nikhil/`) | `p3-v1.0` <!-- TODO: commit hash --> |
+| 2 | `part2/member-nikhil/` (LoRA rank 16; baseline: `part2/member-anushka/`) | `p2-v1.0` <!-- TODO: commit hash --> |
+| 3 | `part3/member-anushka/` (critique loop with her own Part 2 rank-16 LoRA; baseline: `part3/member-nikhil/`) | `p3-v1.0` <!-- TODO: commit hash --> |
 
 ---
 
@@ -22,8 +22,8 @@ Both members built a complete pipeline for every part, in `part{N}/member-anushk
 
 | Item | Where |
 |---|---|
-| C1.2 Pinned requirements, how to run | `requirements.txt`; `README.md` → "Running each part"; per-part READMEs in each `member-anushka/` |
-| C1.3 Executed notebooks | `part1/member-anushka/notebooks/p1_rag.ipynb`, `p1_human_eval.ipynb`; `part2/member-anushka/notebooks/p2_finetune.ipynb`, `p2_evaluate.ipynb`; `part3/member-anushka/notebooks/p3_agents.ipynb`, `p3_human_eval.ipynb` |
+| C1.2 Pinned requirements, how to run | `requirements.txt`; `README.md` → "Running each part"; per-part READMEs in each final system's folder |
+| C1.3 Executed notebooks | `part1/member-anushka/notebooks/p1_rag.ipynb`, `p1_human_eval.ipynb`; `part2/member-nikhil/notebooks/p2_finetune.ipynb`; `part3/member-anushka/notebooks/p3_agents.ipynb`, `p3_human_eval.ipynb` |
 | C1.4 Cell 1 run info (commit, versions, GPU, seed 266) | First code cell of each notebook above |
 | C1.5 Tags | `p1-v1.0`, `p2-v1.0`, `p3-v1.0`; commits listed in `links.txt` |
 | C1.6 Weights and images on Hugging Face | `links.txt` (no weights or datasets in Git; see `.gitignore`) |
@@ -37,8 +37,8 @@ Both members built a complete pipeline for every part, in `part{N}/member-anushk
 |---|---|---|
 | Part 1 golden set (final system) | `part1/member-anushka/eval/p1_golden_set.csv` | 2026-11-15 (written 2026-11-11, after tuning on the *practice* questions began; disclosed in `CONTRIBUTIONS.md`) |
 | Part 1 golden set (Nikhil) | `part1/eval/part1_golden_set.json` | 2026-10-27 (4 items replaced 2026-11-15 for overlapping practice questions) |
-| Part 2 fixed 20 prompts (final) | `part2/member-anushka/eval/p2_fixed_20_prompts.json` | 2026-11-14, frozen in the training notebook before training |
-| Part 2 fixed 20 prompts (Nikhil) | `part2/eval/part2_prompts.json` | 2026-10-27 |
+| Part 2 fixed 20 prompts (final system) | `part2/eval/part2_prompts.json` | 2026-10-27, before training |
+| Part 2 fixed 20 prompts (Anushka, baseline) | `part2/member-anushka/eval/p2_fixed_20_prompts.json` | 2026-11-14, frozen in the training notebook before training |
 | Part 3 scenarios + red team (Anushka) | `part3/member-anushka/eval/scenarios.json`, `redteam.json` | 2026-11-13 |
 | Part 3 scenarios + red team (Nikhil) | `part3/eval/part3_scenarios.json`, `part3_redteam.json` | 2026-10-27 |
 
@@ -90,33 +90,41 @@ C-1 image was not followed (G25), and a false premise was corrected (G24).
 
 ## Part 2: Diffusion fine-tuning (27)
 
-Notebooks: `part2/member-anushka/notebooks/p2_finetune.ipynb` (data, training, generation) and
-`p2_evaluate.ipynb` (metrics, safety, human evaluation, Hugging Face release).
-Summary file: `part2/eval/part2_final_results_anushka.json`.
+Final system: `part2/member-nikhil/`. Notebook: `part2/member-nikhil/notebooks/p2_finetune.ipynb` (data, training,
+generation, metrics, safety, memorization, human evaluation). Result files: `part2/member-nikhil/eval/`.
+Baseline (Anushka's complete pipeline): `part2/member-anushka/`, summary in `part2/eval/part2_final_results_anushka.json`.
+Paths in the table are relative to `part2/member-nikhil/`.
 
 | Task | Requirement | Evidence |
 |---|---|---|
-| 2.1 | Clean data, report removals, 90/10 split with seed 266, 512×512, two biases | 1,221 images, 0 corrupt and 0 duplicates removed, 1,098 train / 123 test; `eval/part2_data_and_decision.json`; `README.md` |
-| 2.2.1–2 | Two runs, same budget; params, LR, steps, batch, peak memory, time | LoRA rank 4 vs rank 16, 1,500 steps, lr 1e-4, batch 1 × accumulation 4; table in `p2_finetune.ipynb` |
-| 2.2.3 | Both models on Hugging Face, model card for the final run | `links.txt` (`Anushka1202/data266-lab2-part2-lora-rank4`, `-rank16`) |
-| 2.3 | 20 fixed prompts, seeds 0/1, 40 images per model, grids for 8 prompts, image dataset with metadata | `eval/p2_fixed_20_prompts.json`; grids in `p2_finetune.ipynb`; dataset link in `links.txt` |
-| 2.4 | Metrics, failure modes, final-run choice, safety | Table below; `failure_analysis.md` |
+| 2.1 | Clean data, report removals, 90/10 split with seed 266, 512×512, two biases | 1,221 images, 0 corrupt and 0 duplicates removed, 1,098 train / 123 test; `eval/part2_data_report.json`; `README.md` § 2.1 |
+| 2.2.1–2 | Two runs, same budget; params, LR, steps, batch, peak memory, time | LoRA rank 4 vs rank 16 (797,184 vs 3,188,736 trainable parameters), 1,200 steps, lr 1e-4, batch 1 × accumulation 4; `eval/part2_training.json` |
+| 2.2.3 | Both models on Hugging Face, model card for the final run | `links.txt` (`nikhilkhaneja/sd15-naruto-lora-run1`, `-run2`) |
+| 2.3 | 20 fixed prompts, seeds 0/1, 40 images per model, grids for 8 prompts, image dataset with metadata | `../eval/part2_prompts.json`; grids in `p2_finetune.ipynb`; dataset link in `links.txt` |
+| 2.4 | Metrics, failure modes, final-run choice, safety | Table below; `README.md` § 2.4 (failure modes, final-run choice) |
 
-### Results (source: `part2/eval/part2_final_results_anushka.json`)
+### Results (source: `eval/part2_metrics.json`, `eval/part2_training.json`, human-evaluation cell of `p2_finetune.ipynb`)
 
 | Measurement | Base SD 1.5 | LoRA rank 4 | LoRA rank 16 (final) |
 |---|---|---|---|
-| Primary: KID, in-domain (mean ± std over 100 subsets) | 0.142 ± 0.026 | 0.034 ± 0.015 | 0.035 ± 0.016 |
-| Primary: CLIP score (20 prompts) | 0.313 | 0.307 | 0.304 |
-| Secondary: LPIPS seed diversity | 0.690 | 0.692 | 0.676 |
-| Human: final-run win rate vs base (25 pairs, 3 raters incl. 1 outside, ties excluded) | reference | not rated | 42.6% (Fleiss' κ 0.086) |
-| Efficiency: GPU-hours / peak memory (T4) | – | 0.81 h / 6.15 GiB | 0.81 h / 6.17 GiB |
+| Primary: KID vs test images (mean ± std) | 0.118 ± 0.012 | 0.051 ± 0.008 | 0.023 ± 0.006 |
+| Primary: CLIP score (40 images) | 0.312 | 0.305 | 0.304 |
+| Secondary: LPIPS seed diversity | 0.686 | 0.674 | 0.661 |
+| Human: final-run win rate vs base, style (25 pairs, 3 raters incl. 1 outside) | reference | not rated | 37.3% (majority 20%, Fleiss' κ 0.03) |
+| Human: final-run win rate vs base, prompt match | reference | not rated | 41.3% (majority 40%, Fleiss' κ 0.40) |
+| Efficiency: GPU-hours / peak memory | – | 0.368 h / 4.12 GB | 0.362 h / 4.15 GB |
 
-**Safety (C4).** Naruto images are copyrighted, so both models are for non-commercial research only.
-The Stable Diffusion safety checker flagged 2 of 40 rank-4 outputs (false positives) and 0 of 40
-rank-16 outputs. Flagged images are excluded from the released dataset. Memorization check: the
-highest CLIP similarity between a final-run generation and a training image is 0.928, below the
-95th percentile for real held-out images (0.943).
+**Baseline comparison (Anushka's rank-16 run, `part2/eval/part2_final_results_anushka.json`).** KID 0.035 ± 0.016,
+CLIP 0.304, LPIPS 0.676, human win rate vs base 42.6% (one combined criterion, ties excluded, κ 0.086), 0.81
+GPU-hours. The final system has the lower KID (0.023 vs 0.035) at under half the compute. Human preference is
+similar for both and below 50%: raters preferred the base model. The KID set-ups and human-rating forms differ, so
+the two are compared as reported, not as the same measurement.
+
+**Safety (C4).** Naruto images are copyrighted, so the adapters and images are for non-commercial research only.
+The Stable Diffusion safety checker flagged 11 of 120 images (base 0, rank 4: 4, rank 16: 7), almost all in-domain
+"a man ..." prompts, which points to false positives on the anime style. Flagged images are published black and
+left out of the human-evaluation pairs. Memorization check: the highest CLIP similarity between a final-run
+generation and a training image is 0.916 (`eval/part2_memorization.json`).
 
 ---
 
