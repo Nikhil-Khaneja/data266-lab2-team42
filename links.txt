@@ -11,8 +11,6 @@ p3-v1.0 commit: a9d0838ab14e6e594c3526d783f85b49de59924c
 Kaggle team name: Pair_Programming_Team_42
 Final notebook: https://www.kaggle.com/code/anushkak12345/notebook1f4786ea97
 Notebook version used for final submission: Version 1 (scriptVersionId=370559212, submission 58460119, public score 0.930)
-Baseline notebook (Nikhil): https://www.kaggle.com/code/khanejanikhil/data266-team42-p1-rag (version 7, submission 58381645, public score 0.867)
-Baseline executed-notebook run (Nikhil, code commit 3055126; this run's output is part1/member-nikhil/notebooks/p1_rag.ipynb): https://www.kaggle.com/code/khanejanikhil/data266-team42-p1-rag-exec
 
 # Hugging Face (Part 2)
 Model, run 1 (LoRA rank 4): https://huggingface.co/nikhilkhaneja/sd15-naruto-lora-run1
@@ -21,10 +19,6 @@ Generated images dataset: https://huggingface.co/datasets/nikhilkhaneja/sd15-nar
 Baseline model, run 1 (Anushka, LoRA rank 4): https://huggingface.co/Anushka1202/data266-lab2-part2-lora-rank4
 Baseline model, run 2 (Anushka, LoRA rank 16): https://huggingface.co/Anushka1202/data266-lab2-part2-lora-rank16
 Baseline generated images dataset (Anushka): https://huggingface.co/datasets/Anushka1202/data266-lab2-part2-generated-images-safe
-
-# Part 2 reproduction on one 16 GB GPU (not the graded run)
-Kaggle T4 run of part2/member-nikhil/notebooks/p2_finetune.ipynb (code commit 730c3da, version 3; KID rank 16 0.024, peak 4.15 GB, 0.63 GPU-hours): https://www.kaggle.com/code/khanejanikhil/data266-team42-p2-exec
-Part 3 baseline run (Nikhil, code commit 730c3da, version 3; output = part3/member-nikhil/notebooks/p3_agents.ipynb): https://www.kaggle.com/code/khanejanikhil/data266-team42-p3-exec
 
 # Hugging Face (Part 3)
 Input images dataset (optional): not provided
