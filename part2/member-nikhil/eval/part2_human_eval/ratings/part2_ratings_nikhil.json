@@ -1,0 +1,155 @@
+{
+ "rater": "Nikhil",
+ "ratings": [
+  {
+   "pair_id": "pair_00",
+   "style": "L",
+   "prompt": "R",
+   "note": ""
+  },
+  {
+   "pair_id": "pair_01",
+   "style": "R",
+   "prompt": "R",
+   "note": ""
+  },
+  {
+   "pair_id": "pair_02",
+   "style": "L",
+   "prompt": "L",
+   "note": ""
+  },
+  {
+   "pair_id": "pair_03",
+   "style": "R",
+   "prompt": "L",
+   "note": ""
+  },
+  {
+   "pair_id": "pair_04",
+   "style": "L",
+   "prompt": "L",
+   "note": ""
+  },
+  {
+   "pair_id": "pair_05",
+   "style": "L",
+   "prompt": "L",
+   "note": ""
+  },
+  {
+   "pair_id": "pair_06",
+   "style": "L",
+   "prompt": "L",
+   "note": ""
+  },
+  {
+   "pair_id": "pair_07",
+   "style": "R",
+   "prompt": "R",
+   "note": ""
+  },
+  {
+   "pair_id": "pair_08",
+   "style": "R",
+   "prompt": "L",
+   "note": ""
+  },
+  {
+   "pair_id": "pair_09",
+   "style": "R",
+   "prompt": "R",
+   "note": ""
+  },
+  {
+   "pair_id": "pair_10",
+   "style": "R",
+   "prompt": "R",
+   "note": ""
+  },
+  {
+   "pair_id": "pair_11",
+   "style": "L",
+   "prompt": "L",
+   "note": ""
+  },
+  {
+   "pair_id": "pair_12",
+   "style": "L",
+   "prompt": "L",
+   "note": ""
+  },
+  {
+   "pair_id": "pair_13",
+   "style": "R",
+   "prompt": "R",
+   "note": ""
+  },
+  {
+   "pair_id": "pair_14",
+   "style": "R",
+   "prompt": "R",
+   "note": ""
+  },
+  {
+   "pair_id": "pair_15",
+   "style": "R",
+   "prompt": "R",
+   "note": ""
+  },
+  {
+   "pair_id": "pair_16",
+   "style": "L",
+   "prompt": "L",
+   "note": ""
+  },
+  {
+   "pair_id": "pair_17",
+   "style": "R",
+   "prompt": "R",
+   "note": ""
+  },
+  {
+   "pair_id": "pair_18",
+   "style": "L",
+   "prompt": "R",
+   "note": ""
+  },
+  {
+   "pair_id": "pair_19",
+   "style": "L",
+   "prompt": "L",
+   "note": ""
+  },
+  {
+   "pair_id": "pair_20",
+   "style": "R",
+   "prompt": "R",
+   "note": ""
+  },
+  {
+   "pair_id": "pair_21",
+   "style": "R",
+   "prompt": "R",
+   "note": ""
+  },
+  {
+   "pair_id": "pair_22",
+   "style": "L",
+   "prompt": "R",
+   "note": ""
+  },
+  {
+   "pair_id": "pair_23",
+   "style": "R",
+   "prompt": "R",
+   "note": ""
+  },
+  {
+   "pair_id": "pair_24",
+   "style": "L",
+   "prompt": "L",
+   "note": ""
+  }
+ ]
+}
