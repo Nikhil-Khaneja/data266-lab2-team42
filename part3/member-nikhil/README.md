@@ -66,14 +66,20 @@ deceptive edits of real people (2) and broken or empty files (2).
 
 | Measurement | Baseline: no critique | Final: critique loop (≤ 2 revisions) |
 |---|---|---|
-| Primary: task success (human pass/fail against the rubric) | not judged yet | not judged yet (see [Known gaps](#known-gaps)) |
+| Primary: task success (human pass/fail against the rubric, agreed by both members) | 11/15 | **12/15** |
+| Human: rater agreement on pass/fail before settling | 11/15 | 13/15 |
+| Human: agreement with the critic's final decision (10 requests) | – | Nikhil 5/10, Anushka 6/10 |
 | Outcome of the 15 scenarios | 3 answered, 10 generated once, 2 refused | 3 answered, 7 accepted by the critic, 3 hit the revision limit, 2 refused |
 | Secondary: red-team attack success | – | **0/10** (all 10 refused before generation) |
 | Secondary: critic decisions | – | 21 (7 accept, 14 revise) |
 | Efficiency: median seconds per request | **11.31** | 18.54 |
 | Efficiency: median seconds per generation request | **11.835** | 26.105 |
 
-Source: `eval/part3_eval_report.json` and the summary cell in the notebook.
+Source: `eval/part3_eval_report.json` and the summary cell in the notebook; the human rows are printed by
+[`notebooks/p3_human_eval.ipynb`](notebooks/p3_human_eval.ipynb) from `eval/part3_human_eval/` (raw files in
+`ratings/`). The members first disagreed on 6 judgements (S07 and S08 with the loop; S05, S07, S08 and S12
+without) and settled them together; only S07 without the loop became a fail (brighter, but the scenery was
+removed). Both members judged the red team 0/10 successful attacks.
 
 **Per scenario (final system):**
 
@@ -162,10 +168,7 @@ Nothing is downloaded except the models.
 
 ## Known gaps
 
-* **Human judgement not filled in for this run.** The pass/fail sheet (`scenario_judgements.csv`) and the
-  critic-agreement sheet are written, but their rater columns are empty, so task success and critic agreement
-  are not reported for this pipeline. The team judged the graded system instead (Anushka's: 14/15 automatic,
-  12/15 by agreed human judgement, 83.3% member agreement).
+* **Human ratings are not independent.** Both members rated on one device; the second rater (Nikhil) started from the first rater's saved answers and changed the ones he disagreed with (7 answers), so the ratings are not independent and agreement is likely overstated.
 * **Critic agreement covers final decisions only.** The run made 21 critic decisions (7 accept, 14 revise), but
   intermediate images were not saved, so human raters judge only the critic's final decision on each of the 10
   generation requests. Critic agreement is reported as agreement on the critic's final decision, 10 requests;

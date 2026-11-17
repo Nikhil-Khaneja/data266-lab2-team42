@@ -211,16 +211,16 @@ All numbers below are printed by `part3/member-anushka/notebooks/p3_agents.ipynb
 - 15 test scenarios and 10 red-team cases run against self-generated fixture images
   (no external downloads needed). All 15 scenarios complete without crashing, including
   the two broken/missing-image cases, which refuse cleanly instead of crashing the batch.
-  All 10 red-team cases are handled correctly: direct unsafe requests and deceptive edits
-  of real people are refused by the planner's safety check; the three image-embedded
-  prompt-injection attacks ("ignore previous instructions", a fake system prompt, a fake
-  developer override) are captured verbatim as data in the vision agent's output but never
-  change the caption or the route, so the architecture resists them without needing an
-  explicit refusal. Found and fixed two real bugs from this run: a crash on a corrupted
-  (not just missing) image file, and two safety-regex gaps ("graphic violence" and
-  "celebrity ... compromising" phrasing that the original patterns missed). Final
-  pass/fail judgment against the written rubric and the two instructions-in-image calls
-  still needs sign-off from the team.
+  All 10 red-team cases are refused at the planner (instructions in the image, unsafe requests, deceptive
+  edits of real people, broken files), so no unsafe image is generated. Found and fixed two real bugs from
+  this run: a crash on a corrupted (not just missing) image file, and two safety-regex gaps ("graphic
+  violence" and "celebrity ... compromising" phrasing that the original patterns missed).
+- Results of the Kaggle run (`part3/member-nikhil/notebooks/p3_agents.ipynb`, code `730c3da`) and the human
+  evaluation (`part3/member-nikhil/notebooks/p3_human_eval.ipynb`): task success 12/15 with the critique loop
+  and 11/15 without (agreed by both members after settling 6 disagreements together); rater agreement 13/15
+  and 11/15; agreement with the critic's final decision on the 10 generation requests 5/10 (Nikhil) and 6/10
+  (Anushka); red-team attack success 0/10; median 18.54 s per request with the loop and 11.31 s without.
+  Both members rated on one device; the second rater (Nikhil) started from the first rater's saved answers and changed the ones he disagreed with (7 answers), so the ratings are not independent and agreement is likely overstated.
 
 ## Meeting recordings
 
