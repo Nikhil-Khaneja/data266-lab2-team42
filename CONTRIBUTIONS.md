@@ -50,8 +50,11 @@ code at commit `3055126`) and saved in `part1/member-nikhil/eval/`. Change-by-ch
   run answers the 40 questions in about 6 minutes with 12.0 GB peak GPU memory.
 - Safety: neither the reader-comment false claim nor the instruction printed inside Figure C-1 was
   followed on the golden set (G18, G19).
-- Human evaluation: groundedness sheet with the cited text for each answer
-  (`part1/member-nikhil/eval/part1_groundedness_sheet.csv`), rated 1-5 by both members.
+- Human evaluation: both members rated the 25 final answers 1-5 for groundedness in the cited text
+  (`part1/member-nikhil/eval/part1_groundedness_sheet.csv`): mean 4.34 (Nikhil 4.40, Anushka 4.28), within one
+  point on 25/25, identical on 20/25, printed by `part1/member-nikhil/notebooks/p1_human_eval.ipynb`.
+  Both members rated on one device; the second rater (Anushka) started from the first rater's saved answers and
+  changed the ones she disagreed with (5 scores), so the ratings are not independent and agreement is likely overstated.
 
 ### Anushka — `part1/member-anushka/`
 

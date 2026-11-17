@@ -45,7 +45,7 @@ The three configurations use the same index and the same model. Only retrieval c
 | Primary: answer correctness (all expected numbers and the correct status) | 12/25 | 20/25 | **20/25** |
 | Secondary: Recall@5 (gold page or figure in the top 5) | 0.88 | 0.92 | **1.00** |
 | Secondary: citation accuracy | 0.99 | 0.99 | **1.00** |
-| Human: groundedness 1-5 | not rated | not rated | not rated (see [Known gaps](#known-gaps)) |
+| Human: groundedness 1-5, both members (25 answers) | not rated | not rated | **4.34** (Nikhil 4.40, Anushka 4.28; within 1 point 25/25, identical 20/25) |
 | Efficiency: median seconds per question (Kaggle T4) | 11.4 | 11.4 | **11.0** |
 
 **Where hybrid retrieval helps.** Dense retrieval alone misses exact table labels and years, so 8 more items
@@ -170,13 +170,16 @@ scores the three golden-set configurations, and writes the groundedness rating s
 | `src/part1/score_golden_set.py` | Golden-set scorer and rating sheet |
 | `src/common/vlm.py` | Shared VLM loader (also used by Part 3) |
 | `eval/part1_golden_eval.json` | Per-item golden-set results for all three configurations |
-| `eval/part1_groundedness_sheet.csv` | Groundedness rating sheet (one row per final answer, with cited text) |
+| `eval/part1_groundedness_sheet.csv` | Groundedness ratings by both members (one row per final answer, with cited text) |
+| `notebooks/p1_human_eval.ipynb` | Prints the groundedness summary |
 | `tests/test_postprocess.py` | Unit tests |
 | `EXPERIMENTS.md` | Change log and Kaggle scores |
 
 ## Known gaps
 
-* **Groundedness was not rated for this pipeline.** The sheet is written, but its rater columns are empty. The
-  team rated the graded system instead (Anushka's, mean 5.0, agreement 1.00).
+* **Groundedness ratings are not independent.** The numbers above are printed by
+  [`notebooks/p1_human_eval.ipynb`](notebooks/p1_human_eval.ipynb) from `eval/part1_groundedness_sheet.csv`
+  (raw files in `eval/human_ratings/`). Both members rated on one device; the second rater (Anushka) started from the first rater's saved answers and
+  changed the ones she disagreed with (5 scores), so the ratings are not independent and agreement is likely overstated.
 * **Weak spot:** applying a rule stated in prose (for example an Okun slope and a threshold growth rate) is
   still unreliable with the 7B model in 4-bit.
