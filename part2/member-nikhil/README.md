@@ -15,7 +15,7 @@ This implementation is the partner's working pipeline that the lab requires (req
 **0.023**, half of rank 4's 0.051, at the same cost (0.36 GPU-hours, 4.2 GB peak) and the same CLIP score.
 
 All numbers below are printed by [`notebooks/p2_finetune.ipynb`](notebooks/p2_finetune.ipynb). It was
-executed at commit `67fe603` with seed 266, and saved to `eval/`. All paths are relative to
+executed at commit `7e66071` with seed 266, and saved to `eval/`. All paths are relative to
 `part2/member-nikhil/`.
 
 ## 2.1 Data preparation
@@ -77,11 +77,21 @@ positive does not count as a black image in KID, CLIP or LPIPS.
 | Primary: KID vs test images (mean ± std) | 0.118 ± 0.012 | 0.051 ± 0.008 | **0.023 ± 0.006** |
 | Primary: CLIP score (40 images) | 0.312 | 0.305 | 0.304 |
 | Secondary: LPIPS between seeds (diversity) | 0.686 | 0.674 | 0.661 |
-| Human: blinded win rate vs base | – | – | not rated (see [Known gaps](#known-gaps)) |
+| Human: blinded win rate vs base, style (3 raters × 25 pairs) | – | – | 37.3% (majority 20%, Fleiss' κ 0.03) |
+| Human: blinded win rate vs base, prompt match | – | – | 41.3% (majority 40%, Fleiss' κ 0.40) |
 | Efficiency: GPU-hours / peak memory | – | 0.368 / 4.12 GB | 0.362 / 4.15 GB |
 | Safety checker flags (of 40) | 0 | 4 | 7 |
 
-Source: `eval/part2_metrics.json`, `eval/part2_training.json`, and the generation cell.
+Source: `eval/part2_metrics.json`, `eval/part2_training.json`, the generation cell, and the human-evaluation cell
+(ratings in `eval/part2_human_eval/ratings/`).
+
+**Human evaluation.** Three raters (both members and one outside rater) each compared 25 blinded pairs of the
+final run against base SD 1.5, choosing separately for Naruto style and for prompt match. The raters preferred
+the base model on style: the final run won 37.3% of the 75 votes and the majority vote on only 20% of pairs, and
+the raters barely agreed with each other (κ 0.03; per rater 28%, 60% and 24%). On prompt match the final run
+won 41.3% (majority 40%, κ 0.40). So the KID gain is not matched by human preference. Anushka's run has a
+similar human result (42.6%), but she measured one combined criterion with ties excluded, so the two figures
+are not strictly comparable.
 
 **Final run: rank 16.** It has the same data, steps and learning rate as rank 4, and its KID is less than half
 of rank 4's (0.023 vs 0.051). Its CLIP score is the same (0.304 vs 0.305) and its compute is the same. The cost
@@ -147,13 +157,10 @@ Model weights are not stored in Git.
 | `eval/part2_training.json` | Per-run settings, memory and time |
 | `eval/part2_metrics.json` | KID, CLIP, LPIPS per model |
 | `eval/part2_memorization.json` | Closest training images |
-| `eval/part2_human_eval/` | The 25 blinded pairs and the answer key |
+| `eval/part2_human_eval/` | The 25 blinded pairs, the answer key and the three raters' files (`ratings/`) |
 
 ## Known gaps
 
-* **No human evaluation for this run.** The 25 blinded pairs and the rater page are built, but no rating
-  files were returned. The notebook prints "no ratings yet". The team's human evaluation (3 raters, win rate
-  42.6%) was done on the graded run (Anushka's rank 16).
-* **The Hugging Face upload predates the re-run.** The re-executed notebook was not logged in to Hugging Face,
-  so it did not upload again. The repositories above hold an earlier upload; their run reports should be
-  checked against `eval/part2_training.json` before they are cited as this run's weights.
+* **Hugging Face upload.** The notebook's last cell is not logged in here, so it prints "nothing pushed". The
+  adapters and images were uploaded on 2026-11-17 from the same files (run2 weights sha256 `2636819024e9b2f5…`,
+  Hub commit `4ffd927`; run1 `d25846fda4070152…`, Hub commit `5fadf07`).
