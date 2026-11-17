@@ -14,7 +14,7 @@ Both members built a complete pipeline for every part, in `part{N}/member-anushk
 |---|---|---|
 | 1 | `part1/member-anushka/` (Kaggle public score 0.930) | `p1-v1.0` <!-- TODO: commit hash --> |
 | 2 | `part2/member-anushka/` (LoRA rank 16) | `p2-v1.0` <!-- TODO: commit hash --> |
-| 3 | `part3/member-anushka/` <!-- TODO: confirm final Part 3 implementation --> | `p3-v1.0` <!-- TODO: commit hash --> |
+| 3 | `part3/member-anushka/` (critique loop, Part 2 rank-16 LoRA; baseline: `part3/member-nikhil/`) | `p3-v1.0` <!-- TODO: commit hash --> |
 
 ---
 

@@ -239,6 +239,9 @@ failure-mode cell of `p2_evaluate.ipynb`.
    True` removes flagged images from the first upload.
 4. **Cell 1** of each notebook prints the Git commit, library versions, GPU and seed (C1.4).
    `COMMIT_HASH` holds the short hash of the commit the notebook was run from.
+   In `p2_finetune.ipynb`, the required Cell 1 was added after training had finished and was run on its own
+   (commit `c167af8`), so it is the only cell with an execution count. Every other cell keeps the outputs of the
+   original Colab training run, unchanged; training was not repeated.
 
 Environment: `requirements-p2.txt`. Key library versions printed by Cell 1 of the evaluation run:
 

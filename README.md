@@ -16,7 +16,7 @@ None. Every model runs locally from open weights on the Hugging Face Hub:
 | 1 (`member-nikhil`, baseline) | `Qwen/Qwen2.5-VL-7B-Instruct` (4-bit, bitsandbytes) for figure descriptions and answers; `BAAI/bge-small-en-v1.5` embeddings; `BAAI/bge-reranker-v2-m3` reranker |
 | 2 | `stable-diffusion-v1-5/stable-diffusion-v1-5` + our LoRA runs; `openai` CLIP ViT-B-32 (open_clip) and LPIPS (AlexNet) for evaluation |
 | 3 (`member-nikhil`) | `Qwen/Qwen2.5-VL-3B-Instruct` (fp16); SD 1.5 img2img; `timbrooks/instruct-pix2pix`; our Part 2 LoRA `nikhilkhaneja/sd15-naruto-lora-run2`; CLIP ViT-B-32 |
-| 3 (`member-anushka`) | See `part3/member-anushka/README.md` |
+| 3 (`member-anushka`, final) | `Qwen/Qwen2.5-VL-3B-Instruct` (vision, OCR, critic judgement); `stable-diffusion-v1-5/stable-diffusion-v1-5` img2img/txt2img; `timbrooks/instruct-pix2pix`; our Part 2 LoRA `Anushka1202/data266-lab2-part2-lora-rank16`; `openai/clip-vit-base-patch32`; SD safety checker (`CompVis/stable-diffusion-safety-checker`) |
 
 ## Repo layout
 
@@ -131,9 +131,18 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-`requirements.txt` pins the versions the notebooks were executed with, including the CUDA 12.8
-build of torch/torchvision (RTX 4090). On Kaggle/Colab, keep the preinstalled torch: Part 1's
-Kaggle notebook installs only `part1/member-nikhil/kaggle_requirements.txt`.
+`requirements.txt` pins the versions the RTX 4090 runs (Nikhil's baseline notebooks) were executed with,
+including the CUDA 12.8 build of torch/torchvision. The final (graded) notebooks ran on Kaggle/Colab T4s with
+the platform's preinstalled torch; each one prints its exact library versions in Cell 1, and their pinned
+extras are in:
+
+| Part | Final notebook environment |
+|---|---|
+| 1 | `part1/member-anushka/requirements.txt` (the notebook's install cell adds only missing pinned packages) |
+| 2 | `part2/member-anushka/requirements-p2.txt` |
+| 3 | `part3/member-anushka/requirements-colab.txt` (Colab), `part3/member-anushka/requirements.txt` (local) |
+
+Nikhil's Part 1 Kaggle notebook installs only `part1/member-nikhil/kaggle_requirements.txt`.
 
 ## Where the notebooks are
 

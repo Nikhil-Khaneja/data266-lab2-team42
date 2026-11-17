@@ -2,9 +2,16 @@
 
 Team: Pair_Programming_Team_42 (Nikhil Khaneja, Anushka Khadatkar)
 
-Both members contribute to all three parts. Nikhil leads Part 3 (agents); Anushka leads
-Part 2 (fine-tuning). Part 1 is shared. The partner not leading a part still implements
-and runs a complete working baseline for it.
+Both members contribute to all three parts, and each member built a complete, executed pipeline for every
+part. Anushka led Part 2 (fine-tuning). Nikhil built the first Part 3 pipeline and the shared Part 3 test set.
+Part 1 is shared. For each part the team compared the two implementations and graded the stronger one; the
+other is kept as a working baseline:
+
+| Part | Graded (final) system | Baseline |
+|---|---|---|
+| 1 | `part1/member-anushka/` (Kaggle public score 0.930) | `part1/member-nikhil/` (0.867) |
+| 2 | `part2/member-anushka/` (LoRA rank 16) | `part2/member-nikhil/` |
+| 3 | `part3/member-anushka/` | `part3/member-nikhil/` |
 
 Each part has one directory per member (`part1/member-nikhil/`, `part1/member-anushka/`,
 and so on) so both implementations live side by side in the same repo. Unless a section
@@ -166,6 +173,31 @@ All numbers below are printed by `part2/member-anushka/notebooks/p2_evaluate.ipy
   against the test set, instead of just the 10 in-domain ones the lab spec asks for.
 
 ## Part 3 — Multimodal Multi-Agent System
+
+### Anushka (final) — `part3/member-anushka/`
+
+All numbers below are printed by `part3/member-anushka/notebooks/p3_agents.ipynb` (Colab T4, code at commit
+`40c0a5c`) and `notebooks/p3_human_eval.ipynb`, and saved in `part3/member-anushka/outputs/`. Details:
+`part3/member-anushka/README.md` (architecture, results, system card) and `failure_analysis.md`.
+
+- **Agents.** Planner (rule-based routing plus input safety: NSFW terms, deceptive real-person edits, OCR scan
+  for instructions in the image), Vision Understanding (Qwen2.5-VL-3B: caption, objects, visible text, at least 2
+  answers), Prompt Engineering (image text never copied into the prompt), Image Generation (SD 1.5 img2img,
+  InstructPix2Pix edits, the Part 2 rank-16 LoRA for domain-style requests), Critique (CLIP score, VLM judgement,
+  SD safety checker, concrete revision instruction).
+- **Orchestration.** One pydantic `AgentState` (`p3/state.py`), plain-Python graph with at most 2 revisions
+  (`p3/graph.py`), a JSON trace per request (`outputs/traces/`), clear messages for broken, empty or ambiguous
+  input, and a Gradio app (`python -m p3.app`; Space build in `space/`).
+- **Test set.** 15 scenarios and 10 red-team cases with pass/fail rubrics (`eval/scenarios.json`,
+  `eval/redteam.json`).
+- **Results.** Task success 14/15 with the critique loop vs 12/15 without (automatic); 12/15 in both versions by
+  our agreed human judgement. Critic agreement 10/14. Red-team attack success 1/10 (R01). Median 6.4 s per request
+  with the loop, 4.9 s without.
+- **Human evaluation.** Both members judged all 30 scenario outputs and 14 critic decisions independently on a
+  page that hid the automatic results: 25/30 scenario and 12/14 critic agreement; every disagreement was discussed
+  and resolved (`human_eval/scenario_judgements.csv`, `human_eval/critic_labels.csv`).
+
+### Nikhil (baseline) — `part3/member-nikhil/`
 
 - Five agents (planner, vision understanding, prompt engineering, image generation,
   critique), orchestrator with revise loop and JSON tracing, safety guardrails, Gradio
