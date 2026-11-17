@@ -166,8 +166,10 @@ Nothing is downloaded except the models.
   critic-agreement sheet are written, but their rater columns are empty, so task success and critic agreement
   are not reported for this pipeline. The team judged the graded system instead (Anushka's: 14/15 automatic,
   12/15 by agreed human judgement, 83.3% member agreement).
-* `critic_agreement.csv` lists this run's 21 critic decisions (7 accept, 14 revise), matching
-  `eval/part3_eval_report.json`.
+* **Critic agreement covers final decisions only.** The run made 21 critic decisions (7 accept, 14 revise), but
+  intermediate images were not saved, so human raters judge only the critic's final decision on each of the 10
+  generation requests. Critic agreement is reported as agreement on the critic's final decision, 10 requests;
+  ingesting the ratings rewrites `critic_agreement.csv` to those 10 rows.
 * **LoRA version.** This run loaded `nikhilkhaneja/sd15-naruto-lora-run2` from Hugging Face before the
   2026-11-17 upload, so it used the earlier rank-16 adapter (Hub revision `28df400c`), not the adapter in
   Part 2's final results.
