@@ -12,9 +12,9 @@ Both members built a complete pipeline for every part, in `part{N}/member-anushk
 
 | Part | Final system | Tag |
 |---|---|---|
-| 1 | `part1/member-anushka/` (Kaggle public score 0.930) | `p1-v1.0` <!-- TODO: commit hash --> |
-| 2 | `part2/member-nikhil/` (LoRA rank 16; baseline: `part2/member-anushka/`) | `p2-v1.0` <!-- TODO: commit hash --> |
-| 3 | `part3/member-anushka/` (critique loop with her own Part 2 rank-16 LoRA; baseline: `part3/member-nikhil/`) | `p3-v1.0` <!-- TODO: commit hash --> |
+| 1 | `part1/member-anushka/` (Kaggle public score 0.930) | `p1-v1.0` (`a9d0838`) |
+| 2 | `part2/member-nikhil/` (LoRA rank 16; baseline: `part2/member-anushka/`) | `p2-v1.0` (`a9d0838`) |
+| 3 | `part3/member-anushka/` (critique loop with her own Part 2 rank-16 LoRA; baseline: `part3/member-nikhil/`) | `p3-v1.0` (`a9d0838`) |
 
 ---
 
