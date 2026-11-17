@@ -107,6 +107,8 @@ what, is in `AI_USAGE.md`.
   - A false premise was corrected (G24).
 - **Disclosed limitation.**
   - The final golden set was written on Nov 11, after tuning on the practice questions had started.
+  - G06 and G07 use Figures A-4/A-5 (the near-identical pair) but ask for a different series than any practice
+    question on those figures (and, for G06, a different date), so their answers differ.
   - The human groundedness scale is at its ceiling (every answer was rated 5), and both raters built the
     system.
 

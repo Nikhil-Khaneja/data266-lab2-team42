@@ -266,5 +266,9 @@ python3.11 -m venv .venv && .venv/bin/pip install -r requirements.txt
 * **Reworded questions:** G06, G07 and G23 were reworded on 2026-11-15 so none resembles a practice
   question. Their answers and sources were not changed.
 * **Graded notebook:** it embeds the earlier wording of those three questions.
+* **G06 and G07 vs the practice questions:** G06 and G07 use Figures A-4 and A-5 (the near-identical pair)
+  but ask for a different series than any practice question on those figures, so their answers differ:
+  G06 asks for the emerging economies' series in December 2010 (practice Q018: Euro area, March 2009), and
+  G07 asks for the Euro area series in December 2010 (practice Q019: U.S., December 2010).
 * **Regression check:** the set was also used to check that general changes did not break earlier
   answers.
