@@ -4,7 +4,7 @@
   "route": "caption_or_question",
   "refused": false,
   "refusal_reason": null,
-  "image_text": "BANJO",
+  "image_text": "50",
   "final_status": "answered",
   "critique_history": [],
   "revision_count": 0,
@@ -17,7 +17,7 @@
     "safety_flagged": false
   },
   "images": {
-    "input": "data/processed/part3/images\\with_critique\\S02_input.png"
+    "input": "data/processed/part3/images/with_critique/S02_input.png"
   },
   "trace": [
     {
@@ -27,9 +27,9 @@
         "route": "caption_or_question",
         "refused": false,
         "refusal_reason": null,
-        "image_text": "BANJO"
+        "image_text": "50"
       },
-      "duration_seconds": 0.636284351348877
+      "duration_seconds": 0.9889225959777832
     },
     {
       "agent": "vision_understanding",
@@ -42,7 +42,7 @@
           "buildings",
           "signs"
         ],
-        "text_in_image": "BANCO",
+        "text_in_image": "50",
         "qa": [
           {
             "question": "What is the main subject?",
@@ -54,7 +54,7 @@
           }
         ]
       },
-      "duration_seconds": 5.172651052474976
+      "duration_seconds": 6.157104730606079
     }
   ]
 }
