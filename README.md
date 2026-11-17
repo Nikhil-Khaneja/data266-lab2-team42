@@ -12,7 +12,8 @@ None. Every model runs locally from open weights on the Hugging Face Hub:
 
 | Part | Models |
 |---|---|
-| 1 | `Qwen/Qwen2.5-VL-7B-Instruct` (4-bit, bitsandbytes) for figure descriptions and answers; `BAAI/bge-small-en-v1.5` embeddings; `BAAI/bge-reranker-v2-m3` reranker |
+| 1 (`member-anushka`, final) | `Qwen/Qwen2.5-VL-3B-Instruct` (fp16) for figure descriptions and answers; `BAAI/bge-small-en-v1.5` embeddings; `BAAI/bge-reranker-v2-m3` reranker |
+| 1 (`member-nikhil`, baseline) | `Qwen/Qwen2.5-VL-7B-Instruct` (4-bit, bitsandbytes) for figure descriptions and answers; `BAAI/bge-small-en-v1.5` embeddings; `BAAI/bge-reranker-v2-m3` reranker |
 | 2 | `stable-diffusion-v1-5/stable-diffusion-v1-5` + our LoRA runs; `openai` CLIP ViT-B-32 (open_clip) and LPIPS (AlexNet) for evaluation |
 | 3 (`member-nikhil`) | `Qwen/Qwen2.5-VL-3B-Instruct` (fp16); SD 1.5 img2img; `timbrooks/instruct-pix2pix`; our Part 2 LoRA `nikhilkhaneja/sd15-naruto-lora-run2`; CLIP ViT-B-32 |
 | 3 (`member-anushka`) | See `part3/member-anushka/README.md` |
@@ -145,15 +146,16 @@ cd part1\member-nikhil      # or part2\..., part3\...
 ..\..\.venv\Scripts\python.exe -m src.part1.score_golden_set   # example
 ```
 
-**Part 1** needs the real lab files from Canvas (Files → Labs → Lab 2 →
-DATA266_Lab2_Part1) or the Kaggle competition's Data tab: `Document.pdf`,
-`Document2_Supplement_A_Outturns_2011-2013.pdf`,
-`Document3_Briefing_B_Labour_Prices_Policy.pdf`, `kb_manifest.json`, `Questions.csv`,
-`sample_submission.csv`, `validate_submission.py`. Place them under
-`part1/member-nikhil/data/raw/part1/`, then run
-`part1/member-nikhil/notebooks/p1_rag.ipynb` top to bottom. On Kaggle the same notebook runs
-with the competition data and the code attached as a dataset; it reads `QUESTIONS_PATH`
+**Part 1** has two implementations. The team's final Part 1 (the `p1-v1.0` target, public score 0.930) is
+Anushka's: `part1/member-anushka/notebooks/p1_rag.ipynb`, run on Kaggle (T4) with the competition data attached.
+Its README (`part1/member-anushka/README.md`, "How to run") gives the steps; the notebook reads `QUESTIONS_PATH`
 (default `Questions.csv`) and writes `submission.csv` with no manual step.
+
+Nikhil's (`part1/member-nikhil/`) is the baseline implementation. It needs the lab files from Canvas (Files → Labs → Lab 2 →
+DATA266_Lab2_Part1) or the competition's Data tab: `Document.pdf`, `Document2_Supplement_A_Outturns_2011-2013.pdf`,
+`Document3_Briefing_B_Labour_Prices_Policy.pdf`, `kb_manifest.json`, `Questions.csv`, `sample_submission.csv`,
+`validate_submission.py`, placed under `part1/member-nikhil/data/raw/part1/`. Then run
+`part1/member-nikhil/notebooks/p1_rag.ipynb` top to bottom, locally or on Kaggle with the code attached as a dataset.
 
 **Part 2** only needs public data (`lambdalabs/naruto-blip-captions` + Stable Diffusion
 1.5) and runs end to end via `part2/member-nikhil/notebooks/p2_finetune.ipynb`, or the

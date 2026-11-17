@@ -81,7 +81,10 @@ saved in `part1/eval/final_results/`. Details: `part1/member-anushka/README.md`,
   | Hybrid, no reranker | 25 | 1.00 | 0.958 | 0.887 | 3.53 |
   | Final: hybrid + reranker | 25 | 1.00 | 0.958 | 0.887 | 4.79 |
 
-- **Reranker (bonus).** Recall@5 0.958 → 1.000 and MRR@10 0.931 → 0.951 on the golden set.
+- **Reranker (bonus).** Recall@5 0.958 → 1.000 and MRR@10 0.931 → 0.951 on the golden set, in the
+  retrieval-only ablation (`part1/eval/final_results/reranker_ablation.csv`). That ablation re-runs the retriever
+  alone on each question's query. The Recall@5 in the table above (0.958 for both) counts the first five units each
+  answer actually used, from its trace. The two measures differ on one of the 24 questions with a retrieval target.
 - **Kaggle.** Public score **0.930**, rank 4: the team's final submission,
   `part1/member-anushka/results/kaggle_final/submission.csv`. The full notebook runs in about 21 minutes
   on a T4.
