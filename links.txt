@@ -15,6 +15,7 @@ Hugging Face:
 Kaggle:
   Competition: https://www.kaggle.com/competitions/data-266-fall-2026-lab-2-part-1-multimodal-rag
   Nikhil's Kaggle notebook (version 7, code commit 9d19eb1): https://www.kaggle.com/code/khanejanikhil/data266-team42-p1-rag
+  Nikhil's executed-notebook run (2026-11-16, code commit 3055126; output = notebooks/p1_rag.ipynb): https://www.kaggle.com/code/khanejanikhil/data266-team42-p1-rag-exec
     Submission 58381645 (2026-11-15): public score 0.867
   Anushka's earlier submission 58377565 (2026-11-15): public score 0.881
   Final notebook (Anushka, team's final Part 1): https://www.kaggle.com/code/anushkak12345/notebook1e60e8258f

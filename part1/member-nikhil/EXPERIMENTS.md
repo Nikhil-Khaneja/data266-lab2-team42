@@ -37,15 +37,16 @@ were not written before tuning. They were run once and the pipeline was not chan
 
 ## Reranker ablation (golden set, Kaggle T4, same index and model)
 
-Kaggle notebook version 7, code at commit `9d19eb1`, revised golden set. Only the cross-encoder
+Kaggle T4 run of 2026-11-16 (the executed `notebooks/p1_rag.ipynb`), code at commit `3055126`, revised golden set.
+Every answer is identical to Kaggle notebook version 7 (code `9d19eb1`, same Part 1 code); only the timings differ. Only the cross-encoder
 (`bge-reranker-v2-m3`) is switched on or off; everything else is the final pipeline.
 Full per-item results: `eval/part1_golden_eval.json`.
 
 | Configuration | Correct (of 25) | Recall@5 | Citation accuracy | Median s/question |
 |---|---|---|---|---|
-| Baseline: dense retrieval only | 12 | 0.88 | 0.99 | 12.0 |
-| Hybrid (dense + BM25, RRF), no reranker | 20 | 0.92 | 0.99 | 12.1 |
-| Final: hybrid + reranker | 20 | 1.00 | 1.00 | 11.8 |
+| Baseline: dense retrieval only | 12 | 0.88 | 0.99 | 11.4 |
+| Hybrid (dense + BM25, RRF), no reranker | 20 | 0.92 | 0.99 | 11.4 |
+| Final: hybrid + reranker | 20 | 1.00 | 1.00 | 11.0 |
 
 The reranker lifts Recall@5 from 23/25 to 25/25: G18 (the Figure C-1 question) and G25 (a follow-up
 asking for an outturn) only get their source page into the top 5 with it. It does not change answer

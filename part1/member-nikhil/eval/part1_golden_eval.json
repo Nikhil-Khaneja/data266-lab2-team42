@@ -3,7 +3,7 @@
   "primary_correct_out_of": "12/25",
   "secondary_recall_at_5": 0.88,
   "secondary_citation_accuracy": 0.99,
-  "efficiency_median_seconds": 12.028469324111938,
+  "efficiency_median_seconds": 11.426735401153564,
   "items": {
    "G01": {
     "correct": true,
@@ -161,7 +161,7 @@
   "primary_correct_out_of": "20/25",
   "secondary_recall_at_5": 0.92,
   "secondary_citation_accuracy": 0.9866666666666667,
-  "efficiency_median_seconds": 12.149100303649902,
+  "efficiency_median_seconds": 11.441620111465454,
   "items": {
    "G01": {
     "correct": true,
@@ -319,7 +319,7 @@
   "primary_correct_out_of": "20/25",
   "secondary_recall_at_5": 1.0,
   "secondary_citation_accuracy": 1.0,
-  "efficiency_median_seconds": 11.823967456817627,
+  "efficiency_median_seconds": 11.041635990142822,
   "items": {
    "G01": {
     "correct": true,

@@ -30,8 +30,8 @@ Change history with the Kaggle score of each change: [`EXPERIMENTS.md`](EXPERIME
 
 ## Results
 
-**Source.** The golden-set numbers come from the Kaggle notebook run (version 7, T4, code commit `9d19eb1`).
-That run wrote [`eval/part1_golden_eval.json`](eval/part1_golden_eval.json), with every answer per item and
+**Source.** The golden-set numbers come from the executed [`notebooks/p1_rag.ipynb`](notebooks/p1_rag.ipynb), run on a
+Kaggle T4 on 2026-11-16 (code commit `3055126`; every answer is identical to Kaggle version 7, code `9d19eb1`). That run wrote [`eval/part1_golden_eval.json`](eval/part1_golden_eval.json), with every answer per item and
 configuration. The golden set is [`../eval/part1_golden_set.json`](../eval/part1_golden_set.json): 25 items,
 first committed on 2026-10-27, before tuning began. On 2026-11-15, four items (G13, G15, G16, G18) were
 replaced because they repeated practice questions (see `EXPERIMENTS.md`).
@@ -46,7 +46,7 @@ The three configurations use the same index and the same model. Only retrieval c
 | Secondary: Recall@5 (gold page or figure in the top 5) | 0.88 | 0.92 | **1.00** |
 | Secondary: citation accuracy | 0.99 | 0.99 | **1.00** |
 | Human: groundedness 1-5 | not rated | not rated | not rated (see [Known gaps](#known-gaps)) |
-| Efficiency: median seconds per question (Kaggle T4) | 12.0 | 12.1 | **11.8** |
+| Efficiency: median seconds per question (Kaggle T4) | 11.4 | 11.4 | **11.0** |
 
 **Where hybrid retrieval helps.** Dense retrieval alone misses exact table labels and years, so 8 more items
 are answered correctly with BM25 fused in. G02, G12, G13, G16, G18, G22, G23 and G24 move from wrong to right.
@@ -176,9 +176,6 @@ scores the three golden-set configurations, and writes the groundedness rating s
 
 ## Known gaps
 
-* **The executed notebook is on Kaggle.** The copy in `notebooks/` has no outputs. The run that produced
-  `eval/part1_golden_eval.json` and the 0.867 submission is Kaggle notebook version 7. Download that version
-  with outputs into `notebooks/` to make the numbers above visible in the repository.
 * **Groundedness was not rated for this pipeline.** The sheet is written, but its rater columns are empty. The
   team rated the graded system instead (Anushka's, mean 5.0, agreement 1.00).
 * **Weak spot:** applying a rule stated in prose (for example an Okun slope and a threshold growth rate) is
