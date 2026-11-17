@@ -22,3 +22,6 @@ submission.csv
 # OS
 .DS_Store
 Thumbs.db
+
+# Course PDFs and other documents (slide 15: never commit PDFs)
+*.pdf

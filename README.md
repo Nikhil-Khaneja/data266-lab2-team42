@@ -135,6 +135,21 @@ pip install -r requirements.txt
 build of torch/torchvision (RTX 4090). On Kaggle/Colab, keep the preinstalled torch: Part 1's
 Kaggle notebook installs only `part1/member-nikhil/kaggle_requirements.txt`.
 
+## Where the notebooks are
+
+The repo uses one folder per member inside each part instead of a single root `notebooks/` folder
+(a part may span several notebooks). Every notebook is committed executed, with outputs.
+
+| Part | Final (graded) notebook | Partner baseline |
+|---|---|---|
+| 1 | `part1/member-anushka/notebooks/p1_rag.ipynb` (Kaggle T4 run, public score 0.930) | `part1/member-nikhil/notebooks/p1_rag.ipynb` |
+| 2 | `part2/member-anushka/notebooks/p2_finetune.ipynb` (train + generate), `part2/member-anushka/notebooks/p2_evaluate.ipynb` (evaluation, safety, release) | `part2/member-nikhil/notebooks/p2_finetune.ipynb` |
+| 3 | `part3/member-anushka/notebooks/p3_agents.ipynb` (agents + Gradio), `part3/member-anushka/notebooks/p3_human_eval.ipynb` (human evaluation) | `part3/member-nikhil/notebooks/p3_agents.ipynb` |
+
+Shared definitions written before tuning (golden set, prompts, scenarios) are in `part1/eval/`, `part2/eval/`
+and `part3/eval/`. Part 3 JSON traces: `part3/member-anushka/outputs/traces/` (final) and
+`part3/member-nikhil/eval/part3_traces/` (baseline).
+
 ## Running each part
 
 Each part's scripts expect to be run **with that member's folder as the working
